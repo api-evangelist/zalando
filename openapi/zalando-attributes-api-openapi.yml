@@ -1,0 +1,197 @@
+openapi: 3.0.2
+info:
+  title: Article Requirements AnnouncedReturns Attributes API
+  version: 1.0.0
+  x-audience: external-merchant
+  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
+  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+
+    '
+tags:
+- name: Attributes
+paths:
+  /merchants/{merchant_id}/attribute-types/{type_label}/attributes:
+    get:
+      summary: List all attributes of the given attribute type
+      tags:
+      - Attributes
+      security:
+      - OAuth2:
+        - products/attributes/read
+      parameters:
+      - $ref: '#/components/parameters/merchant_id'
+      - $ref: '#/components/parameters/type_label'
+      - $ref: '#/components/parameters/flow_id'
+      responses:
+        '200':
+          $ref: '#/components/responses/AttributesPagedResponse'
+        default:
+          $ref: '#/components/responses/GenericError'
+  /merchants/{merchant_id}/attribute-types/{type_label}/attributes/{attribute_label}:
+    get:
+      summary: Return a given attribute of the given attribute type
+      tags:
+      - Attributes
+      security:
+      - OAuth2:
+        - products/attributes/read
+      parameters:
+      - $ref: '#/components/parameters/merchant_id'
+      - $ref: '#/components/parameters/type_label'
+      - $ref: '#/components/parameters/attribute_label'
+      - $ref: '#/components/parameters/flow_id'
+      responses:
+        '200':
+          $ref: '#/components/responses/AttributeResponse'
+        default:
+          $ref: '#/components/responses/GenericError'
+components:
+  schemas:
+    Attribute:
+      required:
+      - label
+      - value
+      - name
+      properties:
+        label:
+          type: string
+          example: color_code
+        name:
+          $ref: '#/components/schemas/Name'
+        value:
+          $ref: '#/components/schemas/AttributeValue'
+        _meta:
+          $ref: '#/components/schemas/AttributeMeta'
+    Name:
+      description: 'Map of language to text, key must follow (rfc-2616, section
+
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+
+
+        This mapping is only a human readable name of the entity.
+
+        Building logic dependant on this field should be avoided.
+
+        '
+      additionalProperties:
+        type: string
+      example:
+        en: The name
+        de: Der Name
+        es: El nombre
+    AttributeMeta:
+      type: object
+      description: 'Optional additional information for the attribute.
+
+        There are no guarantees or fixed structure on this field.
+
+        '
+    AttributeValue:
+      description: 'Holder for the value of an attribute.
+
+
+        There must be one, and only one, of the following properties set, and
+
+        this **must** match the definition of the Attribute''s `Type.definition`.
+
+        '
+      properties:
+        boolean:
+          type: boolean
+        datetime:
+          type: string
+          format: date-time
+        decimal:
+          type: number
+          format: float
+        integer:
+          type: integer
+          format: int64
+        string:
+          type: string
+        localized:
+          type: object
+          additionalProperties:
+            type: string
+        structure:
+          type: object
+      example:
+        localized:
+          fr: gris foncé
+          pt: cinzento escuro
+          cs: tmavě šedá
+          it: grigio scuro
+          nl: Donkergrijs
+          de: dunkelgrau
+          sv: mörkgrå
+          da: mørkegrå
+          en: dark grey
+          es: gris oscuro
+          fi: tummanharmaa
+          'no': mørkegrå
+          pl: ciemnoszary
+  responses:
+    AttributeResponse:
+      description: a single attribute
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Attribute'
+    AttributesPagedResponse:
+      description: list of attributes
+      content:
+        application/json:
+          schema:
+            required:
+            - items
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attribute'
+    GenericError:
+      description: 'error occurred - see status code and problem object for more
+
+        information.
+
+        '
+      content:
+        application/problem+json:
+          schema:
+            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+  parameters:
+    attribute_label:
+      name: attribute_label
+      in: path
+      description: Label of the attribute
+      required: true
+      schema:
+        type: string
+        format: string
+    type_label:
+      name: type_label
+      in: path
+      description: Label of the attribute type
+      required: true
+      schema:
+        type: string
+        format: string
+    flow_id:
+      name: X-Flow-Id
+      description: 'A custom header that will be passed onto any further requests and can be
+
+        used for diagnosing.
+
+        '
+      in: header
+      required: false
+      schema:
+        type: string
+    merchant_id:
+      name: merchant_id
+      in: path
+      description: Id of the merchant
+      required: true
+      schema:
+        type: string
+        format: string

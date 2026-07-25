@@ -1,0 +1,262 @@
+openapi: 3.0.2
+info:
+  title: Article Requirements AnnouncedReturns Outlines API
+  version: 1.0.0
+  x-audience: external-merchant
+  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
+  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+
+    '
+tags:
+- name: Outlines
+paths:
+  /merchants/{merchant_id}/outlines:
+    get:
+      summary: 'List sellable outlines for the merchant
+
+        '
+      description: 'Returns a list of product outlines that a given merchant can sell. The
+
+        merchant can use these outlines to create a new product.
+
+        '
+      tags:
+      - Outlines
+      security:
+      - OAuth2:
+        - products/attributes/read
+      parameters:
+      - $ref: '#/components/parameters/merchant_id'
+      - $ref: '#/components/parameters/flow_id'
+      responses:
+        '200':
+          $ref: '#/components/responses/OutlinesPagedResponse'
+        default:
+          $ref: '#/components/responses/GenericError'
+  /merchants/{merchant_id}/outlines/{outline_label}:
+    get:
+      summary: Return the outline
+      description: 'Provide the structure of the outline.
+
+        '
+      tags:
+      - Outlines
+      security:
+      - OAuth2:
+        - products/attributes/read
+      parameters:
+      - $ref: '#/components/parameters/merchant_id'
+      - $ref: '#/components/parameters/outline_label'
+      - $ref: '#/components/parameters/flow_id'
+      responses:
+        '200':
+          $ref: '#/components/responses/OutlinesPagedResponse'
+        default:
+          $ref: '#/components/responses/GenericError'
+components:
+  parameters:
+    outline_label:
+      name: outline_label
+      in: path
+      description: Label of the outline
+      required: true
+      schema:
+        type: string
+        format: string
+    flow_id:
+      name: X-Flow-Id
+      description: 'A custom header that will be passed onto any further requests and can be
+
+        used for diagnosing.
+
+        '
+      in: header
+      required: false
+      schema:
+        type: string
+    merchant_id:
+      name: merchant_id
+      in: path
+      description: Id of the merchant
+      required: true
+      schema:
+        type: string
+        format: string
+  schemas:
+    Outline:
+      description: 'Provides an outline of a product, etc., defining the types of attributes
+
+        that must be present, and those which may be present, and also some
+
+        optional additional constraints on the attributes of those types.
+
+        '
+      required:
+      - label
+      - tiers
+      properties:
+        label:
+          type: string
+          example: shoe
+        name:
+          $ref: '#/components/schemas/Name'
+        description:
+          $ref: '#/components/schemas/Description'
+        tiers:
+          $ref: '#/components/schemas/Tiers'
+    Tiers:
+      properties:
+        model:
+          $ref: '#/components/schemas/OutlineTier'
+        config:
+          $ref: '#/components/schemas/OutlineTier'
+        simple:
+          $ref: '#/components/schemas/OutlineTier'
+    OutlineTier:
+      description: 'Defines the optional and mandatory attributes and attribute constraints
+
+        applied to a product at a given tier.
+
+        '
+      required:
+      - mandatory_types
+      - optional_types
+      - restricted_attributes
+      properties:
+        mandatory_types:
+          description: 'All mandatory types must present in the request body for successful
+
+            product submission.
+
+            '
+          type: array
+          items:
+            type: string
+          example:
+          - mandatory_type_1
+          - mandatory_type_2
+        optional_types:
+          description: 'Optional types will improve product quality, however are not
+
+            required for submission.
+
+            '
+          type: array
+          items:
+            type: string
+          example:
+          - optional_type_1
+          - optional_type_2
+        restricted_attributes:
+          description: 'List of restrictive attributes for mandatory/optional types.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributePerType'
+          example:
+          - type:
+              label: optional_type_1
+              version: 1.0.0
+            values:
+            - optional_type_1_value_1
+            - optional_type_1_value_2
+        validation_hints:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              related_types:
+                type: array
+                items:
+                  type: string
+                nullable: true
+              description:
+                type: object
+                additionalProperties:
+                  type: string
+                example:
+                  en: Please specify the material composition if the product has filling.
+              hint_type:
+                type: string
+                example: mandatory_if_applicable
+          example:
+            material.filling:
+              related_types: null
+              description:
+                en: Please specify the material composition if the product has filling.
+              hint_type: mandatory_if_applicable
+    Description:
+      description: 'Map of language to text, key must follow (rfc-2616, section
+
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+
+
+        This mapping is only a human readable description of the entity.
+
+        Building logic dependant on the this field should be avoided.
+
+        '
+      additionalProperties:
+        type: string
+      example:
+        en: Description
+        de: Beschreibung
+        es: Descripción
+    Name:
+      description: 'Map of language to text, key must follow (rfc-2616, section
+
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+
+
+        This mapping is only a human readable name of the entity.
+
+        Building logic dependant on this field should be avoided.
+
+        '
+      additionalProperties:
+        type: string
+      example:
+        en: The name
+        de: Der Name
+        es: El nombre
+    AttributePerType:
+      type: object
+      description: 'Define a relation between an (outline, type) and its allowed values.
+
+        '
+      properties:
+        type:
+          type: object
+          properties:
+            label:
+              type: string
+            version:
+              type: string
+        values:
+          type: array
+          items:
+            type: string
+  responses:
+    OutlinesPagedResponse:
+      description: list of outlines
+      content:
+        application/json:
+          schema:
+            required:
+            - items
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Outline'
+    GenericError:
+      description: 'error occurred - see status code and problem object for more
+
+        information.
+
+        '
+      content:
+        application/problem+json:
+          schema:
+            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem

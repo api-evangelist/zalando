@@ -1,0 +1,208 @@
+openapi: 3.0.2
+info:
+  title: Article Requirements AnnouncedReturns Cross Border Movements API
+  version: 1.0.0
+  x-audience: external-merchant
+  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
+  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+
+    '
+tags:
+- name: Cross Border Movements
+paths:
+  /cross-border-movements/{merchant_id}:
+    get:
+      summary: Returns the cross-border movement report
+      description: Returns all the cross border movements for the specified merchant for the specified report date range.
+      security:
+      - OAuth2:
+        - zfs.icm-reports.read
+      parameters:
+      - in: path
+        name: merchant_id
+        schema:
+          type: string
+          format: uuid
+        description: The Zalando specific UUID representing a merchant.
+        required: true
+      - in: query
+        name: from
+        schema:
+          type: string
+          format: date
+        description: The start date for the query i.e. when movements were reported as arrived at the destination.
+        example: '2020-04-01'
+        required: true
+      - in: query
+        name: to
+        schema:
+          type: string
+          format: date
+        description: The end date (inclusive) for the query i.e. when movements were reported as arrived at the destination.
+        example: '2020-04-10'
+        required: true
+      - in: query
+        name: location_id
+        schema:
+          type: string
+          format: uuid
+        description: The warehouse location id to query i.e both source and destination locations.
+        required: false
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          format: int32
+        description: 'Client suggested limit to restrict the number of movements per buffer query on a page.
+
+          '
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: 'The cursor is an indication of the first item tracking to include in the response.
+
+          '
+      responses:
+        200:
+          description: 'Returns a list of all the cross-border movements in the requested date range.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrossBorderReportResponse'
+        default:
+          description: 'An error has occurred. Please check the status code and review the problem object for additional details. For information about the error codes, see: https://opensource.zalando.com/restful-api-guidelines/#client-side-error-codes
+
+            '
+          content:
+            application/problem+json:
+              schema:
+                $ref: https://opensource.zalando.com/restful-api-guidelines/models/problem-1.0.1.yaml#/Problem
+      tags:
+      - Cross Border Movements
+components:
+  schemas:
+    CrossBorderReportResponse:
+      type: object
+      properties:
+        merchant_id:
+          type: string
+          format: uuid
+          description: Merchant ID
+        items:
+          type: array
+          description: A set of items for each movement if the specified report_date range
+          items:
+            $ref: '#/components/schemas/CrossBorderMovement'
+        next:
+          description: Pagination cursor pointing to the next page.
+          type: string
+        query:
+          description: 'Object containing the current query filters applied to the collection resource. The cursor here is a copy of the current request -- it should not be used for the next request.\n
+
+            '
+          type: object
+          properties:
+            from:
+              type: string
+              format: date
+            to:
+              type: string
+              format: date
+            cursor:
+              type: string
+            limit:
+              type: integer
+              format: int32
+              default: 1000
+      required:
+      - merchant_id
+    StockLocationV2:
+      type: object
+      description: Details of the Stock Location
+      properties:
+        location_id:
+          type: string
+          format: uuid
+          description: Unique identifier for the Stock Location.
+        name:
+          type: string
+          description: The name / location of the Stock Location.
+          example: Erfurt
+        country_code:
+          type: string
+          description: Country code in ISO 3166-1 alpha-2 of the country that the Stock Location is in.
+          example: DE
+        inbound_active:
+          type: boolean
+          description: Whether the stock location is active for inbound or not.
+          example: true
+        outbound_active:
+          type: boolean
+          description: Whether the stock location is active for outbound or not.
+          example: true
+      required:
+      - location_id
+      - name
+      - country_code
+      - inbound_active
+      - outbound_active
+    CrossBorderMovement:
+      type: object
+      description: Cross-border Movement
+      properties:
+        movement_id:
+          type: string
+          format: uuid
+          description: Identifier for the movement.
+        report_date:
+          type: string
+          format: date
+          description: Report date of the movement.
+          example: '2019-01-08'
+        transaction_date:
+          type: string
+          format: date
+          description: Transaction date of the movement.
+          example: '2019-01-08'
+        product_sku:
+          type: string
+          description: Unique Identifier of the product.
+        ean:
+          $ref: '#/components/schemas/Ean13'
+        merchant_sku:
+          type: string
+          description: Merchant product identifier
+        movement_type:
+          type: string
+          x-extensible-enum:
+          - relocation_inbound
+          - customer_return_inbound
+          - external_treatment_inbound
+          - reconciliation_inbound
+          description: Type of movement.
+        source_stock_location:
+          $ref: '#/components/schemas/StockLocationV2'
+        destination_stock_location:
+          $ref: '#/components/schemas/StockLocationV2'
+        order_id:
+          type: string
+          description: Corresponding order id for the movement when applicable.
+      required:
+      - movement_id
+      - report_date
+      - transaction_date
+      - product_sku
+      - ean
+      - destination_stock_location
+      - source_stock_location
+      - movement_type
+    Ean13:
+      type: string
+      format: ean
+      pattern: ^[0-9]{13}$
+      maxLength: 13
+      description: A 13-digit EAN
+      example: 0123456789123

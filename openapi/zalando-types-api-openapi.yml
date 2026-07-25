@@ -1,0 +1,212 @@
+openapi: 3.0.2
+info:
+  title: Article Requirements AnnouncedReturns Types API
+  version: 1.0.0
+  x-audience: external-merchant
+  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
+  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+
+    '
+tags:
+- name: Types
+paths:
+  /merchants/{merchant_id}/attribute-types/{type_label}:
+    get:
+      summary: Returns the attribute type
+      tags:
+      - Types
+      security:
+      - OAuth2:
+        - products/attributes/read
+      parameters:
+      - $ref: '#/components/parameters/merchant_id'
+      - $ref: '#/components/parameters/type_label'
+      - $ref: '#/components/parameters/flow_id'
+      responses:
+        '200':
+          $ref: '#/components/responses/TypeResponse'
+        default:
+          $ref: '#/components/responses/GenericError'
+components:
+  schemas:
+    TypeCardinality:
+      description: 'The allowed cardinality of this type when used - i.e. how many
+
+        attributes of this type can be used.
+
+        '
+      type: string
+      x-extensible-enum:
+      - one
+      - many
+      example: one
+    TypeDefinition:
+      description: 'The specification of the actual type of this type.
+
+        '
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          x-extensible-enum:
+          - BooleanDefinition
+          - StringDefinition
+          - LocalizedStringDefinition
+          - IntegerDefinition
+          - DecimalDefinition
+          - DatetimeDefinition
+          - StructuredDefinition
+        types:
+          type: array
+          items:
+            required:
+            - label
+            - optional
+            properties:
+              label:
+                type: string
+              optional:
+                type: boolean
+      example:
+        type: LocalizedStringDefinition
+    TypeVariants:
+      description: 'Allow aliases for types, when used it would be:
+
+        "{type_label}.{type_variant}", this way it would be allowed to have the
+
+        same type used multiple times in the same outline/attributes
+
+        E.g: color.primary being color the type and primary the variant
+
+        '
+      type: array
+      items:
+        required:
+        - label
+        - name
+        properties:
+          label:
+            type: string
+          name:
+            $ref: '#/components/schemas/Name'
+      example:
+      - label: primary
+        name: Primary Type
+      - label: secondary
+        name: Secondary Type
+    Type:
+      required:
+      - label
+      - name
+      - definition
+      - type_variants
+      - cardinality
+      - usage
+      properties:
+        label:
+          type: string
+          example: color_code
+        name:
+          $ref: '#/components/schemas/Name'
+        description:
+          $ref: '#/components/schemas/Description'
+        cardinality:
+          $ref: '#/components/schemas/TypeCardinality'
+        usage:
+          $ref: '#/components/schemas/TypeUsage'
+        definition:
+          $ref: '#/components/schemas/TypeDefinition'
+        type_variants:
+          $ref: '#/components/schemas/TypeVariants'
+    Name:
+      description: 'Map of language to text, key must follow (rfc-2616, section
+
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+
+
+        This mapping is only a human readable name of the entity.
+
+        Building logic dependant on this field should be avoided.
+
+        '
+      additionalProperties:
+        type: string
+      example:
+        en: The name
+        de: Der Name
+        es: El nombre
+    Description:
+      description: 'Map of language to text, key must follow (rfc-2616, section
+
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+
+
+        This mapping is only a human readable description of the entity.
+
+        Building logic dependant on the this field should be avoided.
+
+        '
+      additionalProperties:
+        type: string
+      example:
+        en: Description
+        de: Beschreibung
+        es: Descripción
+    TypeUsage:
+      description: 'How this type is to be used. Reference attributes established within
+
+        this service, or Literal values provided.
+
+        '
+      type: string
+      x-extensible-enum:
+      - literal
+      - reference_by_label
+      - reference_by_value
+      example: reference_by_label
+  responses:
+    TypeResponse:
+      description: a single attribute type
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Type'
+    GenericError:
+      description: 'error occurred - see status code and problem object for more
+
+        information.
+
+        '
+      content:
+        application/problem+json:
+          schema:
+            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+  parameters:
+    type_label:
+      name: type_label
+      in: path
+      description: Label of the attribute type
+      required: true
+      schema:
+        type: string
+        format: string
+    flow_id:
+      name: X-Flow-Id
+      description: 'A custom header that will be passed onto any further requests and can be
+
+        used for diagnosing.
+
+        '
+      in: header
+      required: false
+      schema:
+        type: string
+    merchant_id:
+      name: merchant_id
+      in: path
+      description: Id of the merchant
+      required: true
+      schema:
+        type: string
+        format: string

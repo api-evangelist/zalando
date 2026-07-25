@@ -1,0 +1,129 @@
+openapi: 3.0.2
+info:
+  title: Article Requirements AnnouncedReturns Liquidated Items API
+  version: 1.0.0
+  x-audience: external-merchant
+  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
+  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+
+    '
+tags:
+- name: Liquidated Items
+paths:
+  /liquidated-items/{merchant-id}:
+    get:
+      summary: Returns liquidation data
+      description: Returns all liquidated items from the specified partner in the given timeframe. <br /><br />
+      security:
+      - merchant_platform:
+        - zfs/liquidated-item/read
+      parameters:
+      - in: path
+        name: merchant-id
+        schema:
+          type: string
+          format: uuid
+        description: merchant ID
+        required: true
+      - in: query
+        name: from
+        schema:
+          $ref: '#/components/schemas/Date'
+        description: Start timestamp for the query, restricted to now minus 100 days
+        required: true
+      - in: query
+        name: to
+        schema:
+          $ref: '#/components/schemas/Date'
+        description: End timestamp for the query, restricted to now minus 100 days
+        required: true
+      - in: query
+        name: purchase-order-number
+        schema:
+          type: string
+        description: The purchase order number associated with that ownership transfer.
+        required: false
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiquidatedItemsQueryResult'
+        default:
+          description: A specific error occurred - see status code for more information.
+          content:
+            application/problem+json:
+              schema:
+                $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+      tags:
+      - Liquidated Items
+components:
+  schemas:
+    LiquidatedItem:
+      type: object
+      description: Liquidated Item
+      properties:
+        merchant_name:
+          type: string
+          description: A merchant name
+          example: reference
+        merchant_id:
+          type: string
+          format: uuid
+        purchase_order_number:
+          type: string
+          description: 'The purchase order number associated with that ownership transfer.
+
+            '
+          example: PO123
+        shipping_notice_number:
+          type: string
+          format: uuid
+        ean:
+          $ref: '#/components/schemas/Ean13'
+        sku_simple:
+          type: string
+          format: sku
+          maxLength: 50
+          readOnly: true
+          description: the Zalando Simple SKU found during validation for the given EAN
+          example: TH341G023-K1100XL000
+        quantity:
+          type: integer
+          format: int32
+          minimum: 0
+          description: The number of liquidated items
+        stock_location_id:
+          type: string
+          format: uuid
+          description: The stock location Id
+        liquidation_date:
+          $ref: '#/components/schemas/Date'
+        reporting_date:
+          $ref: '#/components/schemas/Date'
+        average_price_per_item:
+          type: number
+          format: double
+        total_price:
+          type: number
+          format: double
+    Date:
+      type: string
+      format: date
+      description: Date
+      example: '2018-03-17'
+    LiquidatedItemsQueryResult:
+      type: object
+      properties:
+        liquidated_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LiquidatedItem'
+    Ean13:
+      type: string
+      format: ean
+      pattern: ^[0-9]{13}$
+      maxLength: 13
+      description: A 13-digit EAN
+      example: 0191476239145

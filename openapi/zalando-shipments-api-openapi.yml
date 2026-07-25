@@ -1,0 +1,532 @@
+openapi: 3.0.2
+info:
+  title: Article Requirements AnnouncedReturns Shipments API
+  version: 1.0.0
+  x-audience: external-merchant
+  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
+  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+
+    '
+tags:
+- name: Shipments
+paths:
+  /merchants/{merchant-id}/orders/{order-id}/shipments:
+    get:
+      summary: Get shipments for the order
+      description: Retrieves all shipments associated with the order. Each order has at least one shipment (the default), which includes all of its order lines
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-flow-id'
+      - $ref: '#/components/parameters/merchantId'
+      - name: order-id
+        in: path
+        description: The identifier of the order on which operations are being requested on.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      security:
+      - merchant_platform:
+        - orders/read
+      tags:
+      - Shipments
+      responses:
+        '200':
+          description: Shipments were found and will be returned in the answer.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Shipments'
+        '403':
+          description: The privileges of the token are insufficient to retrieve orders for this merchant.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Merchant order was not found.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Exceeded the rate limit.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          headers:
+            X-Flow-Id:
+              type: string
+              description: Unique identifier for the request
+            Retry-After:
+              type: string
+              description: Specifies how long you must wait before making a new request, in seconds
+            X-Rate-Limit:
+              type: string
+              description: Shows the limit for the operation that you are performing
+    post:
+      summary: Create a shipment.
+      description: Creates a shipment object in preparation for shipping the order. A shipment defines the specific order lines to be shipped together and plays a central role in the fulfillment process. If any order line is already assigned to another shipment, it will be automatically removed from that shipment and assigned to the current one
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-flow-id'
+      - $ref: '#/components/parameters/merchantId'
+      - name: order-id
+        in: path
+        description: The identifier of the order on which operations are being requested on.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      security:
+      - merchant_platform:
+        - orders/write
+      tags:
+      - Shipments
+      requestBody:
+        description: The request body contains the information of the shipment
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              required:
+              - order_lines
+              - weight
+              properties:
+                merchant_specified_shipment_id:
+                  type: string
+                  description: Shipment id used by the partner
+                order_lines:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ShipmentOrderLine'
+                weight:
+                  $ref: '#/components/schemas/Weight'
+                outbound_logistic_center_id:
+                  description: Optional unique identifier of the outbound logistic center.
+                  type: string
+                  format: uuid
+                  example: 57be9d4a-28d6-4b83-94de-b784899cabc9
+                tracking_number:
+                  type: string
+                  example: 003403418039972556
+                return_tracking_number:
+                  type: string
+                  example: ReTurNTracKINGNumBER123461413
+      responses:
+        '201':
+          description: Shipment was created successfully.
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                required:
+                - shipment_id
+                properties:
+                  shipment_id:
+                    description: Identifier of the created shipment.
+                    type: string
+                    format: uuid
+                    example: ff8cd551-3642-4ba5-91e4-d75b652d06e6
+        '400':
+          description: Error in the payload - wrong format or missing fields, see error object for more details.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: The specified update operation is not allowed or the write permissions are missing for this merchant.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Merchant order was not found.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Exceeded the rate limit.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          headers:
+            X-Flow-Id:
+              type: string
+              description: Unique identifier for the request
+            Retry-After:
+              type: string
+              description: Specifies how long you must wait before making a new request, in seconds
+            X-Rate-Limit:
+              type: string
+              description: Shows the limit for the operation that you are performing
+        default:
+          description: Errors object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /merchants/{merchant-id}/orders/{order-id}/shipments/{shipment-id}:
+    get:
+      summary: Get an individual shipment
+      description: Retrieves a specific shipment object
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-flow-id'
+      - $ref: '#/components/parameters/merchantId'
+      - name: order-id
+        in: path
+        description: The identifier of the order on which operations are being requested on.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: shipment-id
+        in: path
+        description: The identifier of the shipment which is being requested.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      security:
+      - merchant_platform:
+        - orders/read
+      tags:
+      - Shipments
+      responses:
+        '200':
+          description: Shipment was found and will be returned in the response.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+        '403':
+          description: The privileges of the token are insufficient to retrieve orders for this merchant.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Merchant order or shipment was not found.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Exceeded the rate limit.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          headers:
+            X-Flow-Id:
+              type: string
+              description: Unique identifier for the request
+            Retry-After:
+              type: string
+              description: Specifies how long you must wait before making a new request, in seconds
+            X-Rate-Limit:
+              type: string
+              description: Shows the limit for the operation that you are performing
+    patch:
+      summary: Update a shipment
+      description: Updates a shipment object in preparation for shipping the order. A shipment represents the specific order lines that will be shipped together and plays a central role in the fulfillment process. All shipment fields can be updated except the order line IDs, it is not allowed to add or remove order lines from an existing shipment
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/x-flow-id'
+      - $ref: '#/components/parameters/merchantId'
+      - name: order-id
+        in: path
+        description: The identifier of the order to which the shipment belongs.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: shipment-id
+        in: path
+        description: The identifier of the shipment for which updates are being requested.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      security:
+      - merchant_platform:
+        - orders/write
+      tags:
+      - Shipments
+      requestBody:
+        description: The request body contains the updated information of the shipment
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                merchant_specified_shipment_id:
+                  type: string
+                  description: Shipment id used by the partner
+                order_lines:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ShipmentOrderLine'
+                weight:
+                  $ref: '#/components/schemas/Weight'
+                outbound_logistic_center_id:
+                  description: Optional unique identifier of the outbound logistic center.
+                  type: string
+                  format: uuid
+                  example: 57be9d4a-28d6-4b83-94de-b784899cabc9
+                tracking_number:
+                  type: string
+                  example: 003403418039972556
+                return_tracking_number:
+                  type: string
+                  example: ReTurNTracKINGNumBER123461413
+                status:
+                  $ref: '#/components/schemas/ShipmentStatus'
+      responses:
+        '204':
+          description: Shipment was updated successfully.
+          headers:
+            Location:
+              description: The URL of the patched shipment.
+              schema:
+                type: string
+                format: url
+        '400':
+          description: Error in the payload - wrong format or missing fields, see error object for more details.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: The specified update operation (status transition or updating an already 'shipped' shipment) is not allowed or the write permissions are missing for this merchant.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Merchant order or shipment was not found.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Exceeded the rate limit.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+          headers:
+            X-Flow-Id:
+              type: string
+              description: Unique identifier for the request
+            Retry-After:
+              type: string
+              description: Specifies how long you must wait before making a new request, in seconds
+            X-Rate-Limit:
+              type: string
+              description: Shows the limit for the operation that you are performing
+        default:
+          description: Errors object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+components:
+  schemas:
+    Errors:
+      type: object
+      description: An array of error objects.
+      properties:
+        errors:
+          description: All errors.
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    Shipment:
+      type: object
+      description: 'A shipment represents the delivery of specific order lines from an order in a single parcel. It includes additional details such as tracking numbers, the stock location ID from which the shipment is sent and the shipment weight (in grams)
+
+        '
+      required:
+      - shipment_id
+      properties:
+        shipment_id:
+          type: string
+          format: uuid
+          description: Unique identifier of a Shipment.
+          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
+        merchant_specified_shipment_id:
+          type: string
+          description: Shipment id used by the partner
+          example: 744374997468
+        shipment_number:
+          type: string
+          description: a numeric identifier of a Shipment.
+          example: 003403418039972556
+        order_lines:
+          type: array
+          description: The order line identifiers associated with the shipment.
+          items:
+            $ref: '#/components/schemas/ShipmentOrderLine'
+        tracking_number:
+          type: string
+          description: The tracking number associated with the shipment's delivery.
+          example: TRACKING-123456-WHATEVER
+        return_tracking_number:
+          type: string
+          description: The tracking number associated with the shipment's return.
+          example: ReTurNTracKINGNumBER123461413
+        outbound_logistic_center_id:
+          description: Optional unique identifier of the outbound logistic center.
+          type: string
+          format: uuid
+          example: 57be9d4a-28d6-4b83-94de-b784899cabc9
+        weight:
+          $ref: '#/components/schemas/Weight'
+        status:
+          $ref: '#/components/schemas/ShipmentStatus'
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp of the shipment creation.
+        modified_at:
+          type: string
+          format: date-time
+          description: The last modified timestamp.
+    Error:
+      type: object
+      description: Error object
+      properties:
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+          example: 404
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+          example: 123A
+        title:
+          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+          example: The resource requested could not be found.
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The order 123 does not exist.
+        source:
+          $ref: '#/components/schemas/ErrorSource'
+    ShipmentOrderLine:
+      type: object
+      description: Shipment related attributes of an order line
+      required:
+      - order_line_id
+      properties:
+        merchant_specified_identifier:
+          description: Optional merchant specific identifier associated with the order line (such as UPOS identifier)
+          type: object
+          required:
+          - type
+          - value
+          properties:
+            type:
+              type: string
+              description: Value indicating the format of the identifier provided
+              example: UPOS-15
+              x-extensible-enum:
+              - UPOS-15
+            value:
+              type: string
+              description: The identifier for the order line in the format as indicated by the `type` field
+              example: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+        order_line_id:
+          description: Identifier of an order line.
+          type: string
+          format: uuid
+          example: 0178b487-262c-4638-b88e-6bb1aa5a166d
+    Weight:
+      type: object
+      description: The weight measurement
+      required:
+      - value
+      - unit
+      properties:
+        value:
+          type: integer
+          description: The numerical value of the weight
+          format: int32
+          example: 1250
+        unit:
+          type: string
+          description: The unit of measurement for the weight
+          example: g
+          x-extensible-enum:
+          - g
+    Shipments:
+      type: object
+      description: A collection of shipments for this order.
+      properties:
+        shipments:
+          type: array
+          description: A list of shipments associated with this order.
+          items:
+            $ref: '#/components/schemas/Shipment'
+    ShipmentStatus:
+      type: string
+      description: The status of the shipment.
+      x-extensible-enum:
+      - initial
+      - shipped
+      - canceled
+      example: initial
+    ErrorSource:
+      type: object
+      description: Indicate the source of error.
+      properties:
+        pointer:
+          description: A JSON Pointer [RFC6901] to the associated entity in the request document, for example, '/data' for a primary data object, or '/data/attributes/title' for a specific attribute.
+          type: string
+          example: /data/attributes/order_number
+        parameter:
+          description: A string indicating which URI query parameter caused the error.
+          type: string
+          example: order_number
+    RateLimitError:
+      type: object
+      description: Error object for rate limit.
+      properties:
+        message:
+          description: A string containing the error message for exceeding the rate limit
+          type: string
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      description: Bearer access token.
+      required: true
+      schema:
+        type: string
+        format: JWT token
+    merchantId:
+      name: merchant-id
+      in: path
+      description: To identify a merchant for which this operation is carried out.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    x-flow-id:
+      name: X-Flow-Id
+      in: header
+      description: Used for troubleshooting.
+      required: false
+      schema:
+        type: string
+        format: uuid
+      x-doc:
+        excluded: true

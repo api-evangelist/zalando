@@ -1,0 +1,187 @@
+openapi: 3.0.2
+info:
+  title: Article Requirements AnnouncedReturns Returned Items API
+  version: 1.0.0
+  x-audience: external-merchant
+  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
+  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+
+    '
+tags:
+- name: Returned Items
+paths:
+  /returned-items/{merchant-id}:
+    get:
+      summary: Returns returned items
+      description: Returns all items returned from Zalando warehouses to the specified partner in the given timeframe.
+      security:
+      - OAuth2:
+        - zfs/returned-item/read
+      parameters:
+      - in: path
+        name: merchant-id
+        schema:
+          type: string
+          format: uuid
+        description: Merchant ID
+        required: true
+      - in: query
+        name: from
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        description: Start timestamp for the query, restricted to now minus 100 days
+        required: true
+      - in: query
+        name: to
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        description: End timestamp for the query, restricted to now minus 100 days
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/returnedItemsQueryResult'
+        default:
+          description: A specific error occurred - see status code for more information.
+          content:
+            application/problem+json:
+              schema:
+                $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+      tags:
+      - Returned Items
+components:
+  schemas:
+    returnedItem:
+      type: object
+      description: Returned Item
+      properties:
+        merchant_b2b_reference:
+          type: string
+          maxLength: 100
+          nullable: true
+          description: A merchant specific optional reference id or information for the advice (for example a merchant's order name or number)
+          example: reference
+        ean:
+          $ref: '#/components/schemas/Ean13'
+        parent:
+          type: object
+          properties:
+            id:
+              type: string
+              example: '12'
+          description: Either a loading unit container (box) or `null`
+          nullable: true
+          required:
+          - id
+        quality_label:
+          type: string
+          description: A unique identifier per EAN per item.
+          example: 00014D02W8V
+        location_id:
+          type: string
+          format: uuid
+          description: Location ID of the warehouse that was returning the item.
+          example: 29809185-6a98-4691-a15b-e8d16839b6e8
+        shipped_timestamp:
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+          description: Timestamp when actual return has happened.
+        consumed_timestamp:
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+          description: This timestamp represent the time the data record was made available through our system. It can deviate from `shipped_timestamp` and relates directly to the query params `from`/ `to`.
+        zalando_shipment_number:
+          type: string
+          pattern: ^[0-9]{16}$
+          description: An ID identifiying the return-to-partner tour.
+          example: '1234567890123456'
+        destination:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          description: Delivery destination address details.
+        quality_category:
+          description: Defines the quality of an item.
+          type: string
+          x-extensible-enum:
+          - A
+          - B
+          - C
+          - D
+        defect_levels:
+          allOf:
+          - $ref: '#/components/schemas/DefectLevels'
+          description: Hierarchical defect description of defected items.
+          nullable: true
+      required:
+      - consumed_timestamp
+      - ean
+      - merchant_b2b_reference
+      - quality_label
+      - shipped_timestamp
+      - zalando_shipment_number
+      - location_id
+      - quality_category
+      - destination
+      - defect_levels
+      - parent
+    DateTime:
+      type: string
+      format: date-time
+      description: Date time
+      example: '2017-07-21T17:32:28Z'
+    Ean13:
+      type: string
+      format: ean
+      pattern: ^[0-9]{13}$
+      maxLength: 13
+      description: A 13-digit EAN
+      example: 0191476239145
+    DefectLevels:
+      type: object
+      description: Defines a detailed summary of the defect reason.
+      properties:
+        level_1:
+          type: string
+          description: defines a brief summary of the defect reason, not always present
+        level_2:
+          type: string
+          description: defines a detailed summary of the defect reason, not always present
+      required:
+      - level_1
+      - level_2
+    returnedItemsQueryResult:
+      type: object
+      properties:
+        returned_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/returnedItem'
+    Address:
+      type: object
+      description: Destination address to which the items are sent.
+      properties:
+        city:
+          type: string
+        country_code:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        salutation:
+          type: string
+        street:
+          type: string
+        zip:
+          type: string
+      required:
+      - city
+      - country_code
+      - first_name
+      - last_name
+      - salutation
+      - street
+      - zip

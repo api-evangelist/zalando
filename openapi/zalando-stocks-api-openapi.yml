@@ -1,0 +1,159 @@
+openapi: 3.0.2
+info:
+  title: Article Requirements AnnouncedReturns stocks API
+  version: 1.0.0
+  x-audience: external-merchant
+  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
+  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+
+    '
+tags:
+- name: stocks
+paths:
+  /merchants/{merchant-id}/stocks:
+    post:
+      summary: Update stock quantities for a set of articles.
+      tags:
+      - stocks
+      security:
+      - merchant_platform:
+        - products/stock/write
+      parameters:
+      - in: path
+        name: merchant-id
+        description: The ID of the Merchant.
+        schema:
+          type: string
+          format: uuid
+        required: true
+      requestBody:
+        description: 'The request containing a batch of up to 1000 Stock Updates to process.
+
+          Validation: All Stock Updates in a single batch must have a unique combination of `sales_channel_id` and `ean`.
+
+          '
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockUpdatesRequest'
+      responses:
+        207:
+          description: 'The requested batch of Stock Updates has been processed. Please consult the response body for the status information of an individual Stock Update.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockUpdatesResponse'
+        default:
+          description: Error occurred. See status code and problem object for more information.
+          content:
+            application/problem+json:
+              schema:
+                $ref: https://opensource.zalando.com/restful-api-guidelines/problem-1.0.1.yaml#/Problem
+components:
+  schemas:
+    StockUpdatePerSalesChannel:
+      type: object
+      description: Stock Level for a particular article in a particular Sales Channel.
+      properties:
+        sales_channel_id:
+          type: string
+          description: The ID of the Sales Channel.
+          format: uuid
+        ean:
+          type: string
+          format: gtin-13
+          description: Global Trade Item Number (GTIN-13)
+          example: '5901234123457'
+        quantity:
+          type: integer
+          description: The Stock Level for the specified article in the specified Sales Channel.
+          format: int32
+          minimum: 0
+          example: 25
+      required:
+      - sales_channel_id
+      - ean
+      - quantity
+    ResponseDescription:
+      type: string
+      description: Detailed error message regarding the status.
+    ResponseStatus:
+      type: string
+      x-extensible-enum:
+      - ACCEPTED
+      - REJECTED
+      - FAILED
+      description: 'Indicates result of the Product Stock Update.
+
+        - ACCEPTED indicates a successful submission
+
+        - REJECTED indicates validation errors where a detailed description can be found in the `description` field
+
+        - FAILED indicates a failed submission due to internal errors.
+
+        '
+      example: ACCEPTED
+    ResponseCode:
+      type: integer
+      format: int32
+      x-extensible-enum:
+      - 0
+      - 101
+      - 102
+      - 104
+      description: 'Machine readable status code.
+
+        -   0: Update Successful
+
+        - 101: Validation failed
+
+        - 102: Submission failed due to internal errors
+
+        - 104: Update pending - waiting for the article to be onboarded
+
+        '
+    StockUpdateResult:
+      type: object
+      description: The result of Stock Update processing.
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        code:
+          $ref: '#/components/schemas/ResponseCode'
+        description:
+          $ref: '#/components/schemas/ResponseDescription'
+      required:
+      - status
+      - code
+    StockUpdatesResponse:
+      type: object
+      description: The response containing results of Stock Updates processing.
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              item:
+                $ref: '#/components/schemas/StockUpdatePerSalesChannel'
+              result:
+                $ref: '#/components/schemas/StockUpdateResult'
+            required:
+            - item
+            - result
+      required:
+      - results
+    StockUpdatesRequest:
+      type: object
+      description: The request containing a batch of up to 1000 Stock Updates to process.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockUpdatePerSalesChannel'
+          maxItems: 1000
+      required:
+      - items

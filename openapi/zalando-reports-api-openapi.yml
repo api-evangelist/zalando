@@ -1,0 +1,145 @@
+openapi: 3.0.2
+info:
+  title: Article Requirements AnnouncedReturns Reports API
+  version: 1.0.0
+  x-audience: external-merchant
+  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
+  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+
+    '
+tags:
+- name: Reports
+paths:
+  /reports/received-items/{merchant-id}:
+    get:
+      summary: Retrieve inbounded items
+      description: Returns all items inbounded at Zalando warehouses for specific `merchant-id` and `zalando_advice_ids`. Endpoint has no 100 days time limitation, but to not overload the client, it provides cursor based pagination. The cursor is a string that is returned in the response and can be used to fetch the next page of results. Please note that if `from` and `to` parameters are not provided the API will return the data for the last 100 days.
+      security:
+      - BearerAuth:
+        - partner-inbound-tracker.received.read
+      parameters:
+      - in: path
+        name: merchant-id
+        schema:
+          type: string
+          format: uuid
+        example: 29809185-6a98-4691-a15b-e8d16839b6e8
+        description: Merchant ID
+        required: true
+      - in: query
+        name: zalando_advice_ids
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdviceId'
+        description: Zalando advice ids to filter inbounded items by. Returns items for all advice ids if not provided.
+        required: false
+      - in: query
+        name: from
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        description: Start timestamp. Default is now minus 100 days.
+        required: false
+      - in: query
+        name: to
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        description: End timestamp. Default is now.
+        required: false
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: Cursor to paginate through results
+        example: MjAxNy0wNy0yMVQxNzozMjoyOFoK
+        required: false
+      - in: query
+        name: limit
+        schema:
+          type: string
+          default: 100000
+        description: Number of inbounded items to fetch per page. Maximum is 200000.
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InboundedItemsResponse'
+        default:
+          description: A specific error occurred - see status code for more information.
+          content:
+            application/problem+json:
+              schema:
+                $ref: https://opensource.zalando.com/restful-api-guidelines/problem-1.0.1.yaml#/Problem
+      tags:
+      - Reports
+components:
+  schemas:
+    DateTime:
+      type: string
+      format: date-time
+      description: Date time
+      example: '2017-07-21T17:32:28Z'
+    Ean13:
+      type: string
+      format: ean
+      pattern: ^[0-9]{13}$
+      maxLength: 13
+      description: A 13-digit EAN
+      example: 0191476239145
+    InboundedItemsResponse:
+      type: object
+      properties:
+        received_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InboundedItem'
+        next:
+          type: string
+          description: Cursor reference. Used to fetch the next page of results.
+          example: MjAxNy0wNy0yMVQxNzozMjoyOFoK
+    AdviceId:
+      type: string
+      pattern: ^[0-9]{8}$
+      example: 99200001
+    InboundedItem:
+      type: object
+      description: Inbounded Item
+      properties:
+        zalando_advice_id:
+          allOf:
+          - $ref: '#/components/schemas/AdviceId'
+          description: The ID of the advice the item belongs to.
+        ean:
+          $ref: '#/components/schemas/Ean13'
+        quality_label:
+          type: string
+          description: A unique identifier per EAN per item.
+          example: 00014D02W8V
+        merchant_article_id:
+          type: string
+          description: A merchant specified article id if provided. E.g. UPOS-8
+        merchant_item_id:
+          type: string
+          description: A merchant specified item id if provided. E.g. UPOS-15
+        merchant_b2b_reference:
+          type: string
+          description: A merchant specific optional reference id or information for the advice (for example a merchant's order name or number)
+          example: reference
+        location_id:
+          type: string
+          format: uuid
+          description: Location ID of the warehouse that inbounded the item.
+          example: 29809185-6a98-4691-a15b-e8d16839b6e8
+        received_timestamp:
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+          description: Timestamp when actual inbound has happened.
+      required:
+      - zalando_advice_id
+      - ean
+      - quality_label
+      - location_id
+      - received_timestamp

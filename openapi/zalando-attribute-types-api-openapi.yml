@@ -1,0 +1,154 @@
+openapi: 3.0.2
+info:
+  title: Article Requirements AnnouncedReturns attribute-types API
+  version: 1.0.0
+  x-audience: external-merchant
+  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
+  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+
+    '
+tags:
+- name: attribute-types
+paths:
+  /partners/{businessPartnerId}/attribute-types:
+    get:
+      summary: List attribute type labels for a business partner
+      description: Returns all available attribute type labels for the given business partner.
+      tags:
+      - attribute-types
+      parameters:
+      - name: businessPartnerId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: List of attribute type labels
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributeTypeLabelsListResponse'
+  /partners/{businessPartnerId}/attribute-types/{typeLabel}:
+    get:
+      summary: Get an attribute type
+      description: Returns the attribute type with the given label, applying any partner-specific overrides.
+      tags:
+      - attribute-types
+      parameters:
+      - name: businessPartnerId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: typeLabel
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested attribute type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributeTypeResponse'
+        '404':
+          description: Attribute type not found
+components:
+  schemas:
+    AttributeTypeVariantResponse:
+      type: object
+      required:
+      - label
+      - name
+      properties:
+        label:
+          type: string
+        name:
+          type: object
+          description: Locale-keyed display names
+          additionalProperties:
+            type: string
+          example:
+            en: Metric
+            de: Metrisch
+            fr: Métrique
+    AttributeTypeResponse:
+      type: object
+      required:
+      - label
+      - name
+      - description
+      - cardinality
+      - usage
+      - definition
+      - type_variants
+      properties:
+        label:
+          type: string
+        name:
+          type: object
+          description: Locale-keyed display names
+          additionalProperties:
+            type: string
+          example:
+            en: Our model's height
+            de: Modelgröße
+            fr: Taille du mannequin
+        description:
+          type: object
+          description: Locale-keyed descriptions
+          additionalProperties:
+            type: string
+          example:
+            en: Metric type with value and unit. The unit is restricted to the allowed values for this metric
+        cardinality:
+          type: string
+          enum:
+          - one
+          - many
+          example: one
+        usage:
+          type: string
+          enum:
+          - literal
+          - reference_by_value
+          - reference_by_label
+          example: literal
+        definition:
+          type: object
+          description: 'Type-specific definition object. Contains a "type" field indicating the definition kind (e.g. BooleanDefinition, StringDefinition, DecimalDefinition, etc.)
+
+            '
+          additionalProperties: true
+          example:
+            type: StructuredDefinition
+            types:
+            - label: metric_unit
+              optional: false
+              version: 1.0.0
+              attribute_labels:
+              - cm
+            - label: metric_value
+              optional: false
+              version: 1.0.0
+        type_variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeTypeVariantResponse'
+    AttributeTypeLabelsListResponse:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+          example:
+          - brand_code
+          - color_code.primary
+          - color_code.secondary

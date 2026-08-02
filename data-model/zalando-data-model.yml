@@ -1,0 +1,54 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/zalando-orders-openapi.yml + zalando-products-openapi.yml (JSON:API
+  relationships + id-reference fields)
+primary_key_style: JSON:API resource objects with type + id; merchant scoped by path
+  merchant-id
+entities:
+- Merchant
+- Order
+- OrderItem
+- OrderLine
+- OrderLineTransition
+- OrderTransition
+- Price
+- Product
+- ProductAttribute
+- Stock
+relationships:
+- from: Order
+  to: OrderItem
+  type: has_many
+  via: order_items
+- from: Order
+  to: OrderTransition
+  type: has_many
+  via: order_transitions
+- from: OrderItem
+  to: OrderLine
+  type: has_many
+  via: order_lines
+- from: OrderLine
+  to: OrderLineTransition
+  type: has_many
+  via: order_line_transitions
+- from: Order
+  to: Merchant
+  type: belongs_to
+  via: merchant-id
+- from: Product
+  to: Merchant
+  type: belongs_to
+  via: merchant-id
+- from: Product
+  to: ProductAttribute
+  type: has_many
+  via: attributes
+- from: Price
+  to: Product
+  type: belongs_to
+  via: article/ean
+- from: Stock
+  to: Product
+  type: belongs_to
+  via: ean

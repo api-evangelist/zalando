@@ -1,0 +1,20 @@
+generated: '2026-07-21'
+method: generated
+skills:
+- file: zalando-onboard-and-price-article.md
+  name: Onboard and price a Zalando article
+  api: openapi/zalando-products-openapi.yml
+  operations:
+  - POST /products
+  - GET /product-attributes
+  - GET /article-requirements
+  - POST /prices
+  - POST /stocks
+- file: zalando-retrieve-and-fulfill-orders.md
+  name: Retrieve and fulfill Zalando orders
+  api: openapi/zalando-orders-openapi.yml
+  operations:
+  - GET /orders
+  - GET /orders/{order-id}
+  - GET /orders/{order-id}/order-items
+  - GET /zfs/stock-movements

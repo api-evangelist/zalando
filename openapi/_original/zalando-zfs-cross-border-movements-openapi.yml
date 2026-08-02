@@ -1,0 +1,227 @@
+openapi: 3.0.0
+info:
+  version: 1.1.0
+  x-api-id: "01930bb8-3237-7fd0-bb8a-9e352f10515a"
+  x-audience: "external-partner"
+  title: "Cross-Border Movements Report API"
+  description: |-
+    The Cross-Border Movements API provides data on cross-border movements of items between Zalando logistics facilities. In other words, if an item moved from a Zalando logistics facility in one country to a Zalando logistics facility in another country, that movement will be captured in the reports that can be fetched from this endpoint.
+
+
+    This API endpoint allows merchants, or integrators acting on behalf of merchants, to request data on cross-border movements for the specified date range. The date range refers to the `report_date` in the response, which describes when the transaction was recorded as a cross-border movement. Each day, a report is generated that captures all cross-border movements recorded on the previous day; when you call the cross-border movements endpoint, you are fetching the data contained in these reports. 
+
+
+    Limitations / Suggestions:
+
+      * Use `GET /cross-border-movements/{merchant-id}?from={from}&to={to}` endpoint
+      * All daily reports for the specified date range will be fetched.
+      * It is recommended to fetch the report for the previous day after 12:00 UTC.
+      * In case of a non `200` response, the result should be ignored and refetched after an interval of at least 2 minutes.
+      * The `transaction_date` in the result reflects when the item was received at the destination warehouse. Transaction dates may fall outside the `report_date` range that was fetched.
+
+servers:
+  - url: "api.merchants.zalando.com/zfs"
+    description: "Production instance"
+  - url: "api-sandbox.merchants.zalando.com/zfs"
+    description: "Sandbox instance for merchant center"
+
+paths:
+  "/cross-border-movements/{merchant_id}":
+    get:
+      summary: "Returns the cross-border movement report"
+      description:  |-
+        Returns all the cross border movements for the specified merchant for the specified report date range.
+      security:
+        - OAuth2:
+            - "zfs.icm-reports.read"
+      parameters:
+        - in: path
+          name: "merchant_id"
+          schema:
+            type: string
+            format: uuid
+          description: The Zalando specific UUID representing a merchant.
+          required: true
+        - in: query
+          name: "from"
+          schema:
+            type: string
+            format: date
+          description: The start date for the query i.e. when movements were reported as arrived at the destination.
+          example: "2020-04-01"
+          required: true
+        - in: query
+          name: "to"
+          schema:
+            type: string
+            format: date
+          description: The end date (inclusive) for the query i.e. when movements were reported as arrived at the destination.
+          example: "2020-04-10"
+          required: true
+        - in: query
+          name: "location_id"
+          schema:
+            type: string
+            format: uuid
+          description: The warehouse location id to query i.e both source and destination locations.
+          required: false
+        - in: query
+          name: "limit"
+          schema:
+            type: integer
+            format: int32
+          description: >
+            Client suggested limit to restrict the number of movements per buffer query on a page.
+        - in: query
+          name: "cursor"
+          schema:
+            type: string
+          description: >
+            The cursor is an indication of the first item tracking to include in the response.
+      responses:
+        200:
+          description: |
+            Returns a list of all the cross-border movements in the requested date range.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CrossBorderReportResponse"
+        default:
+          description: >
+            An error has occurred. Please check the status code and review the problem object for additional details.
+            For information about the error codes, see: https://opensource.zalando.com/restful-api-guidelines/#client-side-error-codes
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'https://opensource.zalando.com/restful-api-guidelines/models/problem-1.0.1.yaml#/Problem'
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: "https://api-sandbox.merchants.zalando.com/auth/token"
+          scopes:
+            "zfs.icm-reports.read": "Access to ZFS ICM and Cross-border Reports of a merchant."
+  schemas:
+    Ean13:
+      type: string
+      format: ean
+      pattern: "^[0-9]{13}$"
+      maxLength: 13
+      description: "A 13-digit EAN"
+      example: 0123456789123
+    CrossBorderReportResponse:
+      type: object
+      properties:
+        merchant_id:
+          type: string
+          format: uuid
+          description: "Merchant ID"
+        items:
+          type: array
+          description: "A set of items for each movement if the specified report_date range"
+          items:
+            $ref: "#/components/schemas/CrossBorderMovement"
+        next:
+          description: Pagination cursor pointing to the next page.
+          type: string
+        query:
+          description: >
+            Object containing the current query filters applied to the collection resource. The cursor here is a copy of the current request -- it should not be used for the next request.\n
+          type: object
+          properties:
+            from:
+              type: string
+              format: date
+            to:
+              type: string
+              format: date
+            cursor:
+              type: string
+            limit:
+              type: integer
+              format: int32
+              default: 1000
+      required:
+        - merchant_id
+    CrossBorderMovement:
+      type: object
+      description: "Cross-border Movement"
+      properties:
+        movement_id:
+          type: string
+          format: uuid
+          description: "Identifier for the movement."
+        report_date:
+          type: string
+          format: date
+          description: "Report date of the movement."
+          example: "2019-01-08"
+        transaction_date:
+          type: string
+          format: date
+          description: "Transaction date of the movement."
+          example: "2019-01-08"
+        product_sku:
+          type: string
+          description: "Unique Identifier of the product."
+        ean:
+          $ref: "#/components/schemas/Ean13"
+        merchant_sku:
+          type: string
+          description: "Merchant product identifier"
+        movement_type:
+          type: string
+          x-extensible-enum:
+            - relocation_inbound
+            - customer_return_inbound
+            - external_treatment_inbound
+            - reconciliation_inbound
+          description: "Type of movement."
+        source_stock_location:
+          $ref: "#/components/schemas/StockLocationV2"
+        destination_stock_location:
+          $ref: "#/components/schemas/StockLocationV2"
+        order_id:
+          type: string
+          description: "Corresponding order id for the movement when applicable."
+      required:
+        - movement_id
+        - report_date
+        - transaction_date
+        - product_sku
+        - ean
+        - destination_stock_location
+        - source_stock_location
+        - movement_type
+    StockLocationV2:
+      type: object
+      description: "Details of the Stock Location"
+      properties:
+        location_id:
+          type: string
+          format: uuid
+          description: "Unique identifier for the Stock Location."
+        name:
+          type: string
+          description: "The name / location of the Stock Location."
+          example: "Erfurt"
+        country_code:
+          type: string
+          description: "Country code in ISO 3166-1 alpha-2 of the country that the Stock Location is in."
+          example: "DE"
+        inbound_active:
+          type: boolean
+          description: "Whether the stock location is active for inbound or not."
+          example: true
+        outbound_active:
+          type: boolean
+          description: "Whether the stock location is active for outbound or not."
+          example: true
+      required:
+        - location_id
+        - name
+        - country_code
+        - inbound_active
+        - outbound_active

@@ -1,0 +1,29 @@
+generated: '2026-07-21'
+method: searched
+note: No .well-known discovery documents are published on the API or developer hosts.
+  www.zalando.com returns HTTP 200 for these paths but serves the storefront SPA (soft-404),
+  so none are real.
+hosts:
+- host: https://api.merchants.zalando.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://developers.merchants.zalando.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+  - path: /.well-known/openid-configuration
+    status: 301
+- host: https://www.zalando.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: soft-404 storefront HTML, not a real security.txt

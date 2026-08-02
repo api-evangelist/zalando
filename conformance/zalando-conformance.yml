@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/ securitySchemes + media types + tags
+standards:
+- id: oauth2
+  conforms: true
+  evidence: securitySchemes type oauth2 clientCredentials across all zDirect specs
+- id: oidc
+  conforms: false
+- id: json:api
+  conforms: true
+  evidence: application/vnd.api+json request/response bodies with resource objects
+    + relationships (orders, products, sales-channels)
+- id: rfc7807-problem-details
+  conforms: true
+  evidence: 'application/problem+json error responses (Problem: type/title/status/detail/instance)
+    in products and others'
+- id: rfc9457-problem-details
+  conforms: true
+  evidence: problem+json error model, superset-compatible with RFC 9457
+- id: rfc6749-client-credentials
+  conforms: true
+  evidence: OAuth 2.0 client credentials grant at /auth/token
+- id: rate-limiting-429
+  conforms: true
+  evidence: HTTP 429 with Retry-After and X-Rate-Limit headers documented
+- id: zalando-restful-api-guidelines
+  conforms: true
+  evidence: x-flow-id request tracing, kebab-case, cursor pagination per opensource.zalando.com/restful-api-guidelines
+- id: psd2
+  conforms: false
+- id: fhir
+  conforms: false

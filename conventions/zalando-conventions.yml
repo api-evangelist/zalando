@@ -1,0 +1,49 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.merchants.zalando.com/docs/api-overview.html + openapi/
+  + https://opensource.zalando.com/restful-api-guidelines/
+authentication:
+  style: OAuth 2.0 client credentials (Bearer token)
+  token_endpoint: https://api.merchants.zalando.com/auth/token
+  header: 'Authorization: Bearer <access_token>'
+  ref: authentication/zalando-authentication.yml
+idempotency:
+  supported: false
+  note: The Zalando RESTful API Guidelines recommend Idempotency-Key, but the published
+    zDirect merchant specs do not declare an Idempotency-Key header. Not wired as
+    an Idempotency capability.
+pagination:
+  style: cursor + page/limit
+  params:
+  - cursor
+  - page
+  - limit
+  - sort
+  response_fields:
+  - links
+  note: JSON:API-style links object; cursor pagination on collection endpoints.
+request_tracing:
+  header: X-Flow-Id
+  required: false
+  note: x-flow-id request-correlation header per Zalando API Guidelines; echoed for
+    tracing.
+media_types:
+- application/vnd.api+json (JSON:API)
+- application/json
+- application/problem+json (errors)
+versioning:
+  scheme: per-service semantic version in info.version; docs release-notes train
+  ref: lifecycle/zalando-lifecycle.yml
+error_envelope:
+  formats:
+  - RFC 7807 problem+json
+  - JSON:API error objects
+  ref: errors/zalando-problem-types.yml
+rate_limit_signaling:
+  status: 429
+  headers:
+  - Retry-After
+  - X-Rate-Limit
+  examples:
+  - 'Product Attributes API: 1000 requests/minute'
+  - 'Product Submissions API: 25 calls/second'

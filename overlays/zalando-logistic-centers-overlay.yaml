@@ -1,0 +1,15 @@
+# generated: '2026-07-21'
+# method: generated
+# source: openapi/zalando-logistic-centers-openapi.yml
+overlay: 1.0.0
+info:
+  title: 'API Evangelist enhancements for OpenAPI Specification: Logistic Centers
+    API'
+  version: 1.0.0
+extends: openapi/zalando-logistic-centers-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-21'
+    x-apievangelist-provider: zalando
+    x-apievangelist-rating-family: zdirect-merchant-platform

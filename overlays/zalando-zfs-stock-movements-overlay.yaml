@@ -1,0 +1,14 @@
+# generated: '2026-07-21'
+# method: generated
+# source: openapi/zalando-zfs-stock-movements-openapi.yml
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for zDirect Platform ZFS Stock Movements API
+  version: 1.0.0
+extends: openapi/zalando-zfs-stock-movements-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-21'
+    x-apievangelist-provider: zalando
+    x-apievangelist-rating-family: zdirect-merchant-platform

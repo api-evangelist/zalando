@@ -1,0 +1,55 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.merchants.zalando.com/docs/release-notes.html
+scheme: semantic (docs version 2.7.x train, dated)
+current_version: 2.7.141
+entries:
+- version: 2.7.141
+  date: '2026-07-10'
+  highlights:
+  - Add Article Requirements API docs page
+- version: 2.7.140
+  date: '2026-07-07'
+  highlights:
+  - DDS M2 doc update
+  - Limit merchant product ids length
+- version: 2.7.139
+  date: '2026-07-07'
+  highlights:
+  - Inventory visibility docs
+  - Updated KPI descriptions
+  - Product component attribute info
+- version: 2.7.138
+  date: '2026-06-30'
+  breaking:
+  - Removed deprecated Articles API reference
+  highlights:
+  - Consolidated PSR API documentation
+- version: 2.7.137
+  date: '2026-06-09'
+  breaking:
+  - Removed Sales Performance dataset documentation (dataset deprecated)
+  highlights:
+  - Updated shipping notices flow diagrams
+- version: 2.7.136
+  date: '2026-06-05'
+  highlights:
+  - Added docs for zDirect datasets, campaign & campaign sku
+- version: 2.7.135
+  date: '2026-06-02'
+  highlights:
+  - Restructured price reporting docs
+  - Pricing configured at country level
+- version: 2.7.134
+  date: '2026-05-26'
+  highlights:
+  - Adds EAN format in product association API spec
+- version: 2.7.133
+  date: '2026-05-19'
+  highlights:
+  - Enhanced return reason descriptions in Orders API
+- version: 2.7.132
+  date: '2026-05-12'
+  highlights:
+  - Updated dataset deprecation timelines
+  - Improved status field docs

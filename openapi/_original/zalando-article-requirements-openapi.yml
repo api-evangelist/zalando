@@ -1,0 +1,275 @@
+openapi: 3.0.2
+
+info:
+  title: Article Requirements API
+  version: 1.0.0
+  x-audience: external-merchant
+  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
+  description: >
+    This API provides endpoints to retrieve UAF article requirement outlines,
+    attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+
+paths:
+  /partners/{businessPartnerId}/attribute-types:
+    get:
+      summary: List attribute type labels for a business partner
+      description: Returns all available attribute type labels for the given business partner.
+      tags:
+        - attribute-types
+      parameters:
+        - name: businessPartnerId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: List of attribute type labels
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributeTypeLabelsListResponse'
+
+  /partners/{businessPartnerId}/attribute-types/{typeLabel}:
+    get:
+      summary: Get an attribute type
+      description: Returns the attribute type with the given label, applying any partner-specific overrides.
+      tags:
+        - attribute-types
+      parameters:
+        - name: businessPartnerId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: typeLabel
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The requested attribute type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributeTypeResponse'
+        '404':
+          description: Attribute type not found
+
+  /partners/{businessPartnerId}/attribute-types/{typeLabel}/attributes:
+    get:
+      summary: List attribute values for an attribute type
+      description: Returns all attribute values for the given attribute type label.
+      tags:
+        - attribute-values
+      parameters:
+        - name: businessPartnerId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: typeLabel
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of attribute values
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributeValuesListResponse'
+        '404':
+          description: Attribute type not found
+
+  /partners/{businessPartnerId}/attribute-types/{typeLabel}/attributes/{attributeLabel}:
+    get:
+      summary: Get a single attribute value
+      description: Returns the attribute value with the given label for the given attribute type.
+      tags:
+        - attribute-values
+      parameters:
+        - name: businessPartnerId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: typeLabel
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: attributeLabel
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The requested attribute value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributeValueResponse'
+        '404':
+          description: Attribute type or attribute value not found
+
+components:
+  schemas:
+    AttributeTypeLabelsListResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+          example:
+            - "brand_code"
+            - "color_code.primary"
+            - "color_code.secondary"
+
+    AttributeTypeResponse:
+      type: object
+      required:
+        - label
+        - name
+        - description
+        - cardinality
+        - usage
+        - definition
+        - type_variants
+      properties:
+        label:
+          type: string
+        name:
+          type: object
+          description: Locale-keyed display names
+          additionalProperties:
+            type: string
+          example:
+            en: "Our model's height"
+            de: "Modelgröße"
+            fr: "Taille du mannequin"
+        description:
+          type: object
+          description: Locale-keyed descriptions
+          additionalProperties:
+            type: string
+          example:
+            en: "Metric type with value and unit. The unit is restricted to the allowed values for this metric"
+        cardinality:
+          type: string
+          enum: [one, many]
+          example: "one"
+        usage:
+          type: string
+          enum: [literal, reference_by_value, reference_by_label]
+          example: "literal"
+        definition:
+          type: object
+          description: >
+            Type-specific definition object. Contains a "type" field indicating the
+            definition kind (e.g. BooleanDefinition, StringDefinition, DecimalDefinition, etc.)
+          additionalProperties: true
+          example:
+            type: "StructuredDefinition"
+            types:
+              - label: "metric_unit"
+                optional: false
+                version: "1.0.0"
+                attribute_labels:
+                  - "cm"
+              - label: "metric_value"
+                optional: false
+                version: "1.0.0"
+        type_variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeTypeVariantResponse'
+
+    AttributeTypeVariantResponse:
+      type: object
+      required:
+        - label
+        - name
+      properties:
+        label:
+          type: string
+        name:
+          type: object
+          description: Locale-keyed display names
+          additionalProperties:
+            type: string
+          example:
+            en: "Metric"
+            de: "Metrisch"
+            fr: "Métrique"
+
+    AttributeValuesListResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeValueResponse'
+          example:
+            - label: "waterproof_210"
+              name:
+                en-gb: "waterproof_210"
+              value:
+                localized:
+                  en: "yes"
+                  de: "ja"
+                  fr: "oui"
+            - label: "waterproof_209"
+              name:
+                en-gb: "waterproof_209"
+              value:
+                localized:
+                  en: "no"
+                  de: "nein"
+                  fr: "non"
+            - label: "waterproof_7825"
+              name:
+                en-gb: "waterproof_7825"
+              value:
+                localized:
+                  en: "3 ATM"
+                  de: "3 ATM"
+                  fr: "3 ATM"
+
+    AttributeValueResponse:
+      type: object
+      required:
+        - label
+        - name
+      properties:
+        label:
+          type: string
+        name:
+          type: object
+          description: Locale-keyed display names
+          additionalProperties:
+            type: string
+          example:
+            en-gb: "waterproof_7825"
+        value:
+          type: object
+          nullable: true
+          description: Optional free-form value payload
+          additionalProperties: true
+          example:
+            localized:
+              en: "3 ATM"
+              de: "3 ATM"
+              fr: "3 ATM"

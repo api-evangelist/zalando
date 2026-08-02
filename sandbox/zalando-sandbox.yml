@@ -1,0 +1,17 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.merchants.zalando.com/docs/ (auth, quick-start-guide, stages-of-integration)
+environments:
+  sandbox:
+    base_url: https://api-sandbox.merchants.zalando.com
+    token_url: https://api-sandbox.merchants.zalando.com/auth/token
+  production:
+    base_url: https://api.merchants.zalando.com
+    token_url: https://api.merchants.zalando.com/auth/token
+access:
+  note: Create an app in the zDirect Portal to obtain a client_id/client_secret; grant
+    scopes; request an access token via OAuth2 client credentials against the sandbox
+    token URL to integrate against test data before going live.
+test_values:
+  note: zDirect does not publish fixed magic test identifiers or test cards (non-payments);
+    sandbox uses merchant-scoped test data provisioned per partner app.

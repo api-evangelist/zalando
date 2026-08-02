@@ -1,0 +1,90 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/ 4xx/5xx responses
+note: 'zDirect returns two error envelopes: RFC 7807 problem+json (type/title/status/detail/instance)
+  and JSON:API error objects (status/code/title/detail/source). All 429 responses
+  carry Retry-After + X-Rate-Limit headers.'
+envelopes:
+- format: rfc9457
+  media_type: application/problem+json
+  fields:
+  - type
+  - title
+  - status
+  - detail
+  - instance
+- format: json:api
+  media_type: application/vnd.api+json
+  fields:
+  - status
+  - code
+  - title
+  - detail
+  - source
+problems:
+- status: 400
+  title: Bad Request
+  media_types:
+  - json
+  - json:api
+  remediation: Validate the request body/params against the OpenAPI schema before
+    retrying.
+  source_operations:
+  - zalando-orders-openapi.yml#patch /merchants/{merchant-id}/orders/{order-id}
+  - zalando-orders-openapi.yml#patch /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}/lines/{order-line-id}
+  - zalando-orders-openapi.yml#patch /merchants/{merchant-id}/orders/{order-id}/shipments/{shipment-id}
+  - zalando-orders-openapi.yml#post /merchants/{merchant-id}/orders/{order-id}/shipments
+  - zalando-products-openapi.yml#put /merchants/{merchant_id}/products/identifiers/{ean}
+- status: 403
+  title: Forbidden
+  media_types:
+  - json
+  - json:api
+  - rfc9457
+  remediation: Ensure the access token carries the required scope for this operation.
+  source_operations:
+  - zalando-logistic-centers-openapi.yml#get-logistic-center
+  - zalando-logistic-centers-openapi.yml#get-logistic-centers
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/orders
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/orders-deletion-requests
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/orders/{order-id}
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/orders/{order-id}/items
+- status: 404
+  title: Not Found
+  media_types:
+  - json
+  - json:api
+  - rfc9457
+  remediation: Confirm the merchant-id and resource identifiers exist.
+  source_operations:
+  - zalando-article-requirements-openapi.yml#get /partners/{businessPartnerId}/attribute-types/{typeLabel}
+  - zalando-article-requirements-openapi.yml#get /partners/{businessPartnerId}/attribute-types/{typeLabel}/attributes
+  - zalando-article-requirements-openapi.yml#get /partners/{businessPartnerId}/attribute-types/{typeLabel}/attributes/{attributeLabel}
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/orders
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/orders-deletion-requests
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/orders/{order-id}
+- status: 409
+  title: Conflict
+  media_types:
+  - json
+  - json:api
+  remediation: Resolve the resource state conflict (e.g. duplicate/parallel update)
+    and retry.
+  source_operations:
+  - zalando-orders-openapi.yml#patch /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}/lines/{order-line-id}
+  - zalando-products-openapi.yml#get /products/identifiers/{ean}
+  - zalando-products-openapi.yml#put /merchants/{merchant_id}/products/identifiers/{ean}
+- status: 429
+  title: Too Many Requests
+  media_types:
+  - json
+  - json:api
+  remediation: Honor the Retry-After header and the X-Rate-Limit budget; back off
+    before retrying.
+  source_operations:
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/announced-returns
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/orders
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/orders-deletion-requests
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/orders/{order-id}
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/orders/{order-id}/items
+  - zalando-orders-openapi.yml#get /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}

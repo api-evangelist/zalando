@@ -1,0 +1,31 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.merchants.zalando.com/docs/ (release-notes, versioning-and-deprecation-policy,
+  auth)
+versioning:
+  scheme: per-service semantic version
+  docs: https://developers.merchants.zalando.com/docs/release-notes.html
+  current_versions:
+    orders: 1.1.1
+    products: '1.1'
+    prices: 1.1.2
+    stocks: 1.1.0
+    product-attributes: 0.0.9
+    sales-channels: 0.1.0
+    article-requirements: 1.0.0
+    price-reporting: 1.0.0
+    offer-blocking: 1.0.0
+    logistic-centers: '1.0'
+    zfs-stock-movements: 4.2.0
+    zfs-cross-border-movements: 1.1.0
+deprecation:
+  policy_url: https://developers.merchants.zalando.com/docs/versioning-and-deprecation-policy.html
+  note: zDirect publishes a Versioning and Deprecation Policy; deprecated datasets/APIs
+    (e.g. Sales Performance dataset, Articles API) are announced with timelines in
+    the release notes.
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+auth_token_expiry:
+  note: Access tokens carry expires_in; refresh tokens deprecated since 2021-07-01.

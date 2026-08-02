@@ -1,0 +1,40 @@
+# Zalando
+
+> Zalando is Europe's leading online platform for fashion and lifestyle. Its zDirect Platform (Merchant/Partner Platform) exposes OAuth2-protected REST APIs for the full article lifecycle: products, attributes, prices, stock, offer availability, orders, sales channels, logistic centers, and Zalando Fulfillment Solutions (ZFS) stock movements and cross-border reporting. APIs follow the Zalando RESTful API Guidelines and use JSON:API and problem+json media types.
+
+## Developer
+- [Developer Portal](https://developers.merchants.zalando.com/): zDirect Platform developer home
+- [Documentation](https://developers.merchants.zalando.com/docs/index.html): getting started and guides
+- [Quick Start Guide](https://developers.merchants.zalando.com/docs/quick-start-guide.html)
+- [Authentication](https://developers.merchants.zalando.com/docs/auth.html): OAuth2 client credentials
+- [Rate Limiting](https://developers.merchants.zalando.com/docs/rate-limiting.html): 429 + Retry-After / X-Rate-Limit
+- [Release Notes](https://developers.merchants.zalando.com/docs/release-notes.html): dated changelog
+- [RESTful API Guidelines](https://opensource.zalando.com/restful-api-guidelines/): Zalando's public API design standard
+- [GitHub](https://github.com/zalando)
+- [Engineering Blog](https://engineering.zalando.com/)
+
+## APIs (OpenAPI)
+- [Orders API](openapi/zalando-orders-openapi.yml): retrieve merchant orders, items, lines
+- [Products API](openapi/zalando-products-openapi.yml): create/update catalog products
+- [Product Attributes API](openapi/zalando-product-attributes-openapi.yml): enumerate valid attributes
+- [Article Requirements API](openapi/zalando-article-requirements-openapi.yml): UAF requirement outlines
+- [Merchant Price Service API](openapi/zalando-prices-openapi.yml): set article prices by country
+- [Price Reporting API](openapi/zalando-price-reporting-openapi.yml): price status + history
+- [Merchant Stock Service API](openapi/zalando-stocks-openapi.yml): manage article stock
+- [Offer Blocking API](openapi/zalando-offer-blocking-openapi.yml): block/unblock article availability
+- [Sales Channels API](openapi/zalando-sales-channels-openapi.yml): merchant sales channels
+- [Logistic Centers API](openapi/zalando-logistic-centers-openapi.yml): merchant logistic centers
+- [ZFS Stock Movements API](openapi/zalando-zfs-stock-movements-openapi.yml): fulfillment stock movements
+- [ZFS Cross-Border Movements API](openapi/zalando-zfs-cross-border-movements-openapi.yml): inter-warehouse transfers
+
+## Artifacts
+- [Authentication](authentication/zalando-authentication.yml)
+- [OAuth Scopes](scopes/zalando-scopes.yml)
+- [Conventions](conventions/zalando-conventions.yml)
+- [Error Catalog](errors/zalando-problem-types.yml)
+- [Lifecycle](lifecycle/zalando-lifecycle.yml)
+- [Changelog](changelog/zalando-changelog.yml)
+- [Sandbox](sandbox/zalando-sandbox.yml)
+- [Data Model](data-model/zalando-data-model.yml)
+- [Conformance](conformance/zalando-conformance.yml)
+- [Agent Skills](skills/_index.yml)

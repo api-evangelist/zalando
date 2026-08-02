@@ -1,0 +1,166 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/zalando-logistic-centers-openapi.yml, openapi/zalando-offer-blocking-openapi.yml,
+  openapi/zalando-orders-openapi.yml, openapi/zalando-price-reporting-openapi.yml, openapi/zalando-prices-openapi.yml,
+  openapi/zalando-product-attributes-openapi.yml, openapi/zalando-products-openapi.yml, openapi/zalando-sales-channels-openapi.yml,
+  openapi/zalando-stocks-openapi.yml, openapi/zalando-zfs-cross-border-movements-openapi.yml,
+  openapi/zalando-zfs-stock-movements-openapi.yml
+schemes:
+- name: merchant_platform
+  source: openapi/zalando-logistic-centers-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.merchants.zalando.com/auth/token
+  description: The Products service uses the OpenID Connect (OIDC) authentication layer of OAuth
+    2 to handle the client credentials process flow.
+- name: merchant_platform
+  source: openapi/zalando-offer-blocking-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.merchants.zalando.com/auth/token
+- name: merchant_platform
+  source: openapi/zalando-orders-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+  description: This API uses OAuth2 OIDC with Client Credentials flow.
+- name: merchant_platform
+  source: openapi/zalando-price-reporting-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.merchants.zalando.com/auth/token
+- name: merchant_platform
+  source: openapi/zalando-prices-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.merchants.zalando.com/auth/token
+- name: merchant_platform
+  source: openapi/zalando-product-attributes-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+  description: The Products service uses the OpenID Connect (OIDC) authentication layer of OAuth
+    2 to handle the client credentials process flow.
+- name: merchant_platform
+  source: openapi/zalando-products-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+  description: The Products service uses the OpenID Connect (OIDC) authentication layer of OAuth
+    2 to handle the client credentials process flow.
+- name: merchant_platform
+  source: openapi/zalando-sales-channels-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.merchants.zalando.com/auth/token
+  description: The Products service uses the OpenID Connect (OIDC) authentication layer of OAuth
+    2 to handle the client credentials process flow.
+- name: merchant_platform
+  source: openapi/zalando-stocks-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.merchants.zalando.com/auth/token
+- name: OAuth2
+  source: openapi/zalando-zfs-cross-border-movements-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+- name: merchant_platform
+  source: openapi/zalando-zfs-stock-movements-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+scopes:
+- scope: orders/read
+  description: Read access.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-orders-openapi.yml
+- scope: orders/write
+  description: Write access.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-orders-openapi.yml
+- scope: products/attributes/read
+  description: scope to read a product
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-product-attributes-openapi.yml
+- scope: products/blockers/read
+  description: Grant read access for Offer Blockers to external Merchants.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-offer-blocking-openapi.yml
+- scope: products/blockers/write
+  description: Grant write access for Offer Blockers to external Merchants.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-offer-blocking-openapi.yml
+- scope: products/price/read
+  description: Grant read access for product prices to external Merchants.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-price-reporting-openapi.yml
+- scope: products/price/write
+  description: Grant write access to product prices.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-prices-openapi.yml
+- scope: products/read
+  description: scope to read a product
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-products-openapi.yml
+- scope: products/stock/write
+  description: Grant write access for stocks to external Merchants.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-stocks-openapi.yml
+- scope: products/write
+  description: scope to create or update a product
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-products-openapi.yml
+- scope: profile/logistic-centers/read
+  description: scope to get logistic centers
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-logistic-centers-openapi.yml
+- scope: profile/sales-channels/read
+  description: scope to get sales channels
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-sales-channels-openapi.yml
+- scope: zfs.icm-reports.read
+  description: Access to ZFS ICM and Cross-border Reports of a merchant.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-zfs-cross-border-movements-openapi.yml
+- scope: zfs/liquidated-item/read
+  sources:
+  - openapi/zalando-zfs-stock-movements-openapi.yml
+- scope: zfs/received-item/read
+  description: Access to ZFS received items of a merchant.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-zfs-stock-movements-openapi.yml
+- scope: zfs/returned-item/read
+  description: Access to ZFS returned items of a merchant.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/zalando-zfs-stock-movements-openapi.yml

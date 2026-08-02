@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/zalando-logistic-centers-openapi.yml, openapi/zalando-offer-blocking-openapi.yml,
+  openapi/zalando-orders-openapi.yml, openapi/zalando-price-reporting-openapi.yml, openapi/zalando-prices-openapi.yml,
+  openapi/zalando-product-attributes-openapi.yml, openapi/zalando-products-openapi.yml, openapi/zalando-sales-channels-openapi.yml,
+  openapi/zalando-stocks-openapi.yml, openapi/zalando-zfs-cross-border-movements-openapi.yml,
+  openapi/zalando-zfs-stock-movements-openapi.yml
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: merchant_platform
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.merchants.zalando.com/auth/token
+    scopes: 1
+  description: The Products service uses the OpenID Connect (OIDC) authentication layer of OAuth
+    2 to handle the client credentials process flow.
+  sources:
+  - openapi/zalando-logistic-centers-openapi.yml
+  - openapi/zalando-offer-blocking-openapi.yml
+  - openapi/zalando-orders-openapi.yml
+  - openapi/zalando-price-reporting-openapi.yml
+  - openapi/zalando-prices-openapi.yml
+  - openapi/zalando-product-attributes-openapi.yml
+  - openapi/zalando-products-openapi.yml
+  - openapi/zalando-sales-channels-openapi.yml
+  - openapi/zalando-stocks-openapi.yml
+  - openapi/zalando-zfs-cross-border-movements-openapi.yml
+  - openapi/zalando-zfs-stock-movements-openapi.yml

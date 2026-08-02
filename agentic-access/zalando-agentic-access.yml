@@ -1,0 +1,532 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/zalando-article-requirements-openapi.yml, openapi/zalando-logistic-centers-openapi.yml,
+  openapi/zalando-offer-blocking-openapi.yml, openapi/zalando-orders-openapi.yml, openapi/zalando-price-reporting-openapi.yml,
+  openapi/zalando-prices-openapi.yml, openapi/zalando-product-attributes-openapi.yml, openapi/zalando-products-openapi.yml,
+  openapi/zalando-sales-channels-openapi.yml, openapi/zalando-stocks-openapi.yml, openapi/zalando-zfs-cross-border-movements-openapi.yml,
+  openapi/zalando-zfs-stock-movements-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 41
+  by_action_class:
+    connected: 31
+    acting: 10
+  by_consequence:
+    read: 31
+    write: 6
+    physical: 4
+  human_in_the_loop_required: 0
+operations:
+- path: /partners/{businessPartnerId}/attribute-types
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /partners/{businessPartnerId}/attribute-types/{typeLabel}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /partners/{businessPartnerId}/attribute-types/{typeLabel}/attributes
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /partners/{businessPartnerId}/attribute-types/{typeLabel}/attributes/{attributeLabel}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchantId}/logistic-centers
+  method: get
+  operationId: get-logistic-centers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - profile/logistic-centers/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchantId}/logistic-centers/{logisticCenterId}
+  method: get
+  operationId: get-logistic-center
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - profile/logistic-centers/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/offer-blockers
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - products/blockers/write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /merchants/{merchant-id}/offer-blockers
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - products/blockers/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/offer-blockers
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - products/blockers/write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /merchants/{merchant-id}/offer-blockers/{offer-blocker-id}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - products/blockers/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/orders
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/orders/{order-id}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/orders/{order-id}
+  method: patch
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders/write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /merchants/{merchant-id}/orders/{order-id}/transitions
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/orders/{order-id}/shipments
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/orders/{order-id}/shipments
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders/write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /merchants/{merchant-id}/orders/{order-id}/shipments/{shipment-id}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/orders/{order-id}/shipments/{shipment-id}
+  method: patch
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders/write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /merchants/{merchant-id}/orders/{order-id}/items
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}/lines
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}/lines/{order-line-id}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}/lines/{order-line-id}
+  method: patch
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders/write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}/lines/{order-line-id}/transitions
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/orders-deletion-requests
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/announced-returns
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/price-attempts
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - products/price/read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /merchants/{merchant-id}/prices
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - products/price/write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /merchants/{merchant_id}/outlines
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - products/attributes/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant_id}/outlines/{outline_label}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - products/attributes/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant_id}/attribute-types/{type_label}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - products/attributes/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant_id}/attribute-types/{type_label}/attributes
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - products/attributes/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant_id}/attribute-types/{type_label}/attributes/{attribute_label}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - products/attributes/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant_id}/products/identifiers/{ean}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - lemur.prototype.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /products/identifiers/{ean}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - lemur.prototype.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /sales-channels
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - profile/sales-channels/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /merchants/{merchant-id}/stocks
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - products/stock/write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cross-border-movements/{merchant_id}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - zfs.icm-reports.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /reports/received-items/{merchant-id}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - partner-inbound-tracker.received.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /returned-items/{merchant-id}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - zfs/returned-item/read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /liquidated-items/{merchant-id}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - zfs/liquidated-item/read
+    token:
+      max-ttl: 3600
+    audit: none

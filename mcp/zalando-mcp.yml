@@ -1,0 +1,218 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+server:
+  name: zalando-zdirect
+  transport: http
+  note: 'No official Zalando MCP server found. Candidate tool list derived from zDirect
+    OpenAPI operations (operationId where present, else method+path slug). Auth: OAuth2
+    client credentials Bearer token.'
+tools:
+- name: get-partners-by-id-attribute-types
+  method: GET
+  path: /partners/{businessPartnerId}/attribute-types
+  description: List attribute type labels for a business partner
+  source_operation: openapi/zalando-article-requirements-openapi.yml#get-partners-by-id-attribute-types
+- name: get-partners-by-id-attribute-types-by-id
+  method: GET
+  path: /partners/{businessPartnerId}/attribute-types/{typeLabel}
+  description: Get an attribute type
+  source_operation: openapi/zalando-article-requirements-openapi.yml#get-partners-by-id-attribute-types-by-id
+- name: get-partners-by-id-attribute-types-by-id-attributes
+  method: GET
+  path: /partners/{businessPartnerId}/attribute-types/{typeLabel}/attributes
+  description: List attribute values for an attribute type
+  source_operation: openapi/zalando-article-requirements-openapi.yml#get-partners-by-id-attribute-types-by-id-attributes
+- name: get-partners-by-id-attribute-types-by-id-attributes-by-id
+  method: GET
+  path: /partners/{businessPartnerId}/attribute-types/{typeLabel}/attributes/{attributeLabel}
+  description: Get a single attribute value
+  source_operation: openapi/zalando-article-requirements-openapi.yml#get-partners-by-id-attribute-types-by-id-attributes-by-id
+- name: get-logistic-centers
+  method: GET
+  path: /merchants/{merchantId}/logistic-centers
+  description: Get a list of all of the logistic centers belonging to a merchant
+  source_operation: openapi/zalando-logistic-centers-openapi.yml#get-logistic-centers
+- name: get-logistic-center
+  method: GET
+  path: /merchants/{merchantId}/logistic-centers/{logisticCenterId}
+  description: Get information for a logistic center
+  source_operation: openapi/zalando-logistic-centers-openapi.yml#get-logistic-center
+- name: post-merchants-by-id-offer-blockers
+  method: POST
+  path: /merchants/{merchant-id}/offer-blockers
+  description: Create Offer Blockers.
+  source_operation: openapi/zalando-offer-blocking-openapi.yml#post-merchants-by-id-offer-blockers
+- name: get-merchants-by-id-offer-blockers
+  method: GET
+  path: /merchants/{merchant-id}/offer-blockers
+  description: List Offer Blockers.
+  source_operation: openapi/zalando-offer-blocking-openapi.yml#get-merchants-by-id-offer-blockers
+- name: delete-merchants-by-id-offer-blockers
+  method: DELETE
+  path: /merchants/{merchant-id}/offer-blockers
+  description: Delete Offer Blockers.
+  source_operation: openapi/zalando-offer-blocking-openapi.yml#delete-merchants-by-id-offer-blockers
+- name: get-merchants-by-id-offer-blockers-by-id
+  method: GET
+  path: /merchants/{merchant-id}/offer-blockers/{offer-blocker-id}
+  description: Get details about an Offer Blocker.
+  source_operation: openapi/zalando-offer-blocking-openapi.yml#get-merchants-by-id-offer-blockers-by-id
+- name: get-merchants-by-id-orders
+  method: GET
+  path: /merchants/{merchant-id}/orders
+  description: Retrieves the merchant orders. Allows filtering of the orders by creation
+    and modified date.
+  source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders
+- name: get-merchants-by-id-orders-by-id
+  method: GET
+  path: /merchants/{merchant-id}/orders/{order-id}
+  description: Retrieves an order by order-id.
+  source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders-by-id
+- name: patch-merchants-by-id-orders-by-id
+  method: PATCH
+  path: /merchants/{merchant-id}/orders/{order-id}
+  description: Partially updates the order.
+  source_operation: openapi/zalando-orders-openapi.yml#patch-merchants-by-id-orders-by-id
+- name: get-merchants-by-id-orders-by-id-transitions
+  method: GET
+  path: /merchants/{merchant-id}/orders/{order-id}/transitions
+  description: Retrieves all state transitions for a given order-id.
+  source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders-by-id-transitions
+- name: get-merchants-by-id-orders-by-id-shipments
+  method: GET
+  path: /merchants/{merchant-id}/orders/{order-id}/shipments
+  description: Get shipments for the order
+  source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders-by-id-shipments
+- name: post-merchants-by-id-orders-by-id-shipments
+  method: POST
+  path: /merchants/{merchant-id}/orders/{order-id}/shipments
+  description: Create a shipment.
+  source_operation: openapi/zalando-orders-openapi.yml#post-merchants-by-id-orders-by-id-shipments
+- name: get-merchants-by-id-orders-by-id-shipments-by-id
+  method: GET
+  path: /merchants/{merchant-id}/orders/{order-id}/shipments/{shipment-id}
+  description: Get an individual shipment
+  source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders-by-id-shipments-by-id
+- name: patch-merchants-by-id-orders-by-id-shipments-by-id
+  method: PATCH
+  path: /merchants/{merchant-id}/orders/{order-id}/shipments/{shipment-id}
+  description: Update a shipment
+  source_operation: openapi/zalando-orders-openapi.yml#patch-merchants-by-id-orders-by-id-shipments-by-id
+- name: get-merchants-by-id-orders-by-id-items
+  method: GET
+  path: /merchants/{merchant-id}/orders/{order-id}/items
+  description: Retrieves all order items for a given order-id.
+  source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders-by-id-items
+- name: get-merchants-by-id-orders-by-id-items-by-id
+  method: GET
+  path: /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}
+  description: Retrieves an order item with the given identifier.
+  source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders-by-id-items-by-id
+- name: get-merchants-by-id-orders-by-id-items-by-id-lines
+  method: GET
+  path: /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}/lines
+  description: Retrieves the Order Lines of an order item.
+  source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders-by-id-items-by-id-lines
+- name: get-merchants-by-id-orders-by-id-items-by-id-lines-by-id
+  method: GET
+  path: /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}/lines/{order-line-id}
+  description: Retrieves an Order Line with the given identifier.
+  source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders-by-id-items-by-id-lines-by-id
+- name: patch-merchants-by-id-orders-by-id-items-by-id-lines-by-id
+  method: PATCH
+  path: /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}/lines/{order-line-id}
+  description: Updates the Order Line status with the provided status.
+  source_operation: openapi/zalando-orders-openapi.yml#patch-merchants-by-id-orders-by-id-items-by-id-lines-by-id
+- name: get-merchants-by-id-orders-by-id-items-by-id-lines-by-id-transitions
+  method: GET
+  path: /merchants/{merchant-id}/orders/{order-id}/items/{order-item-id}/lines/{order-line-id}/transitions
+  description: Retrieves all transitions that happened at the Order Line level.
+  source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders-by-id-items-by-id-lines-by-id-transitions
+- name: get-merchants-by-id-orders-deletion-requests
+  method: GET
+  path: /merchants/{merchant-id}/orders-deletion-requests
+  description: Retrieves the order data belonging to customers who requested data
+    deletion.
+  source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders-deletion-requests
+- name: get-merchants-by-id-announced-returns
+  method: GET
+  path: /merchants/{merchant-id}/announced-returns
+  description: Retrieve the returns announced by customers via Zalando website.
+  source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-announced-returns
+- name: post-merchants-by-id-price-attempts
+  method: POST
+  path: /merchants/{merchant-id}/price-attempts
+  description: post-merchants-by-id-price-attempts
+  source_operation: openapi/zalando-price-reporting-openapi.yml#post-merchants-by-id-price-attempts
+- name: post-merchants-by-id-prices
+  method: POST
+  path: /merchants/{merchant-id}/prices
+  description: Sets the Prices for a list of Products.
+  source_operation: openapi/zalando-prices-openapi.yml#post-merchants-by-id-prices
+- name: get-merchants-by-id-outlines
+  method: GET
+  path: /merchants/{merchant_id}/outlines
+  description: List sellable outlines for the merchant
+  source_operation: openapi/zalando-product-attributes-openapi.yml#get-merchants-by-id-outlines
+- name: get-merchants-by-id-outlines-by-id
+  method: GET
+  path: /merchants/{merchant_id}/outlines/{outline_label}
+  description: Return the outline
+  source_operation: openapi/zalando-product-attributes-openapi.yml#get-merchants-by-id-outlines-by-id
+- name: get-merchants-by-id-attribute-types-by-id
+  method: GET
+  path: /merchants/{merchant_id}/attribute-types/{type_label}
+  description: Returns the attribute type
+  source_operation: openapi/zalando-product-attributes-openapi.yml#get-merchants-by-id-attribute-types-by-id
+- name: get-merchants-by-id-attribute-types-by-id-attributes
+  method: GET
+  path: /merchants/{merchant_id}/attribute-types/{type_label}/attributes
+  description: List all attributes of the given attribute type
+  source_operation: openapi/zalando-product-attributes-openapi.yml#get-merchants-by-id-attribute-types-by-id-attributes
+- name: get-merchants-by-id-attribute-types-by-id-attributes-by-id
+  method: GET
+  path: /merchants/{merchant_id}/attribute-types/{type_label}/attributes/{attribute_label}
+  description: Return a given attribute of the given attribute type
+  source_operation: openapi/zalando-product-attributes-openapi.yml#get-merchants-by-id-attribute-types-by-id-attributes-by-id
+- name: put-merchants-by-id-products-identifiers-by-id
+  method: PUT
+  path: /merchants/{merchant_id}/products/identifiers/{ean}
+  description: Creates a new simple already known by Zalando by registering the Merchant
+    identifiers in the Zalando system.
+  source_operation: openapi/zalando-products-openapi.yml#put-merchants-by-id-products-identifiers-by-id
+- name: get-products-identifiers-by-id
+  method: GET
+  path: /products/identifiers/{ean}
+  description: Look up the existing product details in Zalando platform
+  source_operation: openapi/zalando-products-openapi.yml#get-products-identifiers-by-id
+- name: get-sales-channels
+  method: GET
+  path: /sales-channels
+  description: List sales channels for the given merchant IDs
+  source_operation: openapi/zalando-sales-channels-openapi.yml#get-sales-channels
+- name: post-merchants-by-id-stocks
+  method: POST
+  path: /merchants/{merchant-id}/stocks
+  description: Update stock quantities for a set of articles.
+  source_operation: openapi/zalando-stocks-openapi.yml#post-merchants-by-id-stocks
+- name: get-cross-border-movements-by-id
+  method: GET
+  path: /cross-border-movements/{merchant_id}
+  description: Returns the cross-border movement report
+  source_operation: openapi/zalando-zfs-cross-border-movements-openapi.yml#get-cross-border-movements-by-id
+- name: get-reports-received-items-by-id
+  method: GET
+  path: /reports/received-items/{merchant-id}
+  description: Retrieve inbounded items
+  source_operation: openapi/zalando-zfs-stock-movements-openapi.yml#get-reports-received-items-by-id
+- name: get-returned-items-by-id
+  method: GET
+  path: /returned-items/{merchant-id}
+  description: Returns returned items
+  source_operation: openapi/zalando-zfs-stock-movements-openapi.yml#get-returned-items-by-id
+- name: get-liquidated-items-by-id
+  method: GET
+  path: /liquidated-items/{merchant-id}
+  description: Returns liquidation data
+  source_operation: openapi/zalando-zfs-stock-movements-openapi.yml#get-liquidated-items-by-id

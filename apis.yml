@@ -719,6 +719,8 @@ apis:
   - type: APIReference
     url: https://developers.merchants.zalando.com/docs/openapi/cross-border-movements.html
 common:
+- type: Overlay
+  url: overlays/zalando-article-requirements-overlay.yaml
 - type: DomainSecurity
   url: security/zalando-domain-security.yml
 - type: AgenticAccess

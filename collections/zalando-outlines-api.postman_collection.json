@@ -1,0 +1,360 @@
+{
+  "item": [
+    {
+      "id": "1eaf4f81-df40-4ea5-9670-e2884e3afa0a",
+      "name": "Outlines",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "729f8351-6a02-4a68-ad2e-92e42b3ba057",
+          "name": "List sellable outlines for the merchant\n",
+          "request": {
+            "name": "List sellable outlines for the merchant\n",
+            "description": {
+              "content": "Returns a list of product outlines that a given merchant can sell. The\nmerchant can use these outlines to create a new product.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant_id",
+                "outlines"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_id",
+                  "description": "(Required) Id of the merchant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                "key": "X-Flow-Id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "41a6d913-90a4-422d-8e00-f67912d2a0f6",
+              "name": "list of outlines",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "outlines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                    "key": "X-Flow-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"label\": \"shoe\",\n      \"tiers\": {\n        \"model\": {\n          \"mandatory_types\": [\n            \"mandatory_type_1\",\n            \"mandatory_type_2\"\n          ],\n          \"optional_types\": [\n            \"optional_type_1\",\n            \"optional_type_2\"\n          ],\n          \"restricted_attributes\": [\n            {\n              \"type\": {\n                \"label\": \"optional_type_1\",\n                \"version\": \"1.0.0\"\n              },\n              \"values\": [\n                \"optional_type_1_value_1\",\n                \"optional_type_1_value_2\"\n              ]\n            }\n          ],\n          \"validation_hints\": {\n            \"material.filling\": {\n              \"related_types\": null,\n              \"description\": {\n                \"en\": \"Please specify the material composition if the product has filling.\"\n              },\n              \"hint_type\": \"mandatory_if_applicable\"\n            }\n          }\n        },\n        \"config\": {\n          \"mandatory_types\": [\n            \"mandatory_type_1\",\n            \"mandatory_type_2\"\n          ],\n          \"optional_types\": [\n            \"optional_type_1\",\n            \"optional_type_2\"\n          ],\n          \"restricted_attributes\": [\n            {\n              \"type\": {\n                \"label\": \"optional_type_1\",\n                \"version\": \"1.0.0\"\n              },\n              \"values\": [\n                \"optional_type_1_value_1\",\n                \"optional_type_1_value_2\"\n              ]\n            }\n          ],\n          \"validation_hints\": {\n            \"material.filling\": {\n              \"related_types\": null,\n              \"description\": {\n                \"en\": \"Please specify the material composition if the product has filling.\"\n              },\n              \"hint_type\": \"mandatory_if_applicable\"\n            }\n          }\n        },\n        \"simple\": {\n          \"mandatory_types\": [\n            \"mandatory_type_1\",\n            \"mandatory_type_2\"\n          ],\n          \"optional_types\": [\n            \"optional_type_1\",\n            \"optional_type_2\"\n          ],\n          \"restricted_attributes\": [\n            {\n              \"type\": {\n                \"label\": \"optional_type_1\",\n                \"version\": \"1.0.0\"\n              },\n              \"values\": [\n                \"optional_type_1_value_1\",\n                \"optional_type_1_value_2\"\n              ]\n            }\n          ],\n          \"validation_hints\": {\n            \"material.filling\": {\n              \"related_types\": null,\n              \"description\": {\n                \"en\": \"Please specify the material composition if the product has filling.\"\n              },\n              \"hint_type\": \"mandatory_if_applicable\"\n            }\n          }\n        }\n      },\n      \"name\": {\n        \"en\": \"The name\",\n        \"de\": \"Der Name\",\n        \"es\": \"El nombre\"\n      },\n      \"description\": {\n        \"en\": \"Description\",\n        \"de\": \"Beschreibung\",\n        \"es\": \"Descripción\"\n      }\n    },\n    {\n      \"label\": \"shoe\",\n      \"tiers\": {\n        \"model\": {\n          \"mandatory_types\": [\n            \"mandatory_type_1\",\n            \"mandatory_type_2\"\n          ],\n          \"optional_types\": [\n            \"optional_type_1\",\n            \"optional_type_2\"\n          ],\n          \"restricted_attributes\": [\n            {\n              \"type\": {\n                \"label\": \"optional_type_1\",\n                \"version\": \"1.0.0\"\n              },\n              \"values\": [\n                \"optional_type_1_value_1\",\n                \"optional_type_1_value_2\"\n              ]\n            }\n          ],\n          \"validation_hints\": {\n            \"material.filling\": {\n              \"related_types\": null,\n              \"description\": {\n                \"en\": \"Please specify the material composition if the product has filling.\"\n              },\n              \"hint_type\": \"mandatory_if_applicable\"\n            }\n          }\n        },\n        \"config\": {\n          \"mandatory_types\": [\n            \"mandatory_type_1\",\n            \"mandatory_type_2\"\n          ],\n          \"optional_types\": [\n            \"optional_type_1\",\n            \"optional_type_2\"\n          ],\n          \"restricted_attributes\": [\n            {\n              \"type\": {\n                \"label\": \"optional_type_1\",\n                \"version\": \"1.0.0\"\n              },\n              \"values\": [\n                \"optional_type_1_value_1\",\n                \"optional_type_1_value_2\"\n              ]\n            }\n          ],\n          \"validation_hints\": {\n            \"material.filling\": {\n              \"related_types\": null,\n              \"description\": {\n                \"en\": \"Please specify the material composition if the product has filling.\"\n              },\n              \"hint_type\": \"mandatory_if_applicable\"\n            }\n          }\n        },\n        \"simple\": {\n          \"mandatory_types\": [\n            \"mandatory_type_1\",\n            \"mandatory_type_2\"\n          ],\n          \"optional_types\": [\n            \"optional_type_1\",\n            \"optional_type_2\"\n          ],\n          \"restricted_attributes\": [\n            {\n              \"type\": {\n                \"label\": \"optional_type_1\",\n                \"version\": \"1.0.0\"\n              },\n              \"values\": [\n                \"optional_type_1_value_1\",\n                \"optional_type_1_value_2\"\n              ]\n            }\n          ],\n          \"validation_hints\": {\n            \"material.filling\": {\n              \"related_types\": null,\n              \"description\": {\n                \"en\": \"Please specify the material composition if the product has filling.\"\n              },\n              \"hint_type\": \"mandatory_if_applicable\"\n            }\n          }\n        }\n      },\n      \"name\": {\n        \"en\": \"The name\",\n        \"de\": \"Der Name\",\n        \"es\": \"El nombre\"\n      },\n      \"description\": {\n        \"en\": \"Description\",\n        \"de\": \"Beschreibung\",\n        \"es\": \"Descripción\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c29c46d4-be1c-42a4-af2d-a3018ea70d62",
+              "name": "error occurred - see status code and problem object for more\ninformation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "outlines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                    "key": "X-Flow-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df92e0f6-4752-4f10-b0a9-dc09404bea96",
+          "name": "Return the outline",
+          "request": {
+            "name": "Return the outline",
+            "description": {
+              "content": "Provide the structure of the outline.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant_id",
+                "outlines",
+                ":outline_label"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_id",
+                  "description": "(Required) Id of the merchant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "outline_label",
+                  "description": "(Required) Label of the outline"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                "key": "X-Flow-Id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "78557469-befc-4a86-88d4-3e3e7142dc92",
+              "name": "list of outlines",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "outlines",
+                    ":outline_label"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "outline_label",
+                      "description": "(Required) Label of the outline"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                    "key": "X-Flow-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"label\": \"shoe\",\n      \"tiers\": {\n        \"model\": {\n          \"mandatory_types\": [\n            \"mandatory_type_1\",\n            \"mandatory_type_2\"\n          ],\n          \"optional_types\": [\n            \"optional_type_1\",\n            \"optional_type_2\"\n          ],\n          \"restricted_attributes\": [\n            {\n              \"type\": {\n                \"label\": \"optional_type_1\",\n                \"version\": \"1.0.0\"\n              },\n              \"values\": [\n                \"optional_type_1_value_1\",\n                \"optional_type_1_value_2\"\n              ]\n            }\n          ],\n          \"validation_hints\": {\n            \"material.filling\": {\n              \"related_types\": null,\n              \"description\": {\n                \"en\": \"Please specify the material composition if the product has filling.\"\n              },\n              \"hint_type\": \"mandatory_if_applicable\"\n            }\n          }\n        },\n        \"config\": {\n          \"mandatory_types\": [\n            \"mandatory_type_1\",\n            \"mandatory_type_2\"\n          ],\n          \"optional_types\": [\n            \"optional_type_1\",\n            \"optional_type_2\"\n          ],\n          \"restricted_attributes\": [\n            {\n              \"type\": {\n                \"label\": \"optional_type_1\",\n                \"version\": \"1.0.0\"\n              },\n              \"values\": [\n                \"optional_type_1_value_1\",\n                \"optional_type_1_value_2\"\n              ]\n            }\n          ],\n          \"validation_hints\": {\n            \"material.filling\": {\n              \"related_types\": null,\n              \"description\": {\n                \"en\": \"Please specify the material composition if the product has filling.\"\n              },\n              \"hint_type\": \"mandatory_if_applicable\"\n            }\n          }\n        },\n        \"simple\": {\n          \"mandatory_types\": [\n            \"mandatory_type_1\",\n            \"mandatory_type_2\"\n          ],\n          \"optional_types\": [\n            \"optional_type_1\",\n            \"optional_type_2\"\n          ],\n          \"restricted_attributes\": [\n            {\n              \"type\": {\n                \"label\": \"optional_type_1\",\n                \"version\": \"1.0.0\"\n              },\n              \"values\": [\n                \"optional_type_1_value_1\",\n                \"optional_type_1_value_2\"\n              ]\n            }\n          ],\n          \"validation_hints\": {\n            \"material.filling\": {\n              \"related_types\": null,\n              \"description\": {\n                \"en\": \"Please specify the material composition if the product has filling.\"\n              },\n              \"hint_type\": \"mandatory_if_applicable\"\n            }\n          }\n        }\n      },\n      \"name\": {\n        \"en\": \"The name\",\n        \"de\": \"Der Name\",\n        \"es\": \"El nombre\"\n      },\n      \"description\": {\n        \"en\": \"Description\",\n        \"de\": \"Beschreibung\",\n        \"es\": \"Descripción\"\n      }\n    },\n    {\n      \"label\": \"shoe\",\n      \"tiers\": {\n        \"model\": {\n          \"mandatory_types\": [\n            \"mandatory_type_1\",\n            \"mandatory_type_2\"\n          ],\n          \"optional_types\": [\n            \"optional_type_1\",\n            \"optional_type_2\"\n          ],\n          \"restricted_attributes\": [\n            {\n              \"type\": {\n                \"label\": \"optional_type_1\",\n                \"version\": \"1.0.0\"\n              },\n              \"values\": [\n                \"optional_type_1_value_1\",\n                \"optional_type_1_value_2\"\n              ]\n            }\n          ],\n          \"validation_hints\": {\n            \"material.filling\": {\n              \"related_types\": null,\n              \"description\": {\n                \"en\": \"Please specify the material composition if the product has filling.\"\n              },\n              \"hint_type\": \"mandatory_if_applicable\"\n            }\n          }\n        },\n        \"config\": {\n          \"mandatory_types\": [\n            \"mandatory_type_1\",\n            \"mandatory_type_2\"\n          ],\n          \"optional_types\": [\n            \"optional_type_1\",\n            \"optional_type_2\"\n          ],\n          \"restricted_attributes\": [\n            {\n              \"type\": {\n                \"label\": \"optional_type_1\",\n                \"version\": \"1.0.0\"\n              },\n              \"values\": [\n                \"optional_type_1_value_1\",\n                \"optional_type_1_value_2\"\n              ]\n            }\n          ],\n          \"validation_hints\": {\n            \"material.filling\": {\n              \"related_types\": null,\n              \"description\": {\n                \"en\": \"Please specify the material composition if the product has filling.\"\n              },\n              \"hint_type\": \"mandatory_if_applicable\"\n            }\n          }\n        },\n        \"simple\": {\n          \"mandatory_types\": [\n            \"mandatory_type_1\",\n            \"mandatory_type_2\"\n          ],\n          \"optional_types\": [\n            \"optional_type_1\",\n            \"optional_type_2\"\n          ],\n          \"restricted_attributes\": [\n            {\n              \"type\": {\n                \"label\": \"optional_type_1\",\n                \"version\": \"1.0.0\"\n              },\n              \"values\": [\n                \"optional_type_1_value_1\",\n                \"optional_type_1_value_2\"\n              ]\n            }\n          ],\n          \"validation_hints\": {\n            \"material.filling\": {\n              \"related_types\": null,\n              \"description\": {\n                \"en\": \"Please specify the material composition if the product has filling.\"\n              },\n              \"hint_type\": \"mandatory_if_applicable\"\n            }\n          }\n        }\n      },\n      \"name\": {\n        \"en\": \"The name\",\n        \"de\": \"Der Name\",\n        \"es\": \"El nombre\"\n      },\n      \"description\": {\n        \"en\": \"Description\",\n        \"de\": \"Beschreibung\",\n        \"es\": \"Descripción\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b905f014-5c2d-40bc-8ccd-1032202718ab",
+              "name": "error occurred - see status code and problem object for more\ninformation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "outlines",
+                    ":outline_label"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "outline_label",
+                      "description": "(Required) Label of the outline"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                    "key": "X-Flow-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f598ec47-d2ca-440d-ad76-2646c4a33d6c",
+    "name": "Article Requirements AnnouncedReturns Outlines API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

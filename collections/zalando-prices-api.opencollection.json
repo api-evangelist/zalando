@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns prices API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "prices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Sets the Prices for a list of Products.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/merchants/:merchant-id/prices",
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Merchant."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the Prices for a list of Products."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

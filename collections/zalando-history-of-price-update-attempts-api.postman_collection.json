@@ -1,0 +1,208 @@
+{
+  "item": [
+    {
+      "id": "76c7f0c1-1984-4b9d-a12c-095577c6b336",
+      "name": "History of Price Update Attempts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01876de3-1338-44cb-8ea6-0091f53931b0",
+          "name": "/merchants/:merchant-id/price-attempts",
+          "request": {
+            "name": "/merchants/:merchant-id/price-attempts",
+            "description": {},
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant-id",
+                "price-attempts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<byte>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchant-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sales_channels\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"eans\": [\n    \"<gtin13>\",\n    \"<gtin13>\"\n  ],\n  \"start\": \"<dateTime>\",\n  \"end\": \"<dateTime>\",\n  \"modified_since\": \"<dateTime>\",\n  \"modified_until\": \"<dateTime>\",\n  \"page_size\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cd7f1033-f237-44f8-b607-2032ee8adfd9",
+              "name": "A list of previous price update attempts per EAN & Sales Channel for a given merchant that match the query.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "price-attempts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sales_channels\": [\n    \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\",\n    \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\"\n  ],\n  \"eans\": [\n    \"5901234123457\",\n    \"5901234123457\"\n  ],\n  \"start\": \"2020-05-30T00:00:00.00Z\",\n  \"end\": \"2020-05-30T00:00:00.00Z\",\n  \"modified_since\": \"2020-05-30T00:00:00.00Z\",\n  \"modified_until\": \"2020-05-30T00:00:00.00Z\",\n  \"page_size\": 200\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"ean\": \"5901234123457\",\n      \"sales_channel_id\": \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\",\n      \"base_price\": {\n        \"regular_price\": {\n          \"value\": \"reference https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money not found in the OpenAPI spec\"\n        },\n        \"status\": \"SCHEDULED\",\n        \"status_transitions\": [\n          {\n            \"from\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"to\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timestamp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"messages\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"from\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"to\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timestamp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"messages\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"promotional_price\": {\n          \"value\": \"reference https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money not found in the OpenAPI spec\"\n        }\n      },\n      \"ignore_warnings\": false,\n      \"scheduled_prices\": [\n        {\n          \"regular_price\": {\n            \"value\": \"reference https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money not found in the OpenAPI spec\"\n          },\n          \"start\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"The time (in format defined by RFC 3339, section 5.6) when this price should become active.\\n\"\n          },\n          \"status\": \"SCHEDULED\",\n          \"status_transitions\": [\n            {\n              \"from\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"to\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"timestamp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"messages\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"from\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"to\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"timestamp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"messages\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"promotional_price\": {\n            \"value\": \"reference https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money not found in the OpenAPI spec\"\n          },\n          \"end\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"The time (in format defined by RFC 3339, section 5.6) when this price should become inactive.\\n\"\n          }\n        },\n        {\n          \"regular_price\": {\n            \"value\": \"reference https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money not found in the OpenAPI spec\"\n          },\n          \"start\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"The time (in format defined by RFC 3339, section 5.6) when this price should become active.\\n\"\n          },\n          \"status\": \"SCHEDULED\",\n          \"status_transitions\": [\n            {\n              \"from\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"to\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"timestamp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"messages\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"from\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"to\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"timestamp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"messages\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"promotional_price\": {\n            \"value\": \"reference https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money not found in the OpenAPI spec\"\n          },\n          \"end\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"The time (in format defined by RFC 3339, section 5.6) when this price should become inactive.\\n\"\n          }\n        }\n      ]\n    },\n    {\n      \"ean\": \"5901234123457\",\n      \"sales_channel_id\": \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\",\n      \"base_price\": {\n        \"regular_price\": {\n          \"value\": \"reference https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money not found in the OpenAPI spec\"\n        },\n        \"status\": \"SCHEDULED\",\n        \"status_transitions\": [\n          {\n            \"from\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"to\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timestamp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"messages\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"from\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"to\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"timestamp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"messages\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"promotional_price\": {\n          \"value\": \"reference https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money not found in the OpenAPI spec\"\n        }\n      },\n      \"ignore_warnings\": false,\n      \"scheduled_prices\": [\n        {\n          \"regular_price\": {\n            \"value\": \"reference https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money not found in the OpenAPI spec\"\n          },\n          \"start\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"The time (in format defined by RFC 3339, section 5.6) when this price should become active.\\n\"\n          },\n          \"status\": \"SCHEDULED\",\n          \"status_transitions\": [\n            {\n              \"from\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"to\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"timestamp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"messages\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"from\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"to\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"timestamp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"messages\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"promotional_price\": {\n            \"value\": \"reference https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money not found in the OpenAPI spec\"\n          },\n          \"end\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"The time (in format defined by RFC 3339, section 5.6) when this price should become inactive.\\n\"\n          }\n        },\n        {\n          \"regular_price\": {\n            \"value\": \"reference https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money not found in the OpenAPI spec\"\n          },\n          \"start\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"The time (in format defined by RFC 3339, section 5.6) when this price should become active.\\n\"\n          },\n          \"status\": \"SCHEDULED\",\n          \"status_transitions\": [\n            {\n              \"from\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"to\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"timestamp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"messages\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"from\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"to\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"timestamp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"messages\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"promotional_price\": {\n            \"value\": \"reference https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money not found in the OpenAPI spec\"\n          },\n          \"end\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"The time (in format defined by RFC 3339, section 5.6) when this price should become inactive.\\n\"\n          }\n        }\n      ]\n    }\n  ],\n  \"cursors\": {\n    \"next\": \"https://api-sandbox.merchants.com/merchants/e2ad171a-6b52-4db0-8ae3-54709720458b/price-attempts?cursor=ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9\"\n  },\n  \"query\": {\n    \"sales_channels\": [\n      \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\",\n      \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\"\n    ],\n    \"eans\": [\n      \"5901234123457\",\n      \"5901234123457\"\n    ],\n    \"start\": \"2020-05-30T00:00:00.00Z\",\n    \"end\": \"2020-05-30T00:00:00.00Z\",\n    \"modified_since\": \"2020-05-30T00:00:00.00Z\",\n    \"modified_until\": \"2020-05-30T00:00:00.00Z\",\n    \"page_size\": 200\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7cd6264d-5066-42be-8352-cac6e2b29e02",
+              "name": "Error occurred. See status code and problem object for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "price-attempts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sales_channels\": [\n    \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\",\n    \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\"\n  ],\n  \"eans\": [\n    \"5901234123457\",\n    \"5901234123457\"\n  ],\n  \"start\": \"2020-05-30T00:00:00.00Z\",\n  \"end\": \"2020-05-30T00:00:00.00Z\",\n  \"modified_since\": \"2020-05-30T00:00:00.00Z\",\n  \"modified_until\": \"2020-05-30T00:00:00.00Z\",\n  \"page_size\": 200\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5134dd31-cad8-4156-b4ae-fffe9633547b",
+    "name": "Article Requirements AnnouncedReturns History of Price Update Attempts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

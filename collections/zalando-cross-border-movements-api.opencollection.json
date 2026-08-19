@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns Cross Border Movements API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cross Border Movements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns the cross-border movement report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/cross-border-movements/:merchant_id",
+            "params": [
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "path",
+                "description": "The Zalando specific UUID representing a merchant."
+              },
+              {
+                "name": "from",
+                "value": "2020-04-01",
+                "type": "query",
+                "description": "The start date for the query i.e. when movements were reported as arrived at the destination."
+              },
+              {
+                "name": "to",
+                "value": "2020-04-10",
+                "type": "query",
+                "description": "The end date (inclusive) for the query i.e. when movements were reported as arrived at the destination."
+              },
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "query",
+                "description": "The warehouse location id to query i.e both source and destination locations."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Client suggested limit to restrict the number of movements per buffer query on a page.\n"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor is an indication of the first item tracking to include in the response.\n"
+              }
+            ]
+          },
+          "docs": "Returns all the cross border movements for the specified merchant for the specified report date range."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

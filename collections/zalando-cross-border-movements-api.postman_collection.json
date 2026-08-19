@@ -1,0 +1,236 @@
+{
+  "item": [
+    {
+      "id": "7bb8d367-2b73-426c-8a31-a53401d50ff4",
+      "name": "Cross Border Movements",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e63738ee-33e7-4e8c-a963-9902f3daa3df",
+          "name": "Returns the cross-border movement report",
+          "request": {
+            "name": "Returns the cross-border movement report",
+            "description": {
+              "content": "Returns all the cross border movements for the specified merchant for the specified report date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cross-border-movements",
+                ":merchant_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>",
+                  "description": "(Required) The start date for the query i.e. when movements were reported as arrived at the destination."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>",
+                  "description": "(Required) The end date (inclusive) for the query i.e. when movements were reported as arrived at the destination."
+                },
+                {
+                  "disabled": false,
+                  "key": "location_id",
+                  "value": "<uuid>",
+                  "description": "The warehouse location id to query i.e both source and destination locations."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Client suggested limit to restrict the number of movements per buffer query on a page.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The cursor is an indication of the first item tracking to include in the response.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchant_id",
+                  "description": "(Required) The Zalando specific UUID representing a merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "7b3787aa-28f5-4278-a985-2897d31925a1",
+              "name": "Returns a list of all the cross-border movements in the requested date range.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-border-movements",
+                    ":merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "2020-04-01"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2020-04-10"
+                    },
+                    {
+                      "key": "location_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant_id",
+                      "description": "(Required) The Zalando specific UUID representing a merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"merchant_id\": \"f9a74b81-78f1-e2e5-c16e-2b7722b69932\",\n  \"items\": [\n    {\n      \"movement_id\": \"6c858356-0ef3-5db3-586c-dbb8a5068ddf\",\n      \"report_date\": \"2019-01-08\",\n      \"transaction_date\": \"2019-01-08\",\n      \"product_sku\": \"string\",\n      \"ean\": \"8187369343460\",\n      \"destination_stock_location\": {\n        \"location_id\": \"db4fc6b5-9b9f-8bb6-b642-d5d4d981fd9d\",\n        \"name\": \"Erfurt\",\n        \"country_code\": \"DE\",\n        \"inbound_active\": true,\n        \"outbound_active\": true\n      },\n      \"source_stock_location\": {\n        \"location_id\": \"53ee36c1-d2aa-3fe7-60d1-2c779a65ee07\",\n        \"name\": \"Erfurt\",\n        \"country_code\": \"DE\",\n        \"inbound_active\": true,\n        \"outbound_active\": true\n      },\n      \"movement_type\": \"string\",\n      \"merchant_sku\": \"string\",\n      \"order_id\": \"string\"\n    },\n    {\n      \"movement_id\": \"25b56805-0b4c-97f2-aa4c-3a0a2eb23aa5\",\n      \"report_date\": \"2019-01-08\",\n      \"transaction_date\": \"2019-01-08\",\n      \"product_sku\": \"string\",\n      \"ean\": \"0283746773786\",\n      \"destination_stock_location\": {\n        \"location_id\": \"deb2af99-c35f-dfb2-f410-8e04a3d68529\",\n        \"name\": \"Erfurt\",\n        \"country_code\": \"DE\",\n        \"inbound_active\": true,\n        \"outbound_active\": true\n      },\n      \"source_stock_location\": {\n        \"location_id\": \"978c8b11-7a49-8fbf-19f8-1fa2b4e0eca1\",\n        \"name\": \"Erfurt\",\n        \"country_code\": \"DE\",\n        \"inbound_active\": true,\n        \"outbound_active\": true\n      },\n      \"movement_type\": \"string\",\n      \"merchant_sku\": \"string\",\n      \"order_id\": \"string\"\n    }\n  ],\n  \"next\": \"string\",\n  \"query\": {\n    \"from\": \"2025-08-21\",\n    \"to\": \"1982-03-02\",\n    \"cursor\": \"string\",\n    \"limit\": 1000\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f84fee6-1c51-46de-81e2-e6636a8296c2",
+              "name": "An error has occurred. Please check the status code and review the problem object for additional details. For information about the error codes, see: https://opensource.zalando.com/restful-api-guidelines/#client-side-error-codes\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-border-movements",
+                    ":merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "2020-04-01"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2020-04-10"
+                    },
+                    {
+                      "key": "location_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant_id",
+                      "description": "(Required) The Zalando specific UUID representing a merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "46b2d29d-947b-4113-a78d-aab8132c956b",
+    "name": "Article Requirements AnnouncedReturns Cross Border Movements API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

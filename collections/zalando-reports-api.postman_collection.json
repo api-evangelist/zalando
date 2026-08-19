@@ -1,0 +1,253 @@
+{
+  "item": [
+    {
+      "id": "c88058a0-aa33-47bf-9b16-b897c26adc79",
+      "name": "Reports",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "beac95e9-c7de-4598-9eb8-2fdc6ec8062b",
+          "name": "Retrieve inbounded items",
+          "request": {
+            "name": "Retrieve inbounded items",
+            "description": {
+              "content": "Returns all items inbounded at Zalando warehouses for specific `merchant-id` and `zalando_advice_ids`. Endpoint has no 100 days time limitation, but to not overload the client, it provides cursor based pagination. The cursor is a string that is returned in the response and can be used to fetch the next page of results. Please note that if `from` and `to` parameters are not provided the API will return the data for the last 100 days.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "received-items",
+                ":merchant-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "zalando_advice_ids",
+                  "value": "<string>",
+                  "description": "Zalando advice ids to filter inbounded items by. Returns items for all advice ids if not provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "zalando_advice_ids",
+                  "value": "<string>",
+                  "description": "Zalando advice ids to filter inbounded items by. Returns items for all advice ids if not provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<dateTime>",
+                  "description": "Start timestamp. Default is now minus 100 days."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<dateTime>",
+                  "description": "End timestamp. Default is now."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Cursor to paginate through results"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100000",
+                  "description": "Number of inbounded items to fetch per page. Maximum is 200000."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchant-id",
+                  "description": "(Required) Merchant ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "771640fb-997e-4e4c-b651-b2cc367c2aed",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "received-items",
+                    ":merchant-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "zalando_advice_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "zalando_advice_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "2017-07-21T17:32:28Z"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2017-07-21T17:32:28Z"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "MjAxNy0wNy0yMVQxNzozMjoyOFoK"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) Merchant ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"received_items\": [\n    {\n      \"zalando_advice_id\": \"<string>\",\n      \"ean\": \"2319944546092\",\n      \"quality_label\": \"00014D02W8V\",\n      \"location_id\": \"29809185-6a98-4691-a15b-e8d16839b6e8\",\n      \"received_timestamp\": \"2017-07-21T17:32:28Z\",\n      \"merchant_article_id\": \"string\",\n      \"merchant_item_id\": \"string\",\n      \"merchant_b2b_reference\": \"reference\"\n    },\n    {\n      \"zalando_advice_id\": \"<string>\",\n      \"ean\": \"7022860241462\",\n      \"quality_label\": \"00014D02W8V\",\n      \"location_id\": \"29809185-6a98-4691-a15b-e8d16839b6e8\",\n      \"received_timestamp\": \"2017-07-21T17:32:28Z\",\n      \"merchant_article_id\": \"string\",\n      \"merchant_item_id\": \"string\",\n      \"merchant_b2b_reference\": \"reference\"\n    }\n  ],\n  \"next\": \"MjAxNy0wNy0yMVQxNzozMjoyOFoK\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ac6f32e-39e3-4e08-907e-80f808aeb2ea",
+              "name": "A specific error occurred - see status code for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "received-items",
+                    ":merchant-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "zalando_advice_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "zalando_advice_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "2017-07-21T17:32:28Z"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2017-07-21T17:32:28Z"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "MjAxNy0wNy0yMVQxNzozMjoyOFoK"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) Merchant ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cc1bee38-2ddb-46ea-a327-5e3fda382373",
+    "name": "Article Requirements AnnouncedReturns Reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

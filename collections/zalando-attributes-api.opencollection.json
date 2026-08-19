@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns Attributes API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Attributes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all attributes of the given attribute type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant_id/attribute-types/:type_label/attributes",
+            "headers": [
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the merchant"
+              },
+              {
+                "name": "type_label",
+                "value": "",
+                "type": "path",
+                "description": "Label of the attribute type"
+              }
+            ]
+          },
+          "docs": "List all attributes of the given attribute type"
+        },
+        {
+          "info": {
+            "name": "Return a given attribute of the given attribute type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant_id/attribute-types/:type_label/attributes/:attribute_label",
+            "headers": [
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the merchant"
+              },
+              {
+                "name": "type_label",
+                "value": "",
+                "type": "path",
+                "description": "Label of the attribute type"
+              },
+              {
+                "name": "attribute_label",
+                "value": "",
+                "type": "path",
+                "description": "Label of the attribute"
+              }
+            ]
+          },
+          "docs": "Return a given attribute of the given attribute type"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

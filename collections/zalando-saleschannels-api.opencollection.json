@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns SalesChannels API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SalesChannels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List sales channels for the given merchant IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/sales-channels",
+            "headers": [
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list of merchants' ids"
+              },
+              {
+                "name": "zalando_only",
+                "value": "",
+                "type": "query",
+                "description": "When set to true - will return a subset of merchant's sales channels that have Zalando as a retailer. Defaults to false."
+              }
+            ]
+          },
+          "docs": "Retrieves all the sales channels in which merchant has any contract"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,739 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns Orders API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves the merchant orders. Allows filtering of the orders by creation and modified date.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated field names to be included. Allowed fields: order_transitions, order_items, order_lines, order_lines.order_line_transitions, shipments"
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Pagination page number."
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of results (per page)."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sorting fields separated by comma. Default order is Ascending (ASC), minus(-) should be used in front of field name for Descending (DESC) order."
+              },
+              {
+                "name": "sales_channel_id",
+                "value": "",
+                "type": "query",
+                "description": "Query filter specifying a sales channel."
+              },
+              {
+                "name": "created_after",
+                "value": "2019-07-01T06:55:47Z",
+                "type": "query",
+                "description": "All orders created after the given timestamp (exclusive). The timestamp is in the ISO 8601 format. The Date and time are separated by the \"T\" literal, and the Time and Timezone are separated by the \"+\" literal. For UTC time, you should simply use \"Z\" as the suffix, for other cases use URL encoding for the \"+\" literal."
+              },
+              {
+                "name": "created_before",
+                "value": "2019-07-01T07:55:47Z",
+                "type": "query",
+                "description": "All orders created before the given timestamp (exclusive). The timestamp is in the ISO 8601 format. The Date and time are separated by the \"T\" literal, and the Time and Timezone are separated by the \"+\" literal. For UTC time, you should simply use \"Z\" as the suffix, for other cases use URL encoding for the \"+\" literal."
+              },
+              {
+                "name": "last_updated_after",
+                "value": "2017-01-01T09:11:48%2B01:00",
+                "type": "query",
+                "description": "All orders updated after the given timestamp (exclusive). The timestamp is in the ISO 8601 format. The Date and time are separated by the \"T\" literal, and the Time and Timezone are separated by the \"+\" literal. For UTC time, you should simply use \"Z\" as the suffix, for other cases use URL encoding for the \"+\" literal."
+              },
+              {
+                "name": "last_updated_before",
+                "value": "2017-01-01T10:11:48%2B01:00",
+                "type": "query",
+                "description": "All orders updated before the given timestamp (exclusive). The timestamp is in the ISO 8601 format. The Date and time are separated by the \"T\" literal, and the Time and Timezone are separated by the \"+\" literal. For UTC time, you should simply use \"Z\" as the suffix, for other cases use URL encoding for the \"+\" literal."
+              },
+              {
+                "name": "order_status",
+                "value": "",
+                "type": "query",
+                "description": "All orders of a given status (possible values are defined in OrderStatus definition)."
+              },
+              {
+                "name": "order_number",
+                "value": "",
+                "type": "query",
+                "description": "Exact Zalando order number to filter against."
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query",
+                "description": "All orders sold in the locale."
+              },
+              {
+                "name": "exported",
+                "value": "",
+                "type": "query",
+                "description": "Filter orders that have already been exported or not."
+              },
+              {
+                "name": "order_type",
+                "value": "",
+                "type": "query",
+                "description": "All orders of a given type (possible values are: PartnerFulfilled, ZalandoFulfilled)."
+              }
+            ]
+          },
+          "docs": "Retrieves all the orders for the merchant that match the query parameters given. The retention period for orders data is 1 year. All the orders older than this period are not accessible in this endpoint. The response displays all the relevant information for each order."
+        },
+        {
+          "info": {
+            "name": "Retrieves an order by order-id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated field names to be included. Allowed fields: order_transitions, order_items, order_lines, order_lines.order_line_transitions, shipments"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the order to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves all order information for a given order-id."
+        },
+        {
+          "info": {
+            "name": "Partially updates the order.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the order to patch."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Used to update certain order fields like merchant order-id and tracking information. The retention period for orders data is 1 year. All the orders older than this period are not available for updates in this endpoint."
+        },
+        {
+          "info": {
+            "name": "Retrieves all state transitions for a given order-id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/transitions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order for which transitions are being requested."
+              }
+            ]
+          },
+          "docs": "Retrieves transitions related to the order including the original state, the final state, the date at which the state transition happened and the user who modified it."
+        },
+        {
+          "info": {
+            "name": "Get shipments for the order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/shipments",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order on which operations are being requested on."
+              }
+            ]
+          },
+          "docs": "Retrieves all shipments associated with the order. Each order has at least one shipment (the default), which includes all of its order lines"
+        },
+        {
+          "info": {
+            "name": "Create a shipment.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/shipments",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order on which operations are being requested on."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a shipment object in preparation for shipping the order. A shipment defines the specific order lines to be shipped together and plays a central role in the fulfillment process. If any order line is already assigned to another shipment, it will be automatically removed from that shipment and assigned to the current one"
+        },
+        {
+          "info": {
+            "name": "Get an individual shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/shipments/:shipment-id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order on which operations are being requested on."
+              },
+              {
+                "name": "shipment-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the shipment which is being requested."
+              }
+            ]
+          },
+          "docs": "Retrieves a specific shipment object"
+        },
+        {
+          "info": {
+            "name": "Update a shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/shipments/:shipment-id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order to which the shipment belongs."
+              },
+              {
+                "name": "shipment-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the shipment for which updates are being requested."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a shipment object in preparation for shipping the order. A shipment represents the specific order lines that will be shipped together and plays a central role in the fulfillment process. All shipment fields can be updated except the order line IDs, it is not allowed to add or remove order lines from an existing shipment"
+        },
+        {
+          "info": {
+            "name": "Retrieves all order items for a given order-id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/items",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated field names to be included. Allowed fields: order_lines, order_lines.order_line_transitions"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the order for which the items are being requested."
+              }
+            ]
+          },
+          "docs": "Retrieves every order item for the given order-id."
+        },
+        {
+          "info": {
+            "name": "Retrieves an order item with the given identifier.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/items/:order-item-id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated field names to be included. Allowed fields: order_lines, order_lines.order_line_transitions"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order for which the items are being requested."
+              },
+              {
+                "name": "order-item-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order item to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves an order item with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Retrieves the Order Lines of an order item.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/items/:order-item-id/lines",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated field names to be included. Allowed fields: order_lines.order_line_transitions"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order for which the items are being requested."
+              },
+              {
+                "name": "order-item-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order item to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves the Order Lines of an order item."
+        },
+        {
+          "info": {
+            "name": "Retrieves an Order Line with the given identifier.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/items/:order-item-id/lines/:order-line-id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated field names to be included. Allowed fields: order_lines.order_line_transitions"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order to handle."
+              },
+              {
+                "name": "order-item-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order item to handle."
+              },
+              {
+                "name": "order-line-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Order Line to handle."
+              }
+            ]
+          },
+          "docs": "Retrieves an Order Line with the given identifier."
+        },
+        {
+          "info": {
+            "name": "Updates the Order Line status with the provided status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/items/:order-item-id/lines/:order-line-id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order to handle."
+              },
+              {
+                "name": "order-item-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order item to handle."
+              },
+              {
+                "name": "order-line-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Order Line to handle."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Attempts an update of the given Order Line regarding its state."
+        },
+        {
+          "info": {
+            "name": "Retrieves all transitions that happened at the Order Line level.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/items/:order-item-id/lines/:order-line-id/transitions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order for which the items are being requested."
+              },
+              {
+                "name": "order-item-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order item to retrieve."
+              },
+              {
+                "name": "order-line-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order item that has lines we want to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves all transitions that happened at the Order Line level."
+        },
+        {
+          "info": {
+            "name": "Retrieves the order data belonging to customers who requested data deletion.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders-deletion-requests",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "sales_channel_id",
+                "value": "",
+                "type": "query",
+                "description": "Query filter specifying a sales channel."
+              },
+              {
+                "name": "cursor",
+                "value": "Y3Vyc29yCg",
+                "type": "query",
+                "description": "Query filter specifying an opaque pointer to a page."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of results (per page)."
+              }
+            ]
+          },
+          "docs": "Retrieves paginated orders data of the customers who requested for their data to be deleted in last 30 days. This is necessary in order to be GDPR compliant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

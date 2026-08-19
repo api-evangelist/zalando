@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns Discovery API API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Discovery API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Look up the existing product details in Zalando platform\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/products/identifiers/:ean",
+            "params": [
+              {
+                "name": "ean",
+                "value": "",
+                "type": "path",
+                "description": "The International Article Number or also known as European Article Number."
+              }
+            ]
+          },
+          "docs": "Look up the existing product details in Zalando platform\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

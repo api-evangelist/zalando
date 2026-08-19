@@ -1,0 +1,208 @@
+{
+  "item": [
+    {
+      "id": "9f0652ee-7f92-4254-98cb-687741416fe4",
+      "name": "Discovery API",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f19d7596-ed32-4c52-97fe-8b00f3219bda",
+          "name": "Look up the existing product details in Zalando platform\n",
+          "request": {
+            "name": "Look up the existing product details in Zalando platform\n",
+            "description": {},
+            "url": {
+              "path": [
+                "products",
+                "identifiers",
+                ":ean"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<gtin13>",
+                  "key": "ean",
+                  "description": "(Required) The International Article Number or also known as European Article Number."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json;charset=utf-8"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "d72734f0-9580-4318-a3ac-493348c4ac01",
+              "name": "Successfully looked up product detail information\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "identifiers",
+                    ":ean"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<gtin13>",
+                      "key": "ean",
+                      "description": "(Required) The International Article Number or also known as European Article Number."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=utf-8"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=utf-8"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"ean\": \"9780679762881\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24ec8387-66ad-4103-a971-0e80220536ba",
+              "name": "The request is semantically correct, but it cannot be processed due to business reasons. e.g. A product with same id was already submitted. Please refer to the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "identifiers",
+                    ":ean"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<gtin13>",
+                      "key": "ean",
+                      "description": "(Required) The International Article Number or also known as European Article Number."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://zalando.github.io/problem/constraint-violation\",\n  \"title\": \"Service Unavailable\",\n  \"status\": 503,\n  \"detail\": \"Connection to database timed out\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5826f402-aeec-453d-a591-d0403589e9c1",
+              "name": "Error occurred - see status code and problem object for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "identifiers",
+                    ":ean"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<gtin13>",
+                      "key": "ean",
+                      "description": "(Required) The International Article Number or also known as European Article Number."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://zalando.github.io/problem/constraint-violation\",\n  \"title\": \"Service Unavailable\",\n  \"status\": 503,\n  \"detail\": \"Connection to database timed out\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "06e85a87-e752-4817-b7e4-f3bd1f415160",
+    "name": "Article Requirements AnnouncedReturns Discovery API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

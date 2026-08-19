@@ -1,0 +1,192 @@
+{
+  "item": [
+    {
+      "id": "8119bae6-1cf4-439d-8eab-6548216732d4",
+      "name": "prices",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "aac85c25-fc3d-429f-9604-f58943f78fa4",
+          "name": "Sets the Prices for a list of Products.",
+          "request": {
+            "name": "Sets the Prices for a list of Products.",
+            "description": {},
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant-id",
+                "prices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchant-id",
+                  "description": "(Required) The ID of the Merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_prices\": [\n    {\n      \"ean\": \"<gtin13>\",\n      \"sales_channel_id\": \"<uuid>\",\n      \"regular_price\": {\n        \"amount\": \"<decimal>\",\n        \"currency\": \"<iso-4217>\"\n      },\n      \"promotional_price\": {\n        \"amount\": \"<decimal>\",\n        \"currency\": \"<iso-4217>\"\n      },\n      \"scheduled_prices\": [\n        {\n          \"regular_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Regular, non-promotional price, described as decimal number.\"\n          },\n          \"start_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.\\n\"\n          },\n          \"promotional_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Promotional price, described as decimal number. Must be less than regular price.\"\n          },\n          \"end_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should end.\\nIf this field is not provided, then the scheduled price will remain active until it is replaced by another price update or overwritten by another schedule.\\n\"\n          }\n        },\n        {\n          \"regular_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Regular, non-promotional price, described as decimal number.\"\n          },\n          \"start_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.\\n\"\n          },\n          \"promotional_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Promotional price, described as decimal number. Must be less than regular price.\"\n          },\n          \"end_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should end.\\nIf this field is not provided, then the scheduled price will remain active until it is replaced by another price update or overwritten by another schedule.\\n\"\n          }\n        }\n      ]\n    },\n    {\n      \"ean\": \"<gtin13>\",\n      \"sales_channel_id\": \"<uuid>\",\n      \"regular_price\": {\n        \"amount\": \"<decimal>\",\n        \"currency\": \"<iso-4217>\"\n      },\n      \"promotional_price\": {\n        \"amount\": \"<decimal>\",\n        \"currency\": \"<iso-4217>\"\n      },\n      \"scheduled_prices\": [\n        {\n          \"regular_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Regular, non-promotional price, described as decimal number.\"\n          },\n          \"start_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.\\n\"\n          },\n          \"promotional_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Promotional price, described as decimal number. Must be less than regular price.\"\n          },\n          \"end_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should end.\\nIf this field is not provided, then the scheduled price will remain active until it is replaced by another price update or overwritten by another schedule.\\n\"\n          }\n        },\n        {\n          \"regular_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Regular, non-promotional price, described as decimal number.\"\n          },\n          \"start_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.\\n\"\n          },\n          \"promotional_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Promotional price, described as decimal number. Must be less than regular price.\"\n          },\n          \"end_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should end.\\nIf this field is not provided, then the scheduled price will remain active until it is replaced by another price update or overwritten by another schedule.\\n\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5d55f337-ead3-4ebf-82e1-615a7ac5375a",
+              "name": "The requested Product Price changes have been processed. Please consult the response body for status information.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "prices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) The ID of the Merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"product_prices\": [\n    {\n      \"ean\": \"5901234123457\",\n      \"sales_channel_id\": \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\",\n      \"regular_price\": {\n        \"amount\": 89.95,\n        \"currency\": \"EUR\"\n      },\n      \"promotional_price\": {\n        \"amount\": 89.95,\n        \"currency\": \"EUR\"\n      },\n      \"scheduled_prices\": [\n        {\n          \"regular_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Regular, non-promotional price, described as decimal number.\"\n          },\n          \"start_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.\\n\"\n          },\n          \"promotional_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Promotional price, described as decimal number. Must be less than regular price.\"\n          },\n          \"end_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should end.\\nIf this field is not provided, then the scheduled price will remain active until it is replaced by another price update or overwritten by another schedule.\\n\"\n          }\n        },\n        {\n          \"regular_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Regular, non-promotional price, described as decimal number.\"\n          },\n          \"start_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.\\n\"\n          },\n          \"promotional_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Promotional price, described as decimal number. Must be less than regular price.\"\n          },\n          \"end_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should end.\\nIf this field is not provided, then the scheduled price will remain active until it is replaced by another price update or overwritten by another schedule.\\n\"\n          }\n        }\n      ]\n    },\n    {\n      \"ean\": \"5901234123457\",\n      \"sales_channel_id\": \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\",\n      \"regular_price\": {\n        \"amount\": 89.95,\n        \"currency\": \"EUR\"\n      },\n      \"promotional_price\": {\n        \"amount\": 89.95,\n        \"currency\": \"EUR\"\n      },\n      \"scheduled_prices\": [\n        {\n          \"regular_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Regular, non-promotional price, described as decimal number.\"\n          },\n          \"start_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.\\n\"\n          },\n          \"promotional_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Promotional price, described as decimal number. Must be less than regular price.\"\n          },\n          \"end_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should end.\\nIf this field is not provided, then the scheduled price will remain active until it is replaced by another price update or overwritten by another schedule.\\n\"\n          }\n        },\n        {\n          \"regular_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Regular, non-promotional price, described as decimal number.\"\n          },\n          \"start_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.\\n\"\n          },\n          \"promotional_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Promotional price, described as decimal number. Must be less than regular price.\"\n          },\n          \"end_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should end.\\nIf this field is not provided, then the scheduled price will remain active until it is replaced by another price update or overwritten by another schedule.\\n\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Multi-Status (WebDAV) (RFC 4918)",
+              "code": 207,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"product_price\": {\n        \"ean\": \"5901234123457\",\n        \"sales_channel_id\": \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\",\n        \"regular_price\": {\n          \"amount\": 89.95,\n          \"currency\": \"EUR\"\n        },\n        \"ignore_warnings\": false,\n        \"promotional_price\": {\n          \"amount\": 89.95,\n          \"currency\": \"EUR\"\n        },\n        \"scheduled_prices\": [\n          {\n            \"scheduled_price\": {\n              \"regular_price\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"start_time\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"promotional_price\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"end_time\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"status\": \"string\",\n            \"code\": 5927,\n            \"description\": \"string\"\n          },\n          {\n            \"scheduled_price\": {\n              \"regular_price\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"start_time\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"promotional_price\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"end_time\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"status\": \"string\",\n            \"code\": 8056,\n            \"description\": \"string\"\n          }\n        ]\n      },\n      \"status\": \"string\",\n      \"code\": 3136,\n      \"description\": \"string\"\n    },\n    {\n      \"product_price\": {\n        \"ean\": \"5901234123457\",\n        \"sales_channel_id\": \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\",\n        \"regular_price\": {\n          \"amount\": 89.95,\n          \"currency\": \"EUR\"\n        },\n        \"ignore_warnings\": false,\n        \"promotional_price\": {\n          \"amount\": 89.95,\n          \"currency\": \"EUR\"\n        },\n        \"scheduled_prices\": [\n          {\n            \"scheduled_price\": {\n              \"regular_price\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"start_time\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"promotional_price\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"end_time\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"status\": \"string\",\n            \"code\": 1067,\n            \"description\": \"string\"\n          },\n          {\n            \"scheduled_price\": {\n              \"regular_price\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"start_time\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"promotional_price\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"end_time\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"status\": \"string\",\n            \"code\": 2840,\n            \"description\": \"string\"\n          }\n        ]\n      },\n      \"status\": \"string\",\n      \"code\": 3721,\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b7f88c7-885d-433a-b83e-f2e0a3d76c58",
+              "name": "Error occurred. See status code and problem object for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "prices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) The ID of the Merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"product_prices\": [\n    {\n      \"ean\": \"5901234123457\",\n      \"sales_channel_id\": \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\",\n      \"regular_price\": {\n        \"amount\": 89.95,\n        \"currency\": \"EUR\"\n      },\n      \"promotional_price\": {\n        \"amount\": 89.95,\n        \"currency\": \"EUR\"\n      },\n      \"scheduled_prices\": [\n        {\n          \"regular_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Regular, non-promotional price, described as decimal number.\"\n          },\n          \"start_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.\\n\"\n          },\n          \"promotional_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Promotional price, described as decimal number. Must be less than regular price.\"\n          },\n          \"end_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should end.\\nIf this field is not provided, then the scheduled price will remain active until it is replaced by another price update or overwritten by another schedule.\\n\"\n          }\n        },\n        {\n          \"regular_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Regular, non-promotional price, described as decimal number.\"\n          },\n          \"start_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.\\n\"\n          },\n          \"promotional_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Promotional price, described as decimal number. Must be less than regular price.\"\n          },\n          \"end_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should end.\\nIf this field is not provided, then the scheduled price will remain active until it is replaced by another price update or overwritten by another schedule.\\n\"\n          }\n        }\n      ]\n    },\n    {\n      \"ean\": \"5901234123457\",\n      \"sales_channel_id\": \"fc0aba96-7802-11e5-9e27-10ddb1ee7671\",\n      \"regular_price\": {\n        \"amount\": 89.95,\n        \"currency\": \"EUR\"\n      },\n      \"promotional_price\": {\n        \"amount\": 89.95,\n        \"currency\": \"EUR\"\n      },\n      \"scheduled_prices\": [\n        {\n          \"regular_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Regular, non-promotional price, described as decimal number.\"\n          },\n          \"start_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.\\n\"\n          },\n          \"promotional_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Promotional price, described as decimal number. Must be less than regular price.\"\n          },\n          \"end_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should end.\\nIf this field is not provided, then the scheduled price will remain active until it is replaced by another price update or overwritten by another schedule.\\n\"\n          }\n        },\n        {\n          \"regular_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Regular, non-promotional price, described as decimal number.\"\n          },\n          \"start_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.\\n\"\n          },\n          \"promotional_price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Promotional price, described as decimal number. Must be less than regular price.\"\n          },\n          \"end_time\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\",\n            \"description\": \"Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should end.\\nIf this field is not provided, then the scheduled price will remain active until it is replaced by another price update or overwritten by another schedule.\\n\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1e41e866-53c3-4141-9ab6-701be31f0ab4",
+    "name": "Article Requirements AnnouncedReturns prices API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

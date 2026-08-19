@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns attribute-types API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "attribute-types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List attribute type labels for a business partner",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/partners/:businessPartnerId/attribute-types",
+            "params": [
+              {
+                "name": "businessPartnerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns all available attribute type labels for the given business partner."
+        },
+        {
+          "info": {
+            "name": "Get an attribute type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/partners/:businessPartnerId/attribute-types/:typeLabel",
+            "params": [
+              {
+                "name": "businessPartnerId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "typeLabel",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the attribute type with the given label, applying any partner-specific overrides."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

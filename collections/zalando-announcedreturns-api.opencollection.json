@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AnnouncedReturns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the returns announced by customers via Zalando website.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/announced-returns",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "sales_channel_id",
+                "value": "",
+                "type": "query",
+                "description": "Query filter specifying a sales channel."
+              },
+              {
+                "name": "cursor",
+                "value": "Y3Vyc29yCg",
+                "type": "query",
+                "description": "Query filter specifying an opaque pointer to a page."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Query filter specifying the upper limit to the number of entries on a page."
+              },
+              {
+                "name": "after",
+                "value": "2019-07-01T06:55:47Z",
+                "type": "query",
+                "description": "Query filter returning the returns announced after the given timestamp (inclusive). The timestamp is in the ISO 8601 format. The Date and time are separated by the \"T\" literal, and the Time and Timezone are separated by the \"+\" literal. For UTC time, you should simply use \"Z\" as the suffix, for other cases use URL encoding for the \"+\" literal."
+              },
+              {
+                "name": "before",
+                "value": "2019-07-01T07:55:47Z",
+                "type": "query",
+                "description": "Query filter returning the returns announced before the given timestamp (exclusive). The timestamp is in the ISO 8601 format. The Date and time are separated by the \"T\" literal, and the Time and Timezone are separated by the \"+\" literal. For UTC time, you should simply use \"Z\" as the suffix, for other cases use URL encoding for the \"+\" literal."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sorting attributes separated by a comma. Default order (without sign symbol '+' or '-') is ascending(+). Minus(-) should be used in front of an attribute name if you want descending order. The parameter value includes the attributes (separated by a comma) that the query parameter 'sort' will apply to. Currently we only support sorting on return_registered_at."
+              }
+            ]
+          },
+          "docs": "Retrieve the returns announced by customers via Zalando website. Currently we only retrieve the announced returns that will be delivered using a return label generated from Zalando website, see 'type' attribute in the AnnouncedReturn object."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

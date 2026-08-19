@@ -1,0 +1,208 @@
+{
+  "item": [
+    {
+      "id": "2c3ae784-c3db-47b0-8bbf-9a8bfbaf9a07",
+      "name": "Liquidated Items",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2adaba90-2f38-4204-8314-2631f798139d",
+          "name": "Returns liquidation data",
+          "request": {
+            "name": "Returns liquidation data",
+            "description": {
+              "content": "Returns all liquidated items from the specified partner in the given timeframe. <br /><br />",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "liquidated-items",
+                ":merchant-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>",
+                  "description": "(Required) Start timestamp for the query, restricted to now minus 100 days"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>",
+                  "description": "(Required) End timestamp for the query, restricted to now minus 100 days"
+                },
+                {
+                  "disabled": false,
+                  "key": "purchase-order-number",
+                  "value": "<string>",
+                  "description": "The purchase order number associated with that ownership transfer."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchant-id",
+                  "description": "(Required) merchant ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "f0555f3f-743e-48ea-b9bb-d108d2f00a69",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidated-items",
+                    ":merchant-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "2018-03-17"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2018-03-17"
+                    },
+                    {
+                      "key": "purchase-order-number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) merchant ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"liquidated_items\": [\n    {\n      \"merchant_name\": \"reference\",\n      \"merchant_id\": \"ec8f86d7-ddc6-8abc-32de-0381bc727b19\",\n      \"purchase_order_number\": \"PO123\",\n      \"shipping_notice_number\": \"2307cfb5-3ecb-685b-0bc0-400a2cc198cd\",\n      \"ean\": \"4564597955532\",\n      \"sku_simple\": \"TH341G023-K1100XL000\",\n      \"quantity\": 8201,\n      \"stock_location_id\": \"40f6349b-b3e4-f1cf-63ac-13950b015315\",\n      \"liquidation_date\": \"2018-03-17\",\n      \"reporting_date\": \"2018-03-17\",\n      \"average_price_per_item\": 6843.8450361757,\n      \"total_price\": 4447.802811932958\n    },\n    {\n      \"merchant_name\": \"reference\",\n      \"merchant_id\": \"911df6b7-cd15-a72d-178b-a127080d294c\",\n      \"purchase_order_number\": \"PO123\",\n      \"shipping_notice_number\": \"69e4e275-5a8b-deda-c7e9-7b73dd92d522\",\n      \"ean\": \"2561133855452\",\n      \"sku_simple\": \"TH341G023-K1100XL000\",\n      \"quantity\": 3080,\n      \"stock_location_id\": \"5136bd23-129d-521a-f70f-0f480c1a1f8d\",\n      \"liquidation_date\": \"2018-03-17\",\n      \"reporting_date\": \"2018-03-17\",\n      \"average_price_per_item\": 7852.453253125829,\n      \"total_price\": 6587.169187979881\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66031bf0-481d-41db-b73c-3210ff0665d6",
+              "name": "A specific error occurred - see status code for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "liquidated-items",
+                    ":merchant-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "2018-03-17"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2018-03-17"
+                    },
+                    {
+                      "key": "purchase-order-number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) merchant ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7413f6d8-5434-46ff-9a1f-207efa739964",
+    "name": "Article Requirements AnnouncedReturns Liquidated Items API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

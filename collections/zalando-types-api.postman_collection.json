@@ -1,0 +1,205 @@
+{
+  "item": [
+    {
+      "id": "10f25e6c-6023-473f-b8e2-b9fbc579fd59",
+      "name": "Types",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a36b489d-a9b8-4bd9-a913-e6a7046eef72",
+          "name": "Returns the attribute type",
+          "request": {
+            "name": "Returns the attribute type",
+            "description": {},
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant_id",
+                "attribute-types",
+                ":type_label"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_id",
+                  "description": "(Required) Id of the merchant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type_label",
+                  "description": "(Required) Label of the attribute type"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                "key": "X-Flow-Id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c453ab7a-197e-4307-95d6-6efcde50eec2",
+              "name": "a single attribute type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "attribute-types",
+                    ":type_label"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type_label",
+                      "description": "(Required) Label of the attribute type"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                    "key": "X-Flow-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": \"color_code\",\n  \"name\": {\n    \"en\": \"The name\",\n    \"de\": \"Der Name\",\n    \"es\": \"El nombre\"\n  },\n  \"definition\": {\n    \"type\": \"LocalizedStringDefinition\"\n  },\n  \"type_variants\": [\n    {\n      \"label\": \"string\",\n      \"name\": {\n        \"en\": \"The name\",\n        \"de\": \"Der Name\",\n        \"es\": \"El nombre\"\n      }\n    },\n    {\n      \"label\": \"string\",\n      \"name\": {\n        \"en\": \"The name\",\n        \"de\": \"Der Name\",\n        \"es\": \"El nombre\"\n      }\n    }\n  ],\n  \"cardinality\": \"one\",\n  \"usage\": \"reference_by_label\",\n  \"description\": {\n    \"en\": \"Description\",\n    \"de\": \"Beschreibung\",\n    \"es\": \"Descripción\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff70f634-4a11-441b-b0fb-8ba0fdf693c8",
+              "name": "error occurred - see status code and problem object for more\ninformation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "attribute-types",
+                    ":type_label"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type_label",
+                      "description": "(Required) Label of the attribute type"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                    "key": "X-Flow-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6aeccbcf-0125-4ba6-b766-3d49196a8b7b",
+    "name": "Article Requirements AnnouncedReturns Types API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

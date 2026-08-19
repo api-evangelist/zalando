@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns Product Association API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Product Association",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Creates a new simple already known by Zalando by registering the Merchant identifiers in the Zalando system.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/merchants/:merchant_id/products/identifiers/:ean",
+            "params": [
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the merchant"
+              },
+              {
+                "name": "ean",
+                "value": "",
+                "type": "path",
+                "description": "The International Article Number or also known as European Article Number."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new simple already known by Zalando by registering the Merchant identifiers in the Zalando system.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,383 @@
+{
+  "item": [
+    {
+      "id": "99cffe92-5b4d-4133-93de-a94cfdc7a03e",
+      "name": "AnnouncedReturns",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c3fd94db-9641-4853-a3b3-73735ca486d9",
+          "name": "Retrieve the returns announced by customers via Zalando website.",
+          "request": {
+            "name": "Retrieve the returns announced by customers via Zalando website.",
+            "description": {
+              "content": "Retrieve the returns announced by customers via Zalando website. Currently we only retrieve the announced returns that will be delivered using a return label generated from Zalando website, see 'type' attribute in the AnnouncedReturn object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant-id",
+                "announced-returns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sales_channel_id",
+                  "value": "<uuid>",
+                  "description": "Query filter specifying a sales channel."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Query filter specifying an opaque pointer to a page."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Query filter specifying the upper limit to the number of entries on a page."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<dateTime>",
+                  "description": "Query filter returning the returns announced after the given timestamp (inclusive). The timestamp is in the ISO 8601 format. The Date and time are separated by the \"T\" literal, and the Time and Timezone are separated by the \"+\" literal. For UTC time, you should simply use \"Z\" as the suffix, for other cases use URL encoding for the \"+\" literal."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<dateTime>",
+                  "description": "Query filter returning the returns announced before the given timestamp (exclusive). The timestamp is in the ISO 8601 format. The Date and time are separated by the \"T\" literal, and the Time and Timezone are separated by the \"+\" literal. For UTC time, you should simply use \"Z\" as the suffix, for other cases use URL encoding for the \"+\" literal."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "-return_registered_at",
+                  "description": "Sorting attributes separated by a comma. Default order (without sign symbol '+' or '-') is ascending(+). Minus(-) should be used in front of an attribute name if you want descending order. The parameter value includes the attributes (separated by a comma) that the query parameter 'sort' will apply to. Currently we only support sorting on return_registered_at."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchant-id",
+                  "description": "(Required) To identify a merchant for which this operation is carried out."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Used for troubleshooting.",
+                "key": "X-Flow-Id",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "a5f0765a-b42c-48a9-b12b-543c70febefc",
+              "name": "Retrieves a list of the announced returns.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "announced-returns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sales_channel_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "Y3Vyc29yCg"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "after",
+                      "value": "2019-07-01T06:55:47Z"
+                    },
+                    {
+                      "key": "before",
+                      "value": "2019-07-01T07:55:47Z"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "-return_registered_at"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) To identify a merchant for which this operation is carried out."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer access token.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Used for troubleshooting.",
+                    "key": "X-Flow-Id",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"announced_return_id\": \"bf48ba35-149d-4b76-8ac9-d08d126b517f\",\n      \"sales_channel_id\": \"bf48ba35-149d-4b76-8ac9-d08d126b517f\",\n      \"return_tracking_number\": \"744374997468\",\n      \"type\": \"string\",\n      \"orders\": [\n        {\n          \"order_id\": \"bf48ba35-149d-4b76-8ac9-d08d126b517f\",\n          \"order_number\": \"1040970000502251\",\n          \"merchant_order_id\": \"1040970000502251\",\n          \"order_lines\": [\n            {\n              \"order_line_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"order_item_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"return_reason\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"order_id\": \"bf48ba35-149d-4b76-8ac9-d08d126b517f\",\n          \"order_number\": \"1040970000502251\",\n          \"merchant_order_id\": \"1040970000502251\",\n          \"order_lines\": [\n            {\n              \"order_line_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"order_item_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"return_reason\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"return_registered_at\": \"2014-12-31T23:00:00.000Z\"\n    },\n    {\n      \"announced_return_id\": \"bf48ba35-149d-4b76-8ac9-d08d126b517f\",\n      \"sales_channel_id\": \"bf48ba35-149d-4b76-8ac9-d08d126b517f\",\n      \"return_tracking_number\": \"744374997468\",\n      \"type\": \"string\",\n      \"orders\": [\n        {\n          \"order_id\": \"bf48ba35-149d-4b76-8ac9-d08d126b517f\",\n          \"order_number\": \"1040970000502251\",\n          \"merchant_order_id\": \"1040970000502251\",\n          \"order_lines\": [\n            {\n              \"order_line_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"order_item_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"return_reason\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"order_id\": \"bf48ba35-149d-4b76-8ac9-d08d126b517f\",\n          \"order_number\": \"1040970000502251\",\n          \"merchant_order_id\": \"1040970000502251\",\n          \"order_lines\": [\n            {\n              \"order_line_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"order_item_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"return_reason\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"return_registered_at\": \"2014-12-31T23:00:00.000Z\"\n    }\n  ],\n  \"links\": {\n    \"self\": \"https://api-sandbox.merchants.zalando.com/resources?cursor=Y3Vyc29yCg\",\n    \"prev\": \"https://api-sandbox.merchant-center.zalan.do/resources?cursor=Y3Vyc29yCg\",\n    \"next\": \"https://api-sandbox.merchants.zalando.com/resources?cursor=Y3Vyc29yCg\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06365aa6-ecf3-442d-82ff-f1ae277f2ed8",
+              "name": "Exceeded the rate limit.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "announced-returns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sales_channel_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "Y3Vyc29yCg"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "after",
+                      "value": "2019-07-01T06:55:47Z"
+                    },
+                    {
+                      "key": "before",
+                      "value": "2019-07-01T07:55:47Z"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "-return_registered_at"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) To identify a merchant for which this operation is carried out."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer access token.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Used for troubleshooting.",
+                    "key": "X-Flow-Id",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Unique identifier for the request",
+                  "key": "X-Flow-Id",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "description": "Specifies how long you must wait before making a new request, in seconds",
+                  "key": "Retry-After",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "description": "Shows the limit for the operation that you are performing",
+                  "key": "X-Rate-Limit",
+                  "value": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9dc2e12a-9dd4-4427-af7e-19f2b4d55f4c",
+              "name": "error occurred - see status code and error/problem objects for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "announced-returns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sales_channel_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "Y3Vyc29yCg"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "after",
+                      "value": "2019-07-01T06:55:47Z"
+                    },
+                    {
+                      "key": "before",
+                      "value": "2019-07-01T07:55:47Z"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "-return_registered_at"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) To identify a merchant for which this operation is carried out."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer access token.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Used for troubleshooting.",
+                    "key": "X-Flow-Id",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"string\",\n      \"code\": \"123A\",\n      \"title\": \"The resource requested could not be found.\",\n      \"detail\": \"The order 123 does not exist.\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/order_number\",\n        \"parameter\": \"order_number\"\n      }\n    },\n    {\n      \"status\": \"string\",\n      \"code\": \"123A\",\n      \"title\": \"The resource requested could not be found.\",\n      \"detail\": \"The order 123 does not exist.\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/order_number\",\n        \"parameter\": \"order_number\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e935b850-325a-4acd-835d-b80fd0fa9605",
+    "name": "Article Requirements AnnouncedReturns API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

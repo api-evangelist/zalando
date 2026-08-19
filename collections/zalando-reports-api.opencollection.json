@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns Reports API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve inbounded items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/reports/received-items/:merchant-id",
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "29809185-6a98-4691-a15b-e8d16839b6e8",
+                "type": "path",
+                "description": "Merchant ID"
+              },
+              {
+                "name": "zalando_advice_ids",
+                "value": "",
+                "type": "query",
+                "description": "Zalando advice ids to filter inbounded items by. Returns items for all advice ids if not provided."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start timestamp. Default is now minus 100 days."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End timestamp. Default is now."
+              },
+              {
+                "name": "cursor",
+                "value": "MjAxNy0wNy0yMVQxNzozMjoyOFoK",
+                "type": "query",
+                "description": "Cursor to paginate through results"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of inbounded items to fetch per page. Maximum is 200000."
+              }
+            ]
+          },
+          "docs": "Returns all items inbounded at Zalando warehouses for specific `merchant-id` and `zalando_advice_ids`. Endpoint has no 100 days time limitation, but to not overload the client, it provides cursor based pagination. The cursor is a string that is returned in the response and can be used to fetch the next page of results. Please note that if `from` and `to` parameters are not provided the API will return the data for the last 100 days."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

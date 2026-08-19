@@ -1,0 +1,725 @@
+{
+  "item": [
+    {
+      "id": "557beea6-0ca6-435c-96aa-db7ebd0274d8",
+      "name": "offer-blockers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e151322c-6b24-49b9-afb9-8e1b74949385",
+          "name": "Create Offer Blockers.",
+          "request": {
+            "name": "Create Offer Blockers.",
+            "description": {
+              "content": "This is a batch endpoint. Creation results for each requested Offer Blocker will be reported separately.\nCreated Offer Blockers will be enriched with an ID.\n\nIf there is already an Offer Blocker with exactly the same criteria and reason, then no new Offer Blocker\nwill be created and the ID of the existing one will be returned in response.\n\nIf batch contains multiple Offer Blockers with exactly the same criteria and reason, such Offer Blockers will\nbe rejected.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant-id",
+                "offer-blockers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchant-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"reason\": \"<string>\",\n      \"criteria\": {\n        \"ean\": \"<gtin-13>\",\n        \"sales_channel_id\": \"<uuid>\"\n      },\n      \"id\": \"<uuid>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"reason\": \"<string>\",\n      \"criteria\": {\n        \"ean\": \"<gtin-13>\",\n        \"sales_channel_id\": \"<uuid>\"\n      },\n      \"id\": \"<uuid>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d2c886c7-76d1-4cac-ad71-29bcfd3c076c",
+              "name": "Request was processed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "offer-blockers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"reason\": \"PAUSE_01\",\n      \"criteria\": {\n        \"ean\": \"5901234123457\",\n        \"sales_channel_id\": \"<uuid>\"\n      },\n      \"id\": \"<uuid>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"reason\": \"PAUSE_01\",\n      \"criteria\": {\n        \"ean\": \"5901234123457\",\n        \"sales_channel_id\": \"<uuid>\"\n      },\n      \"id\": \"<uuid>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Multi-Status (WebDAV) (RFC 4918)",
+              "code": 207,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"item\": {\n        \"reason\": \"PAUSE_01\",\n        \"criteria\": {\n          \"sales_channel_id\": \"<uuid>\",\n          \"ean\": \"5901234123457\"\n        },\n        \"id\": \"<uuid>\",\n        \"description\": \"<string>\"\n      },\n      \"result\": {\n        \"status\": \"ACCEPTED\",\n        \"description\": \"string\"\n      }\n    },\n    {\n      \"item\": {\n        \"reason\": \"PAUSE_01\",\n        \"criteria\": {\n          \"sales_channel_id\": \"<uuid>\",\n          \"ean\": \"5901234123457\"\n        },\n        \"id\": \"<uuid>\",\n        \"description\": \"<string>\"\n      },\n      \"result\": {\n        \"status\": \"ACCEPTED\",\n        \"description\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ecc0bd14-5dca-49f6-8b5c-9a92a99650d2",
+              "name": "Error occurred. See status code and problem object for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "offer-blockers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"reason\": \"PAUSE_01\",\n      \"criteria\": {\n        \"ean\": \"5901234123457\",\n        \"sales_channel_id\": \"<uuid>\"\n      },\n      \"id\": \"<uuid>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"reason\": \"PAUSE_01\",\n      \"criteria\": {\n        \"ean\": \"5901234123457\",\n        \"sales_channel_id\": \"<uuid>\"\n      },\n      \"id\": \"<uuid>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00e4c1cc-da6f-49db-8ea3-a13f8b715f10",
+          "name": "List Offer Blockers.",
+          "request": {
+            "name": "List Offer Blockers.",
+            "description": {},
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant-id",
+                "offer-blockers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ean",
+                  "value": "<gtin-13>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sales_channel_id",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_since",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_until",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<byte>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "100"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchant-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "56eeb708-2ed3-4d1b-8bcc-e83f4834499f",
+              "name": "Request was processed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "offer-blockers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ean",
+                      "value": "5901234123457"
+                    },
+                    {
+                      "key": "sales_channel_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "updated_since",
+                      "value": "2020-05-30T00:00:00.00Z"
+                    },
+                    {
+                      "key": "updated_until",
+                      "value": "2020-05-30T00:00:00.00Z"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"query\": {\n    \"ean\": \"5901234123457\",\n    \"sales_channel_id\": \"<uuid>\",\n    \"updated_since\": \"2020-05-30T00:00:00.00Z\",\n    \"updated_until\": \"2020-05-30T00:00:00.00Z\",\n    \"page_size\": 10\n  },\n  \"items\": [\n    {\n      \"id\": \"71b9911a-d22f-3098-4484-3468624468a6\",\n      \"reason\": \"PAUSE_01\",\n      \"criteria\": {\n        \"sales_channel_id\": \"<uuid>\",\n        \"ean\": \"5901234123457\"\n      },\n      \"description\": \"<string>\"\n    },\n    {\n      \"id\": \"031b1b59-de05-76eb-b4f2-fdd04b806a83\",\n      \"reason\": \"PAUSE_01\",\n      \"criteria\": {\n        \"sales_channel_id\": \"<uuid>\",\n        \"ean\": \"5901234123457\"\n      },\n      \"description\": \"<string>\"\n    }\n  ],\n  \"cursors\": {\n    \"self\": \"https://api-sandbox.merchants.com/merchants/e2ad171a-6b52-4db0-8ae3-54709720458b/offer-blockers?cursor=ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9\",\n    \"next\": \"https://api-sandbox.merchants.com/merchants/e2ad171a-6b52-4db0-8ae3-54709720458b/offer-blockers?cursor=ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88125c98-ccd4-404e-a33f-28332166fa2d",
+              "name": "Error occurred. See status code and problem object for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "offer-blockers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ean",
+                      "value": "5901234123457"
+                    },
+                    {
+                      "key": "sales_channel_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "updated_since",
+                      "value": "2020-05-30T00:00:00.00Z"
+                    },
+                    {
+                      "key": "updated_until",
+                      "value": "2020-05-30T00:00:00.00Z"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "130e6875-6428-430b-9faa-8700ab6e97ae",
+          "name": "Delete Offer Blockers.",
+          "request": {
+            "name": "Delete Offer Blockers.",
+            "description": {
+              "content": "This is a batch endpoint. Deletion results for each Offer Blocker will be reported separately.\n\nOffer Blockers that were successfully deleted, will be reported back with status \"ACCEPTED\" in the response.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant-id",
+                "offer-blockers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchant-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6fdac757-2c03-4d67-a641-13358d57171a",
+              "name": "Request was processed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "offer-blockers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Multi-Status (WebDAV) (RFC 4918)",
+              "code": 207,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"item\": \"<uuid>\",\n      \"result\": {\n        \"status\": \"ACCEPTED\",\n        \"description\": \"string\"\n      }\n    },\n    {\n      \"item\": \"<uuid>\",\n      \"result\": {\n        \"status\": \"ACCEPTED\",\n        \"description\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "640dc812-0260-4f7f-9498-0a200c148e15",
+              "name": "Error occurred. See status code and problem object for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "offer-blockers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dffcf618-2610-4298-8726-20c55978817f",
+          "name": "Get details about an Offer Blocker.",
+          "request": {
+            "name": "Get details about an Offer Blocker.",
+            "description": {},
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant-id",
+                "offer-blockers",
+                ":offer-blocker-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchant-id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "offer-blocker-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "da1c6dff-3d45-4c3e-ae87-5afbac14356c",
+              "name": "Offer Blocker was found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "offer-blockers",
+                    ":offer-blocker-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "offer-blocker-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<uuid>\",\n  \"reason\": \"PAUSE_01\",\n  \"criteria\": {\n    \"sales_channel_id\": \"<uuid>\",\n    \"ean\": \"5901234123457\"\n  },\n  \"description\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "afe3860d-f222-434e-a963-aa2304958143",
+              "name": "Error occurred. See status code and problem object for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "offer-blockers",
+                    ":offer-blocker-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "offer-blocker-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bedbbe7b-721e-4a96-826b-97a2e3fa078a",
+    "name": "Article Requirements AnnouncedReturns offer-blockers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

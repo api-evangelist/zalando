@@ -1,0 +1,416 @@
+{
+  "item": [
+    {
+      "id": "f1b39fab-b4f6-46a4-a78d-94cbca9c0635",
+      "name": "Logistic Centers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "672ed143-415a-43c5-b41a-6e39e4bf8d18",
+          "name": "Get a list of all of the logistic centers belonging to a merchant",
+          "request": {
+            "name": "Get a list of all of the logistic centers belonging to a merchant",
+            "description": {},
+            "url": {
+              "path": [
+                "merchants",
+                ":merchantId",
+                "logistic-centers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchantId",
+                  "description": "(Required) The Zalando specific UUID representing a merchant for whom the logistic centers belong"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c14562ec-6aa8-4e90-8f79-d9f5ee1c7be7",
+              "name": "A list of logistic centers belonging to the merchant",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchantId",
+                    "logistic-centers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchantId",
+                      "description": "(Required) The Zalando specific UUID representing a merchant for whom the logistic centers belong"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"logistic_center_id\": \"f5d869c1-6363-fc79-2748-cebc1e61dfed\",\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"address\": {\n        \"street\": \"Schönhauser Allee 103\",\n        \"city\": \"Berlin\",\n        \"zip\": \"14265\",\n        \"country_code\": \"DE\",\n        \"additional\": \"2. Hinterhof rechts\"\n      }\n    },\n    {\n      \"logistic_center_id\": \"864f2809-8df8-3a3d-b213-7662b3130125\",\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"address\": {\n        \"street\": \"Schönhauser Allee 103\",\n        \"city\": \"Berlin\",\n        \"zip\": \"14265\",\n        \"country_code\": \"DE\",\n        \"additional\": \"2. Hinterhof rechts\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f394adb-1ed9-40db-94bb-cad514c50d6a",
+              "name": "The user doesn't have access to the requested merchant",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchantId",
+                    "logistic-centers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchantId",
+                      "description": "(Required) The Zalando specific UUID representing a merchant for whom the logistic centers belong"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "998c6050-618d-4629-b5b0-a99faacd10ea",
+              "name": "An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchantId",
+                    "logistic-centers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchantId",
+                      "description": "(Required) The Zalando specific UUID representing a merchant for whom the logistic centers belong"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a64bdd57-be97-4566-91f0-772c5242efc1",
+          "name": "Get information for a logistic center",
+          "request": {
+            "name": "Get information for a logistic center",
+            "description": {},
+            "url": {
+              "path": [
+                "merchants",
+                ":merchantId",
+                "logistic-centers",
+                ":logisticCenterId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "logisticCenterId",
+                  "description": "(Required) The unique UUID of a Logistic Center"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchantId",
+                  "description": "(Required) The Zalando specific UUID representing a merchant for whom the logistic centers belong"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "1dd66c98-0e4f-452b-87ac-786e3ba93d22",
+              "name": "The requested logistic center information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchantId",
+                    "logistic-centers",
+                    ":logisticCenterId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "logisticCenterId",
+                      "description": "(Required) The unique UUID of a Logistic Center"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchantId",
+                      "description": "(Required) The Zalando specific UUID representing a merchant for whom the logistic centers belong"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"logistic_center_id\": \"072df25c-fdd5-0b06-5967-4c7ccf891aa3\",\n  \"name\": \"string\",\n  \"type\": \"string\",\n  \"address\": {\n    \"street\": \"Schönhauser Allee 103\",\n    \"city\": \"Berlin\",\n    \"zip\": \"14265\",\n    \"country_code\": \"DE\",\n    \"additional\": \"2. Hinterhof rechts\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8624826-4c8d-468f-8805-838bc7f79c81",
+              "name": "The user doesn't have access to the requested merchant",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchantId",
+                    "logistic-centers",
+                    ":logisticCenterId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "logisticCenterId",
+                      "description": "(Required) The unique UUID of a Logistic Center"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchantId",
+                      "description": "(Required) The Zalando specific UUID representing a merchant for whom the logistic centers belong"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8644a8fc-dae0-4b4e-a1ba-ec3a6121bf6b",
+              "name": "An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchantId",
+                    "logistic-centers",
+                    ":logisticCenterId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "logisticCenterId",
+                      "description": "(Required) The unique UUID of a Logistic Center"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchantId",
+                      "description": "(Required) The Zalando specific UUID representing a merchant for whom the logistic centers belong"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "97eb4855-356a-4ad9-806a-302fc1349495",
+    "name": "Article Requirements AnnouncedReturns Logistic Centers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

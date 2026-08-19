@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns Returned Items API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Returned Items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns returned items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/returned-items/:merchant-id",
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "Merchant ID"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start timestamp for the query, restricted to now minus 100 days"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End timestamp for the query, restricted to now minus 100 days"
+              }
+            ]
+          },
+          "docs": "Returns all items returned from Zalando warehouses to the specified partner in the given timeframe."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

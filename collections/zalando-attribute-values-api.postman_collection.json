@@ -1,0 +1,368 @@
+{
+  "item": [
+    {
+      "id": "7af55a69-4987-491e-9562-c8b446f2d248",
+      "name": "attribute-values",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "da08cf4c-6224-4b8d-89d8-b91bb87ff652",
+          "name": "List attribute values for an attribute type",
+          "request": {
+            "name": "List attribute values for an attribute type",
+            "description": {
+              "content": "Returns all attribute values for the given attribute type label.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "partners",
+                ":businessPartnerId",
+                "attribute-types",
+                ":typeLabel",
+                "attributes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "businessPartnerId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "typeLabel",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "14d6cbae-6f63-48ad-a044-e7eb8fd928dc",
+              "name": "List of attribute values",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    ":businessPartnerId",
+                    "attribute-types",
+                    ":typeLabel",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "businessPartnerId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "typeLabel",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"label\": \"waterproof_210\",\n      \"name\": {\n        \"en-gb\": \"waterproof_210\"\n      },\n      \"value\": {\n        \"localized\": {\n          \"en\": \"yes\",\n          \"de\": \"ja\",\n          \"fr\": \"oui\"\n        }\n      }\n    },\n    {\n      \"label\": \"waterproof_209\",\n      \"name\": {\n        \"en-gb\": \"waterproof_209\"\n      },\n      \"value\": {\n        \"localized\": {\n          \"en\": \"no\",\n          \"de\": \"nein\",\n          \"fr\": \"non\"\n        }\n      }\n    },\n    {\n      \"label\": \"waterproof_7825\",\n      \"name\": {\n        \"en-gb\": \"waterproof_7825\"\n      },\n      \"value\": {\n        \"localized\": {\n          \"en\": \"3 ATM\",\n          \"de\": \"3 ATM\",\n          \"fr\": \"3 ATM\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2babd2e-2217-4854-9849-901655ed2a66",
+              "name": "Attribute type not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    ":businessPartnerId",
+                    "attribute-types",
+                    ":typeLabel",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "businessPartnerId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "typeLabel",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c81e472-a097-42ab-b5bc-bbabe95235ba",
+          "name": "Get a single attribute value",
+          "request": {
+            "name": "Get a single attribute value",
+            "description": {
+              "content": "Returns the attribute value with the given label for the given attribute type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "partners",
+                ":businessPartnerId",
+                "attribute-types",
+                ":typeLabel",
+                "attributes",
+                ":attributeLabel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "businessPartnerId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "typeLabel",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "attributeLabel",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "72a88ee0-7480-4f22-83a9-ea52061f0647",
+              "name": "The requested attribute value",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    ":businessPartnerId",
+                    "attribute-types",
+                    ":typeLabel",
+                    "attributes",
+                    ":attributeLabel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "businessPartnerId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "typeLabel",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeLabel",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": \"string\",\n  \"name\": {\n    \"en-gb\": \"waterproof_7825\"\n  },\n  \"value\": {\n    \"localized\": {\n      \"en\": \"3 ATM\",\n      \"de\": \"3 ATM\",\n      \"fr\": \"3 ATM\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8219e6ef-4882-41ff-94f3-a9ad2b1e5b1d",
+              "name": "Attribute type or attribute value not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    ":businessPartnerId",
+                    "attribute-types",
+                    ":typeLabel",
+                    "attributes",
+                    ":attributeLabel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "businessPartnerId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "typeLabel",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attributeLabel",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f6d82551-b5ac-483f-a83a-7cf0407f080b",
+    "name": "Article Requirements AnnouncedReturns attribute-values API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

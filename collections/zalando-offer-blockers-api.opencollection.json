@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns offer-blockers API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "offer-blockers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Offer Blockers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/offer-blockers",
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "ean",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sales_channel_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_until",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List Offer Blockers."
+        },
+        {
+          "info": {
+            "name": "Create Offer Blockers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/merchants/:merchant-id/offer-blockers",
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This is a batch endpoint. Creation results for each requested Offer Blocker will be reported separately.\nCreated Offer Blockers will be enriched with an ID.\n\nIf there is already an Offer Blocker with exactly the same criteria and reason, then no new Offer Blocker\nwill be created and the ID of the existing one will be returned in response.\n\nIf batch contains multiple Offer Blockers with exactly the same criteria and reason, such Offer Blockers will\nbe rejected.\n"
+        },
+        {
+          "info": {
+            "name": "Delete Offer Blockers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/merchants/:merchant-id/offer-blockers",
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This is a batch endpoint. Deletion results for each Offer Blocker will be reported separately.\n\nOffer Blockers that were successfully deleted, will be reported back with status \"ACCEPTED\" in the response.\n"
+        },
+        {
+          "info": {
+            "name": "Get details about an Offer Blocker.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/offer-blockers/:offer-blocker-id",
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "offer-blocker-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details about an Offer Blocker."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

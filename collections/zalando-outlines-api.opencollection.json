@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns Outlines API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Outlines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List sellable outlines for the merchant\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant_id/outlines",
+            "headers": [
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the merchant"
+              }
+            ]
+          },
+          "docs": "Returns a list of product outlines that a given merchant can sell. The\nmerchant can use these outlines to create a new product.\n"
+        },
+        {
+          "info": {
+            "name": "Return the outline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant_id/outlines/:outline_label",
+            "headers": [
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the merchant"
+              },
+              {
+                "name": "outline_label",
+                "value": "",
+                "type": "path",
+                "description": "Label of the outline"
+              }
+            ]
+          },
+          "docs": "Provide the structure of the outline.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

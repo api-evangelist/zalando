@@ -1,0 +1,192 @@
+{
+  "item": [
+    {
+      "id": "09ddd427-dba4-4495-9f7d-3ee396a2b13f",
+      "name": "stocks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "08c8731c-88b2-4d8a-bce2-e557e528567a",
+          "name": "Update stock quantities for a set of articles.",
+          "request": {
+            "name": "Update stock quantities for a set of articles.",
+            "description": {},
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant-id",
+                "stocks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchant-id",
+                  "description": "(Required) The ID of the Merchant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"sales_channel_id\": \"<uuid>\",\n      \"ean\": \"<gtin-13>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"sales_channel_id\": \"<uuid>\",\n      \"ean\": \"<gtin-13>\",\n      \"quantity\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "068853cc-d34b-4fa6-a3c3-07f44bbb2149",
+              "name": "The requested batch of Stock Updates has been processed. Please consult the response body for the status information of an individual Stock Update.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "stocks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) The ID of the Merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"sales_channel_id\": \"<uuid>\",\n      \"ean\": \"5901234123457\",\n      \"quantity\": 25\n    },\n    {\n      \"sales_channel_id\": \"<uuid>\",\n      \"ean\": \"5901234123457\",\n      \"quantity\": 25\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Multi-Status (WebDAV) (RFC 4918)",
+              "code": 207,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"item\": {\n        \"sales_channel_id\": \"<uuid>\",\n        \"ean\": \"5901234123457\",\n        \"quantity\": 25\n      },\n      \"result\": {\n        \"status\": \"ACCEPTED\",\n        \"code\": 6074,\n        \"description\": \"string\"\n      }\n    },\n    {\n      \"item\": {\n        \"sales_channel_id\": \"<uuid>\",\n        \"ean\": \"5901234123457\",\n        \"quantity\": 25\n      },\n      \"result\": {\n        \"status\": \"ACCEPTED\",\n        \"code\": 5601,\n        \"description\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40079ea9-3816-462e-9235-d61c29e2f09b",
+              "name": "Error occurred. See status code and problem object for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant-id",
+                    "stocks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) The ID of the Merchant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"sales_channel_id\": \"<uuid>\",\n      \"ean\": \"5901234123457\",\n      \"quantity\": 25\n    },\n    {\n      \"sales_channel_id\": \"<uuid>\",\n      \"ean\": \"5901234123457\",\n      \"quantity\": 25\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e6b50620-7450-45f6-bd02-583a0506cc96",
+    "name": "Article Requirements AnnouncedReturns stocks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

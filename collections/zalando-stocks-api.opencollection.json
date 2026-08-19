@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns stocks API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "stocks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update stock quantities for a set of articles.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/merchants/:merchant-id/stocks",
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Merchant."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update stock quantities for a set of articles."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

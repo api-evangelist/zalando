@@ -1,0 +1,275 @@
+{
+  "item": [
+    {
+      "id": "676e44da-5c0e-4e02-8fab-a2149b7888bb",
+      "name": "attribute-types",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "324f37da-a18e-4843-84e8-331c1b7189c6",
+          "name": "List attribute type labels for a business partner",
+          "request": {
+            "name": "List attribute type labels for a business partner",
+            "description": {
+              "content": "Returns all available attribute type labels for the given business partner.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "partners",
+                ":businessPartnerId",
+                "attribute-types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "businessPartnerId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f39cc420-cabf-4d16-b400-dd49c5eb4217",
+              "name": "List of attribute type labels",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    ":businessPartnerId",
+                    "attribute-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "businessPartnerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    \"brand_code\",\n    \"color_code.primary\",\n    \"color_code.secondary\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70d0f25b-fea3-4167-95f7-6202c3aa895a",
+          "name": "Get an attribute type",
+          "request": {
+            "name": "Get an attribute type",
+            "description": {
+              "content": "Returns the attribute type with the given label, applying any partner-specific overrides.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "partners",
+                ":businessPartnerId",
+                "attribute-types",
+                ":typeLabel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "businessPartnerId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "typeLabel",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c16e08ff-b1e9-426c-ab40-8ba4f858bb29",
+              "name": "The requested attribute type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    ":businessPartnerId",
+                    "attribute-types",
+                    ":typeLabel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "businessPartnerId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "typeLabel",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": \"string\",\n  \"name\": {\n    \"en\": \"Our model's height\",\n    \"de\": \"Modelgröße\",\n    \"fr\": \"Taille du mannequin\"\n  },\n  \"description\": {\n    \"en\": \"Metric type with value and unit. The unit is restricted to the allowed values for this metric\"\n  },\n  \"cardinality\": \"one\",\n  \"usage\": \"literal\",\n  \"definition\": {\n    \"type\": \"StructuredDefinition\",\n    \"types\": [\n      {\n        \"label\": \"metric_unit\",\n        \"optional\": false,\n        \"version\": \"1.0.0\",\n        \"attribute_labels\": [\n          \"cm\"\n        ]\n      },\n      {\n        \"label\": \"metric_value\",\n        \"optional\": false,\n        \"version\": \"1.0.0\"\n      }\n    ]\n  },\n  \"type_variants\": [\n    {\n      \"label\": \"string\",\n      \"name\": {\n        \"en\": \"Metric\",\n        \"de\": \"Metrisch\",\n        \"fr\": \"Métrique\"\n      }\n    },\n    {\n      \"label\": \"string\",\n      \"name\": {\n        \"en\": \"Metric\",\n        \"de\": \"Metrisch\",\n        \"fr\": \"Métrique\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d8a58c5-700b-4c56-a545-1beeb373ece2",
+              "name": "Attribute type not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    ":businessPartnerId",
+                    "attribute-types",
+                    ":typeLabel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "businessPartnerId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "typeLabel",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5fecc7cd-7519-4bf7-938d-0dbf75f8b930",
+    "name": "Article Requirements AnnouncedReturns attribute-types API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

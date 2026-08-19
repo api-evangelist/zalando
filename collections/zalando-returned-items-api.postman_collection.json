@@ -1,0 +1,194 @@
+{
+  "item": [
+    {
+      "id": "760803dd-4b26-41ab-961f-293de13af88b",
+      "name": "Returned Items",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5951b1c5-e864-4f02-a322-2c986bb843f2",
+          "name": "Returns returned items",
+          "request": {
+            "name": "Returns returned items",
+            "description": {
+              "content": "Returns all items returned from Zalando warehouses to the specified partner in the given timeframe.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "returned-items",
+                ":merchant-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<dateTime>",
+                  "description": "(Required) Start timestamp for the query, restricted to now minus 100 days"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<dateTime>",
+                  "description": "(Required) End timestamp for the query, restricted to now minus 100 days"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "merchant-id",
+                  "description": "(Required) Merchant ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "d3b6189e-98a3-4872-9187-923ceea52064",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "returned-items",
+                    ":merchant-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "2017-07-21T17:32:28Z"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2017-07-21T17:32:28Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) Merchant ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"returned_items\": [\n    {\n      \"consumed_timestamp\": \"2017-07-21T17:32:28Z\",\n      \"ean\": \"5018290228266\",\n      \"merchant_b2b_reference\": \"reference\",\n      \"quality_label\": \"00014D02W8V\",\n      \"shipped_timestamp\": \"2017-07-21T17:32:28Z\",\n      \"zalando_shipment_number\": \"1234567890123456\",\n      \"location_id\": \"29809185-6a98-4691-a15b-e8d16839b6e8\",\n      \"quality_category\": \"string\",\n      \"destination\": {\n        \"city\": \"string\",\n        \"country_code\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"salutation\": \"string\",\n        \"street\": \"string\",\n        \"zip\": \"string\"\n      },\n      \"defect_levels\": {\n        \"level_1\": \"string\",\n        \"level_2\": \"string\"\n      },\n      \"parent\": {\n        \"id\": \"12\"\n      }\n    },\n    {\n      \"consumed_timestamp\": \"2017-07-21T17:32:28Z\",\n      \"ean\": \"9893307454644\",\n      \"merchant_b2b_reference\": \"reference\",\n      \"quality_label\": \"00014D02W8V\",\n      \"shipped_timestamp\": \"2017-07-21T17:32:28Z\",\n      \"zalando_shipment_number\": \"1234567890123456\",\n      \"location_id\": \"29809185-6a98-4691-a15b-e8d16839b6e8\",\n      \"quality_category\": \"string\",\n      \"destination\": {\n        \"city\": \"string\",\n        \"country_code\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"salutation\": \"string\",\n        \"street\": \"string\",\n        \"zip\": \"string\"\n      },\n      \"defect_levels\": {\n        \"level_1\": \"string\",\n        \"level_2\": \"string\"\n      },\n      \"parent\": {\n        \"id\": \"12\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20b3d7d9-dd9e-4b7f-92ce-6ac9124804da",
+              "name": "A specific error occurred - see status code for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "returned-items",
+                    ":merchant-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "2017-07-21T17:32:28Z"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2017-07-21T17:32:28Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "merchant-id",
+                      "description": "(Required) Merchant ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cce13d6b-1f10-4222-9d7e-9c6edf716dbe",
+    "name": "Article Requirements AnnouncedReturns Returned Items API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

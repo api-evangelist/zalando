@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns Logistic Centers API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Logistic Centers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of all of the logistic centers belonging to a merchant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchantId/logistic-centers",
+            "params": [
+              {
+                "name": "merchantId",
+                "value": "",
+                "type": "path",
+                "description": "The Zalando specific UUID representing a merchant for whom the logistic centers belong"
+              }
+            ]
+          },
+          "docs": "Get a list of all of the logistic centers belonging to a merchant"
+        },
+        {
+          "info": {
+            "name": "Get information for a logistic center",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchantId/logistic-centers/:logisticCenterId",
+            "params": [
+              {
+                "name": "logisticCenterId",
+                "value": "",
+                "type": "path",
+                "description": "The unique UUID of a Logistic Center"
+              },
+              {
+                "name": "merchantId",
+                "value": "",
+                "type": "path",
+                "description": "The Zalando specific UUID representing a merchant for whom the logistic centers belong"
+              }
+            ]
+          },
+          "docs": "Get information for a logistic center"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

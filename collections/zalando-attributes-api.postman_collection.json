@@ -1,0 +1,408 @@
+{
+  "item": [
+    {
+      "id": "76f1f8ac-711b-43a7-a3cf-9e482a779d8e",
+      "name": "Attributes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e2c5c45a-deaf-4eb7-9141-aded253b0ea6",
+          "name": "List all attributes of the given attribute type",
+          "request": {
+            "name": "List all attributes of the given attribute type",
+            "description": {},
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant_id",
+                "attribute-types",
+                ":type_label",
+                "attributes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_id",
+                  "description": "(Required) Id of the merchant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type_label",
+                  "description": "(Required) Label of the attribute type"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                "key": "X-Flow-Id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "19b334c4-e960-44fc-ac14-66c7f2ca4677",
+              "name": "list of attributes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "attribute-types",
+                    ":type_label",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type_label",
+                      "description": "(Required) Label of the attribute type"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                    "key": "X-Flow-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"label\": \"color_code\",\n      \"value\": {\n        \"localized\": {\n          \"fr\": \"gris foncé\",\n          \"pt\": \"cinzento escuro\",\n          \"cs\": \"tmavě šedá\",\n          \"it\": \"grigio scuro\",\n          \"nl\": \"Donkergrijs\",\n          \"de\": \"dunkelgrau\",\n          \"sv\": \"mörkgrå\",\n          \"da\": \"mørkegrå\",\n          \"en\": \"dark grey\",\n          \"es\": \"gris oscuro\",\n          \"fi\": \"tummanharmaa\",\n          \"no\": \"mørkegrå\",\n          \"pl\": \"ciemnoszary\"\n        }\n      },\n      \"name\": {\n        \"en\": \"The name\",\n        \"de\": \"Der Name\",\n        \"es\": \"El nombre\"\n      },\n      \"_meta\": {}\n    },\n    {\n      \"label\": \"color_code\",\n      \"value\": {\n        \"localized\": {\n          \"fr\": \"gris foncé\",\n          \"pt\": \"cinzento escuro\",\n          \"cs\": \"tmavě šedá\",\n          \"it\": \"grigio scuro\",\n          \"nl\": \"Donkergrijs\",\n          \"de\": \"dunkelgrau\",\n          \"sv\": \"mörkgrå\",\n          \"da\": \"mørkegrå\",\n          \"en\": \"dark grey\",\n          \"es\": \"gris oscuro\",\n          \"fi\": \"tummanharmaa\",\n          \"no\": \"mørkegrå\",\n          \"pl\": \"ciemnoszary\"\n        }\n      },\n      \"name\": {\n        \"en\": \"The name\",\n        \"de\": \"Der Name\",\n        \"es\": \"El nombre\"\n      },\n      \"_meta\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14058b66-b4cf-4ed8-8d79-5609193afa92",
+              "name": "error occurred - see status code and problem object for more\ninformation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "attribute-types",
+                    ":type_label",
+                    "attributes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type_label",
+                      "description": "(Required) Label of the attribute type"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                    "key": "X-Flow-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a1b3eab8-0e41-4eaf-adc0-61dc26876451",
+          "name": "Return a given attribute of the given attribute type",
+          "request": {
+            "name": "Return a given attribute of the given attribute type",
+            "description": {},
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant_id",
+                "attribute-types",
+                ":type_label",
+                "attributes",
+                ":attribute_label"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_id",
+                  "description": "(Required) Id of the merchant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type_label",
+                  "description": "(Required) Label of the attribute type"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "attribute_label",
+                  "description": "(Required) Label of the attribute"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                "key": "X-Flow-Id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c2c4ff60-0f50-44d5-86bb-55d9549e8dc9",
+              "name": "a single attribute",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "attribute-types",
+                    ":type_label",
+                    "attributes",
+                    ":attribute_label"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type_label",
+                      "description": "(Required) Label of the attribute type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attribute_label",
+                      "description": "(Required) Label of the attribute"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                    "key": "X-Flow-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"label\": \"color_code\",\n  \"value\": {\n    \"localized\": {\n      \"fr\": \"gris foncé\",\n      \"pt\": \"cinzento escuro\",\n      \"cs\": \"tmavě šedá\",\n      \"it\": \"grigio scuro\",\n      \"nl\": \"Donkergrijs\",\n      \"de\": \"dunkelgrau\",\n      \"sv\": \"mörkgrå\",\n      \"da\": \"mørkegrå\",\n      \"en\": \"dark grey\",\n      \"es\": \"gris oscuro\",\n      \"fi\": \"tummanharmaa\",\n      \"no\": \"mørkegrå\",\n      \"pl\": \"ciemnoszary\"\n    }\n  },\n  \"name\": {\n    \"en\": \"The name\",\n    \"de\": \"Der Name\",\n    \"es\": \"El nombre\"\n  },\n  \"_meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "311e27cc-89e0-4d09-8c17-bd32619fa2eb",
+              "name": "error occurred - see status code and problem object for more\ninformation.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "attribute-types",
+                    ":type_label",
+                    "attributes",
+                    ":attribute_label"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type_label",
+                      "description": "(Required) Label of the attribute type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attribute_label",
+                      "description": "(Required) Label of the attribute"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing.\n",
+                    "key": "X-Flow-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "98a96f4e-9b93-43ce-82d0-33a1583b102b",
+    "name": "Article Requirements AnnouncedReturns Attributes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

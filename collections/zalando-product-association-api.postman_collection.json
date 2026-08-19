@@ -1,0 +1,467 @@
+{
+  "item": [
+    {
+      "id": "952e52b1-64dd-4223-9920-edef9ca1fcaa",
+      "name": "Product Association",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bc7e92d2-0de1-40d8-ae04-5ef329a17008",
+          "name": "Creates a new simple already known by Zalando by registering the Merchant identifiers in the Zalando system.\n",
+          "request": {
+            "name": "Creates a new simple already known by Zalando by registering the Merchant identifiers in the Zalando system.\n",
+            "description": {},
+            "url": {
+              "path": [
+                "merchants",
+                ":merchant_id",
+                "products",
+                "identifiers",
+                ":ean"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchant_id",
+                  "description": "(Required) Id of the merchant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<gtin13>",
+                  "key": "ean",
+                  "description": "(Required) The International Article Number or also known as European Article Number."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merchant_product_simple_id\": \"<string>\",\n  \"merchant_product_config_id\": \"<string>\",\n  \"merchant_product_model_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "98f7d410-4396-42d9-a69d-a0ede55c9c61",
+              "name": "Your sku is successfully associated with the existing product\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "products",
+                    "identifiers",
+                    ":ean"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<gtin13>",
+                      "key": "ean",
+                      "description": "(Required) The International Article Number or also known as European Article Number."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dbe9e9e8-7b0a-42d3-9397-f524d9035b54",
+              "name": "No product with the given EAN could be found for this merchant",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "products",
+                    "identifiers",
+                    ":ean"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<gtin13>",
+                      "key": "ean",
+                      "description": "(Required) The International Article Number or also known as European Article Number."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://zalando.github.io/problem/constraint-violation\",\n  \"title\": \"Service Unavailable\",\n  \"status\": 503,\n  \"detail\": \"Connection to database timed out\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16c2f5e3-b2a0-43f9-9558-c4ef73b7f2fe",
+              "name": "Accessing the data you were trying to reach is forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "products",
+                    "identifiers",
+                    ":ean"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<gtin13>",
+                      "key": "ean",
+                      "description": "(Required) The International Article Number or also known as European Article Number."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://zalando.github.io/problem/constraint-violation\",\n  \"title\": \"Service Unavailable\",\n  \"status\": 503,\n  \"detail\": \"Connection to database timed out\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9377c91-d45a-435e-8555-d5be76ca3b04",
+              "name": "No product with the given EAN could be found for this merchant",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "products",
+                    "identifiers",
+                    ":ean"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<gtin13>",
+                      "key": "ean",
+                      "description": "(Required) The International Article Number or also known as European Article Number."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://zalando.github.io/problem/constraint-violation\",\n  \"title\": \"Service Unavailable\",\n  \"status\": 503,\n  \"detail\": \"Connection to database timed out\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e64a5b65-9b24-4d43-9072-7553fb9e48c0",
+              "name": "The request is semantically correct, but it cannot be processed due to business reasons. e.g. A product with same id was already submitted. Please refer to the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "products",
+                    "identifiers",
+                    ":ean"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<gtin13>",
+                      "key": "ean",
+                      "description": "(Required) The International Article Number or also known as European Article Number."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://zalando.github.io/problem/constraint-violation\",\n  \"title\": \"Service Unavailable\",\n  \"status\": 503,\n  \"detail\": \"Connection to database timed out\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17c06b8a-283f-4618-9370-a1f7dbae3ccb",
+              "name": "Too Many Requests. Server busy, please retry later.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "products",
+                    "identifiers",
+                    ":ean"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<gtin13>",
+                      "key": "ean",
+                      "description": "(Required) The International Article Number or also known as European Article Number."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://zalando.github.io/problem/constraint-violation\",\n  \"title\": \"Service Unavailable\",\n  \"status\": 503,\n  \"detail\": \"Connection to database timed out\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e9cb64b-1d1e-43ec-9c1f-a7494ff1d7b6",
+              "name": "Error occurred - see status code and problem object for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "merchants",
+                    ":merchant_id",
+                    "products",
+                    "identifiers",
+                    ":ean"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchant_id",
+                      "description": "(Required) Id of the merchant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<gtin13>",
+                      "key": "ean",
+                      "description": "(Required) The International Article Number or also known as European Article Number."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://zalando.github.io/problem/constraint-violation\",\n  \"title\": \"Service Unavailable\",\n  \"status\": 503,\n  \"detail\": \"Connection to database timed out\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "63fe9b27-5b42-47c7-a031-2ed31734ede7",
+    "name": "Article Requirements AnnouncedReturns Product Association API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "item": [
+    {
+      "id": "6f4a0054-2eca-42ce-b001-10ca531950bf",
+      "name": "SalesChannels",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a5b10cdc-653d-45fa-bf6e-97ad71854e8b",
+          "name": "List sales channels for the given merchant IDs",
+          "request": {
+            "name": "List sales channels for the given merchant IDs",
+            "description": {
+              "content": "Retrieves all the sales channels in which merchant has any contract",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sales-channels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "merchant_ids",
+                  "value": "<string>",
+                  "description": "(Required) Comma separated list of merchants' ids"
+                },
+                {
+                  "disabled": false,
+                  "key": "zalando_only",
+                  "value": "<boolean>",
+                  "description": "When set to true - will return a subset of merchant's sales channels that have Zalando as a retailer. Defaults to false."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing\n",
+                "key": "X-Flow-Id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "2d3758ce-90c8-498e-a4db-fa1c68dfa153",
+              "name": "List of sales channels",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sales-channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchant_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "zalando_only",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing\n",
+                    "key": "X-Flow-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"sales_channel_id\": \"01924c48-49bb-40c2-9c32-ab582e6db6f4\",\n      \"country_name\": \"Germany\",\n      \"country_code\": \"de\",\n      \"live\": true\n    },\n    {\n      \"sales_channel_id\": \"01924c48-49bb-40c2-9c32-ab582e6db6f4\",\n      \"country_name\": \"Germany\",\n      \"country_code\": \"de\",\n      \"live\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4580a4c6-373a-415a-aa9c-f049da5b4f7a",
+              "name": "An array of error objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sales-channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchant_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "zalando_only",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A custom header that will be passed onto any further requests and can be\nused for diagnosing\n",
+                    "key": "X-Flow-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"string\",\n      \"code\": \"string\",\n      \"title\": \"string\",\n      \"detail\": \"string\",\n      \"source\": {\n        \"pointer\": \"string\",\n        \"parameter\": \"string\"\n      }\n    },\n    {\n      \"status\": \"string\",\n      \"code\": \"string\",\n      \"title\": \"string\",\n      \"detail\": \"string\",\n      \"source\": {\n        \"pointer\": \"string\",\n        \"parameter\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "14a45919-ee13-4224-a1d5-429654f4665d",
+    "name": "Article Requirements AnnouncedReturns SalesChannels API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.\n",
+      "type": "text/plain"
+    }
+  }
+}

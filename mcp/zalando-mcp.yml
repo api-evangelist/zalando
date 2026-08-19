@@ -4,9 +4,8 @@ status: candidate
 server:
   name: zalando-zdirect
   transport: http
-  note: 'No official Zalando MCP server found. Candidate tool list derived from zDirect
-    OpenAPI operations (operationId where present, else method+path slug). Auth: OAuth2
-    client credentials Bearer token.'
+  note: 'No official Zalando MCP server found. Candidate tool list derived from zDirect OpenAPI operations
+    (operationId where present, else method+path slug). Auth: OAuth2 client credentials Bearer token.'
 tools:
 - name: get-partners-by-id-attribute-types
   method: GET
@@ -61,8 +60,8 @@ tools:
 - name: get-merchants-by-id-orders
   method: GET
   path: /merchants/{merchant-id}/orders
-  description: Retrieves the merchant orders. Allows filtering of the orders by creation
-    and modified date.
+  description: Retrieves the merchant orders. Allows filtering of the orders by creation and modified
+    date.
   source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders
 - name: get-merchants-by-id-orders-by-id
   method: GET
@@ -132,8 +131,7 @@ tools:
 - name: get-merchants-by-id-orders-deletion-requests
   method: GET
   path: /merchants/{merchant-id}/orders-deletion-requests
-  description: Retrieves the order data belonging to customers who requested data
-    deletion.
+  description: Retrieves the order data belonging to customers who requested data deletion.
   source_operation: openapi/zalando-orders-openapi.yml#get-merchants-by-id-orders-deletion-requests
 - name: get-merchants-by-id-announced-returns
   method: GET
@@ -178,8 +176,8 @@ tools:
 - name: put-merchants-by-id-products-identifiers-by-id
   method: PUT
   path: /merchants/{merchant_id}/products/identifiers/{ean}
-  description: Creates a new simple already known by Zalando by registering the Merchant
-    identifiers in the Zalando system.
+  description: Creates a new simple already known by Zalando by registering the Merchant identifiers in
+    the Zalando system.
   source_operation: openapi/zalando-products-openapi.yml#put-merchants-by-id-products-identifiers-by-id
 - name: get-products-identifiers-by-id
   method: GET
@@ -216,3 +214,9 @@ tools:
   path: /liquidated-items/{merchant-id}
   description: Returns liquidation data
   source_operation: openapi/zalando-zfs-stock-movements-openapi.yml#get-liquidated-items-by-id
+deployment:
+  mode: none
+  verified: derived
+  tools: 41
+  checked: '2026-08-12'
+  source: catalog MCP census

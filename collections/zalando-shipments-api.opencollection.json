@@ -1,0 +1,178 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns Shipments API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Shipments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get shipments for the order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/shipments",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order on which operations are being requested on."
+              }
+            ]
+          },
+          "docs": "Retrieves all shipments associated with the order. Each order has at least one shipment (the default), which includes all of its order lines"
+        },
+        {
+          "info": {
+            "name": "Create a shipment.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/shipments",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order on which operations are being requested on."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a shipment object in preparation for shipping the order. A shipment defines the specific order lines to be shipped together and plays a central role in the fulfillment process. If any order line is already assigned to another shipment, it will be automatically removed from that shipment and assigned to the current one"
+        },
+        {
+          "info": {
+            "name": "Get an individual shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/shipments/:shipment-id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order on which operations are being requested on."
+              },
+              {
+                "name": "shipment-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the shipment which is being requested."
+              }
+            ]
+          },
+          "docs": "Retrieves a specific shipment object"
+        },
+        {
+          "info": {
+            "name": "Update a shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/merchants/:merchant-id/orders/:order-id/shipments/:shipment-id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "To identify a merchant for which this operation is carried out."
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order to which the shipment belongs."
+              },
+              {
+                "name": "shipment-id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the shipment for which updates are being requested."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a shipment object in preparation for shipping the order. A shipment represents the specific order lines that will be shipped together and plays a central role in the fulfillment process. All shipment fields can be updated except the order line IDs, it is not allowed to add or remove order lines from an existing shipment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

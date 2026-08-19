@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns attribute-values API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "attribute-values",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List attribute values for an attribute type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/partners/:businessPartnerId/attribute-types/:typeLabel/attributes",
+            "params": [
+              {
+                "name": "businessPartnerId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "typeLabel",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns all attribute values for the given attribute type label."
+        },
+        {
+          "info": {
+            "name": "Get a single attribute value",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/partners/:businessPartnerId/attribute-types/:typeLabel/attributes/:attributeLabel",
+            "params": [
+              {
+                "name": "businessPartnerId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "typeLabel",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attributeLabel",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the attribute value with the given label for the given attribute type."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

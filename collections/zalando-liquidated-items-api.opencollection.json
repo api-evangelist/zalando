@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns Liquidated Items API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Liquidated Items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns liquidation data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/liquidated-items/:merchant-id",
+            "params": [
+              {
+                "name": "merchant-id",
+                "value": "",
+                "type": "path",
+                "description": "merchant ID"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start timestamp for the query, restricted to now minus 100 days"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End timestamp for the query, restricted to now minus 100 days"
+              },
+              {
+                "name": "purchase-order-number",
+                "value": "",
+                "type": "query",
+                "description": "The purchase order number associated with that ownership transfer."
+              }
+            ]
+          },
+          "docs": "Returns all liquidated items from the specified partner in the given timeframe. <br /><br />"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Article Requirements AnnouncedReturns Types API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns the attribute type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/:merchant_id/attribute-types/:type_label",
+            "headers": [
+              {
+                "name": "X-Flow-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the merchant"
+              },
+              {
+                "name": "type_label",
+                "value": "",
+                "type": "path",
+                "description": "Label of the attribute type"
+              }
+            ]
+          },
+          "docs": "Returns the attribute type"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

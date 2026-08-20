@@ -33,6 +33,17 @@ tags:
 - Marketplace
 - Fulfillment
 - Merchant Platform
+- Order
+- Product
+tags_raw:
+- Company
+- Consumer; Marketplace
+- Fashion
+- E-Commerce
+- Retail
+- Marketplace
+- Fulfillment
+- Merchant Platform
 - Orders
 - Products
 apis:
@@ -76,6 +87,8 @@ apis:
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
   tags:
+  - Attribute Types
+  tags_raw:
   - attribute-types
   properties:
   - type: OpenAPI
@@ -110,6 +123,8 @@ apis:
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
   tags:
+  - Attribute Values
+  tags_raw:
   - attribute-values
   properties:
   - type: OpenAPI
@@ -384,6 +399,8 @@ apis:
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -452,6 +469,8 @@ apis:
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
   tags:
+  - Prices
+  tags_raw:
   - prices
   properties:
   - type: OpenAPI
@@ -588,6 +607,8 @@ apis:
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
   tags:
+  - Sales Channels
+  tags_raw:
   - SalesChannels
   properties:
   - type: OpenAPI
@@ -656,6 +677,8 @@ apis:
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
   tags:
+  - Stocks
+  tags_raw:
   - stocks
   properties:
   - type: OpenAPI

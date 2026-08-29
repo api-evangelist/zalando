@@ -1,0 +1,72 @@
+slug: zalando
+provider: Zalando
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: Orders
+  spec_file: zalando-orders-api-openapi.yml
+  capability_id: BC-520.40
+  capability_id_l1: BC-520
+  capability_name: Order Fulfilment Management
+  confidence: 0.8
+  evidence: '''Retrieves the merchant orders...'', ''POST /merchants/{merchant-id}/orders/{order-id}/shipments  Create
+    a shipment.'', ''Retrieves the Order Lines of an order item.''; schemas Order, OrderItem, Shipment,
+    OrderLineStatus'
+  reason: Full order lifecycle for merchants — retrieve/update orders, order items and lines, state transitions,
+    and create/update shipments against the order. This is order fulfilment orchestration; the shipment
+    sub-resource keeps it fulfilment rather than sales quoting.
+- tag: prices
+  spec_file: zalando-prices-api-openapi.yml
+  capability_id: BC-440.20
+  capability_id_l1: BC-440
+  capability_name: Price List Management
+  confidence: 0.8
+  evidence: POST /merchants/{merchant-id}/prices "Sets the Prices for a list of Products."; schemas RegularPrice,
+    PromotionalPrice, ScheduledPrice, PriceUpdateRequest
+  reason: The operation maintains regular, promotional and scheduled selling prices per product for a
+    merchant — price list maintenance. Some ambiguity between price list maintenance and promotion management
+    since promotional prices are included.
+- tag: History of Price Update Attempts
+  spec_file: zalando-history-of-price-update-attempts-api-openapi.yml
+  capability_id: BC-440.20
+  capability_id_l1: BC-440
+  capability_name: Price List Management
+  confidence: 0.75
+  evidence: '''This API provides capabilities to retrieve the current price status of merchant articles
+    and a history of the price update attempts.''; schemas AttemptedScheduledPrice, AttemptedPrice, PriceAttemptsResponse'
+  reason: Operations report on the status and history of price submissions for merchant articles, i.e.
+    maintenance and verification of the price book for products. Maps to Price List Management; it is
+    reporting on price updates rather than setting prices, hence not higher.
+- tag: stocks
+  spec_file: zalando-stocks-api-openapi.yml
+  capability_id: BC-530.10
+  capability_id_l1: BC-530
+  capability_name: Stock Level Management
+  confidence: 0.72
+  evidence: POST /merchants/{merchant-id}/stocks "Update stock quantities for a set of articles."; schema
+    StockUpdatePerSalesChannel
+  reason: Merchants push available stock quantities per article and sales channel, which is stock level
+    maintenance for the marketplace. Sub-capability choice (stock level vs. allocation across channels)
+    carries some uncertainty.
+- tag: Reports
+  spec_file: zalando-reports-api-openapi.yml
+  capability_id: BC-2460.10
+  capability_id_l1: BC-2460
+  capability_name: Inbound Operations Management
+  confidence: 0.7
+  evidence: GET /reports/received-items/{merchant-id} 'Retrieve inbounded items'; 'The inbound receive
+    process is the process of receiving items in the warehouse (goods receipt) that were delivered by
+    any partner'; schema InboundedItem
+  reason: Exposes goods-receipt data from Zalando Fulfillment Solutions warehouses to partners, i.e. visibility
+    over the inbound receive process of a third-party fulfilment operation. Maps to Inbound Operations
+    Management; it is reporting on inbound rather than executing putaway, so not higher.

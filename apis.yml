@@ -754,6 +754,9 @@ apis:
   - type: APIReference
     url: https://developers.merchants.zalando.com/docs/openapi/cross-border-movements.html
 common:
+- type: CapabilityMap
+  url: capabilities/zalando-capability-edges.yml
+  name: Zalando Business Capability Map
 - type: Overlay
   url: overlays/zalando-article-requirements-overlay.yaml
 - type: DomainSecurity

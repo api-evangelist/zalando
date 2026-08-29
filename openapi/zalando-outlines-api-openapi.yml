@@ -1,12 +1,10 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns Outlines API
-  version: 1.0.0
+  version: 0.0.9
+  title: 'OpenAPI Specification: Merchant Product Attributes Outlines API'
+  description: This service enumerates and describes Zalando product attributes.
   x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
-
-    '
+  x-api-id: 84689b31-793f-4583-91e5-9ab195be36ca
 tags:
 - name: Outlines
 paths:
@@ -54,64 +52,24 @@ paths:
         default:
           $ref: '#/components/responses/GenericError'
 components:
-  parameters:
-    outline_label:
-      name: outline_label
-      in: path
-      description: Label of the outline
-      required: true
-      schema:
-        type: string
-        format: string
-    flow_id:
-      name: X-Flow-Id
-      description: 'A custom header that will be passed onto any further requests and can be
-
-        used for diagnosing.
-
-        '
-      in: header
-      required: false
-      schema:
-        type: string
-    merchant_id:
-      name: merchant_id
-      in: path
-      description: Id of the merchant
-      required: true
-      schema:
-        type: string
-        format: string
   schemas:
-    Outline:
-      description: 'Provides an outline of a product, etc., defining the types of attributes
+    Name:
+      description: 'Map of language to text, key must follow (rfc-2616, section
 
-        that must be present, and those which may be present, and also some
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
 
-        optional additional constraints on the attributes of those types.
+
+        This mapping is only a human readable name of the entity.
+
+        Building logic dependant on this field should be avoided.
 
         '
-      required:
-      - label
-      - tiers
-      properties:
-        label:
-          type: string
-          example: shoe
-        name:
-          $ref: '#/components/schemas/Name'
-        description:
-          $ref: '#/components/schemas/Description'
-        tiers:
-          $ref: '#/components/schemas/Tiers'
-    Tiers:
-      properties:
-        model:
-          $ref: '#/components/schemas/OutlineTier'
-        config:
-          $ref: '#/components/schemas/OutlineTier'
-        simple:
-          $ref: '#/components/schemas/OutlineTier'
+      additionalProperties:
+        type: string
+      example:
+        en: The name
+        de: Der Name
+        es: El nombre
     OutlineTier:
       description: 'Defines the optional and mandatory attributes and attribute constraints
 
@@ -167,10 +125,11 @@ components:
             type: object
             properties:
               related_types:
-                type: array
+                type:
+                - array
+                - 'null'
                 items:
                   type: string
-                nullable: true
               description:
                 type: object
                 additionalProperties:
@@ -203,23 +162,27 @@ components:
         en: Description
         de: Beschreibung
         es: Descripción
-    Name:
-      description: 'Map of language to text, key must follow (rfc-2616, section
+    Outline:
+      description: 'Provides an outline of a product, etc., defining the types of attributes
 
-        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+        that must be present, and those which may be present, and also some
 
-
-        This mapping is only a human readable name of the entity.
-
-        Building logic dependant on this field should be avoided.
+        optional additional constraints on the attributes of those types.
 
         '
-      additionalProperties:
-        type: string
-      example:
-        en: The name
-        de: Der Name
-        es: El nombre
+      required:
+      - label
+      - tiers
+      properties:
+        label:
+          type: string
+          example: shoe
+        name:
+          $ref: '#/components/schemas/Name'
+        description:
+          $ref: '#/components/schemas/Description'
+        tiers:
+          $ref: '#/components/schemas/Tiers'
     AttributePerType:
       type: object
       description: 'Define a relation between an (outline, type) and its allowed values.
@@ -237,6 +200,14 @@ components:
           type: array
           items:
             type: string
+    Tiers:
+      properties:
+        model:
+          $ref: '#/components/schemas/OutlineTier'
+        config:
+          $ref: '#/components/schemas/OutlineTier'
+        simple:
+          $ref: '#/components/schemas/OutlineTier'
   responses:
     OutlinesPagedResponse:
       description: list of outlines
@@ -260,3 +231,40 @@ components:
         application/problem+json:
           schema:
             $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+  parameters:
+    flow_id:
+      name: X-Flow-Id
+      description: 'A custom header that will be passed onto any further requests and can be
+
+        used for diagnosing.
+
+        '
+      in: header
+      required: false
+      schema:
+        type: string
+    merchant_id:
+      name: merchant_id
+      in: path
+      description: Id of the merchant
+      required: true
+      schema:
+        type: string
+        format: string
+    outline_label:
+      name: outline_label
+      in: path
+      description: Label of the outline
+      required: true
+      schema:
+        type: string
+        format: string
+  securitySchemes:
+    merchant_platform:
+      type: oauth2
+      description: The Products service uses the OpenID Connect (OIDC) authentication layer of OAuth 2 to handle the client credentials process flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+          scopes:
+            products/attributes/read: scope to read a product

@@ -1,12 +1,13 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns API
-  version: 1.0.0
-  x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
-
-    '
+  title: zDirect Platform Orders Announced Returns API
+  description: This specification describes the Orders API of the Zalando Merchant Platform.
+  version: 1.1.1
+  contact: {}
+servers:
+- url: https://api-sandbox.merchants.zalando.com
+security:
+- merchant_platform: []
 tags:
 - name: AnnouncedReturns
 paths:
@@ -76,6 +77,105 @@ paths:
           $ref: '#/components/responses/Default'
 components:
   schemas:
+    Error:
+      type: object
+      description: Error object
+      properties:
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+          example: 404
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+          example: 123A
+        title:
+          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+          example: The resource requested could not be found.
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The order 123 does not exist.
+        source:
+          $ref: '#/components/schemas/ErrorSource'
+    Errors:
+      type: object
+      description: An array of error objects.
+      properties:
+        errors:
+          description: All errors.
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    BaseLinks:
+      type: object
+      required:
+      - self
+      description: Links for cursor-based navigation.
+      properties:
+        prev:
+          description: Simplified hypertext control referencing the previous page. If this link is absent, there is no previous page to iterate.
+          type: string
+          format: uri
+          example: https://api-sandbox.merchant-center.zalan.do/resources?cursor=Y3Vyc29yCg
+        self:
+          description: Simplified hypertext control referencing the current page.
+          type: string
+          format: uri
+          example: https://api-sandbox.merchants.zalando.com/resources?cursor=Y3Vyc29yCg
+        next:
+          description: Simplified hypertext control referencing the next page. If this link is absent, there is no next page to iterate. In rare cases the next link may return an empty collection.
+          type: string
+          format: uri
+          example: https://api-sandbox.merchants.zalando.com/resources?cursor=Y3Vyc29yCg
+    AnnouncedReturnOrderLine:
+      type: object
+      description: The Order Line information in the announced return.
+      required:
+      - order_line_id
+      - order_item_id
+      - return_reason
+      properties:
+        order_line_id:
+          type: string
+          format: uuid
+          description: Unique identifier of an Order Line.
+          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
+        order_item_id:
+          type: string
+          format: uuid
+          description: Unique identifier of the Order Item this Order Line belongs to.
+          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
+        return_reason:
+          type: string
+          description: 'The reason for returning this order line, for example TOO_LARGE, TOO_SMALL, or DONT_LIKE.
+
+
+            Note: this is a free-form string and is not limited to a predefined set of return reasons or a specific format.
+
+            '
+    RateLimitError:
+      type: object
+      description: Error object for rate limit.
+      properties:
+        message:
+          description: A string containing the error message for exceeding the rate limit
+          type: string
+    AnnouncedReturns:
+      type: object
+      required:
+      - data
+      - links
+      description: A collection of returns announced by customers via Zalando website.
+      properties:
+        data:
+          type: array
+          description: An array of returns announced by customers via Zalando website.
+          items:
+            $ref: '#/components/schemas/AnnouncedReturn'
+        links:
+          $ref: '#/components/schemas/BaseLinks'
     AnnouncedReturn:
       type: object
       description: A return announced by a customer via Zalando website. It's possible that a single announced return contains items from multiple orders.
@@ -114,84 +214,6 @@ components:
           type: string
           format: date-time
           example: '2014-12-31T23:00:00.000Z'
-    Errors:
-      type: object
-      description: An array of error objects.
-      properties:
-        errors:
-          description: All errors.
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
-    RateLimitError:
-      type: object
-      description: Error object for rate limit.
-      properties:
-        message:
-          description: A string containing the error message for exceeding the rate limit
-          type: string
-    Error:
-      type: object
-      description: Error object
-      properties:
-        status:
-          description: The HTTP status code applicable to this problem, expressed as a string value.
-          type: string
-          example: 404
-        code:
-          description: An application-specific error code, expressed as a string value.
-          type: string
-          example: 123A
-        title:
-          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          type: string
-          example: The resource requested could not be found.
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-          example: The order 123 does not exist.
-        source:
-          $ref: '#/components/schemas/ErrorSource'
-    AnnouncedReturns:
-      type: object
-      required:
-      - data
-      - links
-      description: A collection of returns announced by customers via Zalando website.
-      properties:
-        data:
-          type: array
-          description: An array of returns announced by customers via Zalando website.
-          items:
-            $ref: '#/components/schemas/AnnouncedReturn'
-        links:
-          $ref: '#/components/schemas/BaseLinks'
-    AnnouncedReturnOrderLine:
-      type: object
-      description: The Order Line information in the announced return.
-      required:
-      - order_line_id
-      - order_item_id
-      - return_reason
-      properties:
-        order_line_id:
-          type: string
-          format: uuid
-          description: Unique identifier of an Order Line.
-          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
-        order_item_id:
-          type: string
-          format: uuid
-          description: Unique identifier of the Order Item this Order Line belongs to.
-          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
-        return_reason:
-          type: string
-          description: 'The reason for returning this order line, for example TOO_LARGE, TOO_SMALL, or DONT_LIKE.
-
-
-            Note: this is a free-form string and is not limited to a predefined set of return reasons or a specific format.
-
-            '
     ErrorSource:
       type: object
       description: Indicate the source of error.
@@ -204,27 +226,6 @@ components:
           description: A string indicating which URI query parameter caused the error.
           type: string
           example: order_number
-    BaseLinks:
-      type: object
-      required:
-      - self
-      description: Links for cursor-based navigation.
-      properties:
-        prev:
-          description: Simplified hypertext control referencing the previous page. If this link is absent, there is no previous page to iterate.
-          type: string
-          format: uri
-          example: https://api-sandbox.merchant-center.zalan.do/resources?cursor=Y3Vyc29yCg
-        self:
-          description: Simplified hypertext control referencing the current page.
-          type: string
-          format: uri
-          example: https://api-sandbox.merchants.zalando.com/resources?cursor=Y3Vyc29yCg
-        next:
-          description: Simplified hypertext control referencing the next page. If this link is absent, there is no next page to iterate. In rare cases the next link may return an empty collection.
-          type: string
-          format: uri
-          example: https://api-sandbox.merchants.zalando.com/resources?cursor=Y3Vyc29yCg
     AnnouncedReturnOrder:
       type: object
       description: The Order information in the announced return.
@@ -252,22 +253,6 @@ components:
           items:
             $ref: '#/components/schemas/AnnouncedReturnOrderLine'
   parameters:
-    Authorization:
-      name: Authorization
-      in: header
-      description: Bearer access token.
-      required: true
-      schema:
-        type: string
-        format: JWT token
-    conventionalLimit:
-      name: limit
-      in: query
-      description: Query filter specifying the upper limit to the number of entries on a page.
-      required: false
-      schema:
-        type: integer
-        default: 50
     merchantId:
       name: merchant-id
       in: path
@@ -284,14 +269,22 @@ components:
       schema:
         type: string
       example: Y3Vyc29yCg
-    salesChannelId:
-      name: sales_channel_id
+    conventionalLimit:
+      name: limit
       in: query
-      description: Query filter specifying a sales channel.
+      description: Query filter specifying the upper limit to the number of entries on a page.
       required: false
       schema:
+        type: integer
+        default: 50
+    Authorization:
+      name: Authorization
+      in: header
+      description: Bearer access token.
+      required: true
+      schema:
         type: string
-        format: uuid
+        format: JWT token
     x-flow-id:
       name: X-Flow-Id
       in: header
@@ -302,6 +295,14 @@ components:
         format: uuid
       x-doc:
         excluded: true
+    salesChannelId:
+      name: sales_channel_id
+      in: query
+      description: Query filter specifying a sales channel.
+      required: false
+      schema:
+        type: string
+        format: uuid
   responses:
     Default:
       description: error occurred - see status code and error/problem objects for more information.
@@ -312,3 +313,13 @@ components:
         application/problem+json:
           schema:
             $ref: https://opensource.zalando.com/restful-api-guidelines/models/problem-1.0.1.yaml#/Problem
+  securitySchemes:
+    merchant_platform:
+      type: oauth2
+      description: This API uses OAuth2 OIDC with Client Credentials flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+          scopes:
+            orders/read: Read access.
+            orders/write: Write access.

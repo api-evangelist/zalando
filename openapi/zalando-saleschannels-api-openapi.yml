@@ -1,12 +1,14 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns SalesChannels API
-  version: 1.0.0
+  version: 0.1.0
+  title: 'OpenAPI Specification: Sales Channels API'
+  description: This specification describes the Sales Channels API of the Zalando zDirect Platform
   x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
-
-    '
+servers:
+- url: api.merchants.zalando.com
+  description: Production Environment
+- url: api-sandbox.merchants.zalando.com
+  description: Sandbox Environment
 tags:
 - name: SalesChannels
 paths:
@@ -48,15 +50,6 @@ paths:
                 $ref: '#/components/schemas/Errors'
 components:
   schemas:
-    Errors:
-      type: object
-      description: Array of error objects
-      properties:
-        errors:
-          description: All errors
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
     Error:
       type: object
       description: Error object
@@ -75,6 +68,25 @@ components:
           type: string
         source:
           $ref: '#/components/schemas/ErrorSource'
+    Errors:
+      type: object
+      description: Array of error objects
+      properties:
+        errors:
+          description: All errors
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    ErrorSource:
+      type: object
+      description: Indicate the source of error
+      properties:
+        pointer:
+          description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. "/data" for a primary data object, or "/data/attributes/title" for a specific attribute].
+          type: string
+        parameter:
+          description: A string indicating which URI query parameter caused the error.
+          type: string
     SalesChannel:
       type: object
       description: representation of one sales channel
@@ -92,16 +104,6 @@ components:
         live:
           type: boolean
           example: true
-    ErrorSource:
-      type: object
-      description: Indicate the source of error
-      properties:
-        pointer:
-          description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. "/data" for a primary data object, or "/data/attributes/title" for a specific attribute].
-          type: string
-        parameter:
-          description: A string indicating which URI query parameter caused the error.
-          type: string
     SalesChannels:
       type: object
       description: list of sales channels
@@ -122,3 +124,12 @@ components:
       required: false
       schema:
         type: string
+  securitySchemes:
+    merchant_platform:
+      type: oauth2
+      description: The Products service uses the OpenID Connect (OIDC) authentication layer of OAuth 2 to handle the client credentials process flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.merchants.zalando.com/auth/token
+          scopes:
+            profile/sales-channels/read: scope to get sales channels

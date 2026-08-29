@@ -1,12 +1,10 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns Types API
-  version: 1.0.0
+  version: 0.0.9
+  title: 'OpenAPI Specification: Merchant Product Attributes Types API'
+  description: This service enumerates and describes Zalando product attributes.
   x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
-
-    '
+  x-api-id: 84689b31-793f-4583-91e5-9ab195be36ca
 tags:
 - name: Types
 paths:
@@ -40,6 +38,23 @@ components:
       - one
       - many
       example: one
+    Name:
+      description: 'Map of language to text, key must follow (rfc-2616, section
+
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+
+
+        This mapping is only a human readable name of the entity.
+
+        Building logic dependant on this field should be avoided.
+
+        '
+      additionalProperties:
+        type: string
+      example:
+        en: The name
+        de: Der Name
+        es: El nombre
     TypeDefinition:
       description: 'The specification of the actual type of this type.
 
@@ -70,72 +85,6 @@ components:
                 type: boolean
       example:
         type: LocalizedStringDefinition
-    TypeVariants:
-      description: 'Allow aliases for types, when used it would be:
-
-        "{type_label}.{type_variant}", this way it would be allowed to have the
-
-        same type used multiple times in the same outline/attributes
-
-        E.g: color.primary being color the type and primary the variant
-
-        '
-      type: array
-      items:
-        required:
-        - label
-        - name
-        properties:
-          label:
-            type: string
-          name:
-            $ref: '#/components/schemas/Name'
-      example:
-      - label: primary
-        name: Primary Type
-      - label: secondary
-        name: Secondary Type
-    Type:
-      required:
-      - label
-      - name
-      - definition
-      - type_variants
-      - cardinality
-      - usage
-      properties:
-        label:
-          type: string
-          example: color_code
-        name:
-          $ref: '#/components/schemas/Name'
-        description:
-          $ref: '#/components/schemas/Description'
-        cardinality:
-          $ref: '#/components/schemas/TypeCardinality'
-        usage:
-          $ref: '#/components/schemas/TypeUsage'
-        definition:
-          $ref: '#/components/schemas/TypeDefinition'
-        type_variants:
-          $ref: '#/components/schemas/TypeVariants'
-    Name:
-      description: 'Map of language to text, key must follow (rfc-2616, section
-
-        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
-
-
-        This mapping is only a human readable name of the entity.
-
-        Building logic dependant on this field should be avoided.
-
-        '
-      additionalProperties:
-        type: string
-      example:
-        en: The name
-        de: Der Name
-        es: El nombre
     Description:
       description: 'Map of language to text, key must follow (rfc-2616, section
 
@@ -165,32 +114,56 @@ components:
       - reference_by_label
       - reference_by_value
       example: reference_by_label
-  responses:
-    TypeResponse:
-      description: a single attribute type
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Type'
-    GenericError:
-      description: 'error occurred - see status code and problem object for more
+    Type:
+      required:
+      - label
+      - name
+      - definition
+      - type_variants
+      - cardinality
+      - usage
+      properties:
+        label:
+          type: string
+          example: color_code
+        name:
+          $ref: '#/components/schemas/Name'
+        description:
+          $ref: '#/components/schemas/Description'
+        cardinality:
+          $ref: '#/components/schemas/TypeCardinality'
+        usage:
+          $ref: '#/components/schemas/TypeUsage'
+        definition:
+          $ref: '#/components/schemas/TypeDefinition'
+        type_variants:
+          $ref: '#/components/schemas/TypeVariants'
+    TypeVariants:
+      description: 'Allow aliases for types, when used it would be:
 
-        information.
+        "{type_label}.{type_variant}", this way it would be allowed to have the
+
+        same type used multiple times in the same outline/attributes
+
+        E.g: color.primary being color the type and primary the variant
 
         '
-      content:
-        application/problem+json:
-          schema:
-            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+      type: array
+      items:
+        required:
+        - label
+        - name
+        properties:
+          label:
+            type: string
+          name:
+            $ref: '#/components/schemas/Name'
+      example:
+      - label: primary
+        name: Primary Type
+      - label: secondary
+        name: Secondary Type
   parameters:
-    type_label:
-      name: type_label
-      in: path
-      description: Label of the attribute type
-      required: true
-      schema:
-        type: string
-        format: string
     flow_id:
       name: X-Flow-Id
       description: 'A custom header that will be passed onto any further requests and can be
@@ -202,6 +175,14 @@ components:
       required: false
       schema:
         type: string
+    type_label:
+      name: type_label
+      in: path
+      description: Label of the attribute type
+      required: true
+      schema:
+        type: string
+        format: string
     merchant_id:
       name: merchant_id
       in: path
@@ -210,3 +191,29 @@ components:
       schema:
         type: string
         format: string
+  responses:
+    GenericError:
+      description: 'error occurred - see status code and problem object for more
+
+        information.
+
+        '
+      content:
+        application/problem+json:
+          schema:
+            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+    TypeResponse:
+      description: a single attribute type
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Type'
+  securitySchemes:
+    merchant_platform:
+      type: oauth2
+      description: The Products service uses the OpenID Connect (OIDC) authentication layer of OAuth 2 to handle the client credentials process flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+          scopes:
+            products/attributes/read: scope to read a product

@@ -1,12 +1,13 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns Orders API
-  version: 1.0.0
-  x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
-
-    '
+  title: zDirect Platform Orders API
+  description: This specification describes the Orders API of the Zalando Merchant Platform.
+  version: 1.1.1
+  contact: {}
+servers:
+- url: https://api-sandbox.merchants.zalando.com
+security:
+- merchant_platform: []
 tags:
 - name: Orders
 paths:
@@ -1166,23 +1167,357 @@ paths:
                 $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
 components:
   schemas:
-    Cursor:
+    OrderItemAttributes:
       type: object
-      description: The representation of a cursor for fetching paginated list of orders for deletion.
+      description: An Order Item contains a summarized view with quantities of the underlying Order Lines.
+      required:
+      - article_id
+      - quantity_initial
+      - quantity_reserved
+      - quantity_shipped
+      - quantity_returned
+      - quantity_canceled
       properties:
-        next:
-          description: The cursor pointer for the next data to be fetched.
+        order_item_id:
           type: string
-          example: HSOD896
-    Errors:
+          format: uuid
+          description: Unique identifier of an Order Item.
+          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
+        order_id:
+          type: string
+          format: uuid
+          description: Unique identifier of an Order.
+          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
+        article_id:
+          description: Zalando's product identifier.
+          type: string
+          example: DU341A00M-1020375000
+        external_id:
+          description: The merchant's product identifier.
+          type: string
+          example: 123AXL
+        description:
+          description: A short description of the ordered product.
+          type: string
+          example: Ladies handwoven rayon fully lined jacket with contrasting silk/rayon velvet notched collar and cuffs. Side seam pockets with 4-bone button closure and polyester lining. XS-XL. Made in XYZ.
+        quantity_initial:
+          description: The initial quantity.
+          type: integer
+          format: int32
+          example: 1
+        quantity_reserved:
+          description: The reserved quantity.
+          type: integer
+          format: int32
+          example: 1
+        quantity_shipped:
+          description: The shipped quantity.
+          type: integer
+          format: int32
+          example: 1
+        quantity_returned:
+          description: The returned quantity.
+          type: integer
+          format: int32
+          example: 0
+        quantity_canceled:
+          description: The canceled quantity.
+          type: integer
+          format: int32
+          example: 0
+        created_by:
+          description: The user who created the order item.
+          type: string
+          example: joe.smith@zalando.de
+        created_at:
+          description: The timestamp of the order item creation.
+          type: string
+          format: date-time
+          example: '2014-12-31T23:00:00.000Z'
+        modified_by:
+          description: The last modified user.
+          type: string
+          example: joe.smith@zalando.de
+        modified_at:
+          description: The last modified timestamp.
+          type: string
+          format: date-time
+          example: '2014-12-31T23:00:00.000Z'
+    Order:
       type: object
-      description: An array of error objects.
+      description: Order Resource Object.
       properties:
-        errors:
-          description: All errors.
+        type:
+          description: Type of resource.
+          type: string
+        id:
+          description: Identifier of a resource.
+          type: string
+        attributes:
+          $ref: '#/components/schemas/OrderAttributes'
+        links:
+          $ref: '#/components/schemas/Links'
+        relationships:
+          $ref: '#/components/schemas/OrderRelationships'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    Address:
+      type: object
+      description: The representation of an address.
+      required:
+      - first_name
+      - last_name
+      - address_type
+      - address_line_1
+      - city
+      - country_code
+      properties:
+        first_name:
+          description: The first name.
+          type: string
+          example: Joe
+        last_name:
+          description: The last name.
+          type: string
+          example: Smith
+        address_line_1:
+          description: The name of the main street.
+          type: string
+          example: Charles Street 1337
+        address_line_2:
+          description: Possible additional information / address schemes.
+          type: string
+          example: Dallas Ranch
+        address_line_3:
+          description: Possible additional information / address schemes.
+          type: string
+          example: SW area
+        zip_code:
+          description: The zip code to use.
+          type: string
+          example: 10178
+        city:
+          description: The city.
+          type: string
+          example: Dallas
+        country_code:
+          description: The two-digit country code. In ISO 3166-1 alpha 2 format.
+          type: string
+          example: US
+        address_type:
+          description: The type of the address.
+          type: string
+          x-extensible-enum:
+          - HOME_ADDRESS
+          - PACK_STATION
+          - PICKUP_POINT
+          example: PICKUP_POINT
+        service_point_details:
+          $ref: '#/components/schemas/ServicePointDetails'
+    OrderItemsTopLevel:
+      type: object
+      description: Representation of a list of order items according to the JSON API specification.
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+        data:
+          description: List of Order Items Resource Objects.
           type: array
           items:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/OrderItem'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        included:
+          description: Include Resource Objects requested by the client.
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemResourceObject'
+    OrderUpdateAttributes:
+      type: object
+      description: Attributes belonging to an order update.
+      properties:
+        tracking_number:
+          description: The tracking number of the shipment.
+          type: string
+          example: TRACKING-123456-WHATEVER
+        return_tracking_number:
+          description: The return tracking number of the shipment.
+          type: string
+          example: ReTurNTracKINGNumBER123461413
+        merchant_order_id:
+          description: The order id provided by merchant. It is an alphanumeric and non-empty value.
+          type: string
+          example: MERCHANT-ORDER-ID-123
+    ServicePointDetails:
+      type: object
+      properties:
+        service_point_name:
+          description: The name of the packstation or pickup point.
+          type: string
+          example: PickupPoint 123
+        service_point_id:
+          description: The id of the packstation or pickup point.
+          type: string
+          example: '123456'
+        service_point_member_id:
+          description: The member id of the packstation or pickup point.
+          type: string
+          example: '123456789'
+    OrderLineStatus:
+      type: string
+      enum:
+      - initial
+      - reserved
+      - shipped
+      - returned
+      - canceled
+      description: The status of an Order Line.
+    RateLimitError:
+      type: object
+      description: Error object for rate limit.
+      properties:
+        message:
+          description: A string containing the error message for exceeding the rate limit
+          type: string
+    ShipmentResource:
+      type: object
+      description: Shipment resource object
+      properties:
+        type:
+          description: Type of resource.
+          type: string
+          example: Shipment
+        id:
+          description: Identifier of a resource.
+          type: string
+          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
+        attributes:
+          $ref: '#/components/schemas/Shipment'
+    OrderResourceObject:
+      oneOf:
+      - $ref: '#/components/schemas/OrderItem'
+      - $ref: '#/components/schemas/OrderLine'
+      - $ref: '#/components/schemas/TransitionData'
+      - $ref: '#/components/schemas/ShipmentResource'
+    DeletionRequestOrder:
+      type: object
+      description: Representation of an order to be deleted.
+      properties:
+        merchant_id:
+          type: string
+          format: uuid
+          description: A unique identifier for the Merchant that this order belongs to. The merchant identifies who owns the stock.
+          example: 26caa95a-174f-41be-8585-0ce49055874d
+        sales_channel_id:
+          description: The sales channel on which the order was sold.
+          type: string
+          format: uuid
+          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
+        customer_number:
+          description: The number of the Zalando customer who placed the order.
+          type: string
+          example: '31400820597'
+        order_id:
+          type: string
+          format: uuid
+          description: Unique identifier of an Order.
+          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
+        order_number:
+          type: string
+          description: Zalando's unique order identifier.
+          example: '1040970000502251'
+        requested_at:
+          description: The timestamp of the deletion-request creation.
+          type: string
+          format: date-time
+          example: '2014-12-31T23:00:00.000Z'
+        shipping_address:
+          $ref: '#/components/schemas/Address'
+    OrderLineUpdateTopLevel:
+      type: object
+      description: Representation of an Order Line update according to the JSON API specification.
+      properties:
+        data:
+          $ref: '#/components/schemas/OrderLineUpdateData'
+    Relationships:
+      description: Relationship object to represent One-to-Many relationships.
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceIdentifierObject'
+    Phone:
+      type: object
+      description: The phone number of the customer who placed the order. It's exposed only with required permissions
+      required:
+      - number
+      properties:
+        number:
+          type: string
+          description: String containing the phone number
+          example: '9876543210'
+    OrderRelationships:
+      type: object
+      description: Order relationships.
+      properties:
+        order_items:
+          type: object
+          $ref: '#/components/schemas/Relationships'
+        order_transitions:
+          type: object
+          $ref: '#/components/schemas/Relationships'
+    TransitionsTopLevel:
+      type: object
+      description: Representation of a list of transitions according to the JSON API specification.
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+        data:
+          description: List of Transitions.
+          type: array
+          items:
+            $ref: '#/components/schemas/TransitionData'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    TransitionReason:
+      type: object
+      description: The reason for an order or order line transition.
+      required:
+      - code
+      - description
+      properties:
+        code:
+          type: string
+          example: '0'
+        description:
+          type: string
+          example: UNKNOWN_CAUSE
+    Meta:
+      type: object
+      description: Meta
+      required:
+      - copyright
+      properties:
+        copyright:
+          description: Zalando SE Copyright notice.
+          type: string
+          example: Zalando SE 2019 All rights reserved.
+        number_of_results:
+          description: Number of results found in response.
+          type: integer
+          format: int32
+          example: 2
+        possible_status_transitions:
+          description: Possible values for the next status transition of an Order Line based on its current status.
+          type: array
+          items:
+            type: string
+          example:
+          - reserved
+          - shipped
+          - canceled
     Shipment:
       type: object
       description: 'A shipment represents the delivery of specific order lines from an order in a single parcel. It includes additional details such as tracking numbers, the stock location ID from which the shipment is sent and the shipment weight (in grams)
@@ -1234,61 +1569,24 @@ components:
           type: string
           format: date-time
           description: The last modified timestamp.
-    TransitionsTopLevel:
+    OrderItem:
       type: object
-      description: Representation of a list of transitions according to the JSON API specification.
+      description: Order Item Resource Object.
       properties:
+        type:
+          description: Type of resource.
+          type: string
+        id:
+          description: Identifier of a resource.
+          type: string
+        attributes:
+          $ref: '#/components/schemas/OrderItemAttributes'
         links:
           $ref: '#/components/schemas/Links'
-        data:
-          description: List of Transitions.
-          type: array
-          items:
-            $ref: '#/components/schemas/TransitionData'
+        relationships:
+          $ref: '#/components/schemas/OrderItemRelationships'
         meta:
           $ref: '#/components/schemas/Meta'
-    Phone:
-      type: object
-      description: The phone number of the customer who placed the order. It's exposed only with required permissions
-      required:
-      - number
-      properties:
-        number:
-          type: string
-          description: String containing the phone number
-          example: '9876543210'
-    OrderLineStatus:
-      type: string
-      enum:
-      - initial
-      - reserved
-      - shipped
-      - returned
-      - canceled
-      description: The status of an Order Line.
-    ShipmentStatus:
-      type: string
-      description: The status of the shipment.
-      x-extensible-enum:
-      - initial
-      - shipped
-      - canceled
-      example: initial
-    Money:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: decimal
-          example: 99.95
-          description: Amount with 2 digits after the decimal separator.
-        currency:
-          type: string
-          format: iso-4217
-          example: EUR
-      required:
-      - amount
-      - currency
     OrderAttributes:
       type: object
       description: Representation of an order.
@@ -1423,372 +1721,6 @@ components:
           example: 33836AD6-F22A-49A5-B7D9-98479EB95BB4
         customer_phone:
           $ref: '#/components/schemas/Phone'
-    TransitionReason:
-      type: object
-      description: The reason for an order or order line transition.
-      required:
-      - code
-      - description
-      properties:
-        code:
-          type: string
-          example: '0'
-        description:
-          type: string
-          example: UNKNOWN_CAUSE
-    OrderLineRelationships:
-      type: object
-      description: Order Line relationships.
-      properties:
-        order_line_transitions:
-          type: object
-          $ref: '#/components/schemas/Relationships'
-    RateLimitError:
-      type: object
-      description: Error object for rate limit.
-      properties:
-        message:
-          description: A string containing the error message for exceeding the rate limit
-          type: string
-    ServicePointDetails:
-      type: object
-      properties:
-        service_point_name:
-          description: The name of the packstation or pickup point.
-          type: string
-          example: PickupPoint 123
-        service_point_id:
-          description: The id of the packstation or pickup point.
-          type: string
-          example: '123456'
-        service_point_member_id:
-          description: The member id of the packstation or pickup point.
-          type: string
-          example: '123456789'
-    ItemResourceObject:
-      oneOf:
-      - $ref: '#/components/schemas/OrderLine'
-      - $ref: '#/components/schemas/TransitionData'
-    Relationships:
-      description: Relationship object to represent One-to-Many relationships.
-      properties:
-        links:
-          $ref: '#/components/schemas/Links'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceIdentifierObject'
-    OrderLineUpdateAttributes:
-      type: object
-      description: Attribute belonging to an Order Line update.
-      required:
-      - status
-      properties:
-        status:
-          description: The new status of the Order Line.
-          type: string
-          example: shipped
-        reason:
-          description: Optional integer code if the line is Returned.
-          type: integer
-          format: int32
-          example: 9
-        outbound_logistic_center_id:
-          description: Optional unique identifier of the outbound logistic center.
-          type: string
-          format: uuid
-          example: 57be9d4a-28d6-4b83-94de-b784899cabc9
-    ShipmentResource:
-      type: object
-      description: Shipment resource object
-      properties:
-        type:
-          description: Type of resource.
-          type: string
-          example: Shipment
-        id:
-          description: Identifier of a resource.
-          type: string
-          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
-        attributes:
-          $ref: '#/components/schemas/Shipment'
-    ShipmentOrderLine:
-      type: object
-      description: Shipment related attributes of an order line
-      required:
-      - order_line_id
-      properties:
-        merchant_specified_identifier:
-          description: Optional merchant specific identifier associated with the order line (such as UPOS identifier)
-          type: object
-          required:
-          - type
-          - value
-          properties:
-            type:
-              type: string
-              description: Value indicating the format of the identifier provided
-              example: UPOS-15
-              x-extensible-enum:
-              - UPOS-15
-            value:
-              type: string
-              description: The identifier for the order line in the format as indicated by the `type` field
-              example: ABCDEFGHIJKLMNOPQRSTUVWXYZ
-        order_line_id:
-          description: Identifier of an order line.
-          type: string
-          format: uuid
-          example: 0178b487-262c-4638-b88e-6bb1aa5a166d
-    OrderResourceObject:
-      oneOf:
-      - $ref: '#/components/schemas/OrderItem'
-      - $ref: '#/components/schemas/OrderLine'
-      - $ref: '#/components/schemas/TransitionData'
-      - $ref: '#/components/schemas/ShipmentResource'
-    Shipments:
-      type: object
-      description: A collection of shipments for this order.
-      properties:
-        shipments:
-          type: array
-          description: A list of shipments associated with this order.
-          items:
-            $ref: '#/components/schemas/Shipment'
-    Order:
-      type: object
-      description: Order Resource Object.
-      properties:
-        type:
-          description: Type of resource.
-          type: string
-        id:
-          description: Identifier of a resource.
-          type: string
-        attributes:
-          $ref: '#/components/schemas/OrderAttributes'
-        links:
-          $ref: '#/components/schemas/Links'
-        relationships:
-          $ref: '#/components/schemas/OrderRelationships'
-        meta:
-          $ref: '#/components/schemas/Meta'
-    TransitionAttributes:
-      type: object
-      description: Details of a state transition for an Order or Order Line
-      required:
-      - original_status
-      - final_status
-      - created_at
-      - created_by
-      properties:
-        original_status:
-          description: The original status of the transition.
-          type: string
-          example: initial
-        final_status:
-          description: The final status of the transition.
-          type: string
-          example: approved
-        transition_reason:
-          $ref: '#/components/schemas/TransitionReason'
-        created_at:
-          description: The timestamp of the transition.
-          type: string
-          format: date-time
-          example: '2014-12-31T23:00:00.000Z'
-        created_by:
-          description: The user who triggered the status change.
-          type: string
-          example: jow.smith@zalando.de
-    OrderItem:
-      type: object
-      description: Order Item Resource Object.
-      properties:
-        type:
-          description: Type of resource.
-          type: string
-        id:
-          description: Identifier of a resource.
-          type: string
-        attributes:
-          $ref: '#/components/schemas/OrderItemAttributes'
-        links:
-          $ref: '#/components/schemas/Links'
-        relationships:
-          $ref: '#/components/schemas/OrderItemRelationships'
-        meta:
-          $ref: '#/components/schemas/Meta'
-    OrderUpdateAttributes:
-      type: object
-      description: Attributes belonging to an order update.
-      properties:
-        tracking_number:
-          description: The tracking number of the shipment.
-          type: string
-          example: TRACKING-123456-WHATEVER
-        return_tracking_number:
-          description: The return tracking number of the shipment.
-          type: string
-          example: ReTurNTracKINGNumBER123461413
-        merchant_order_id:
-          description: The order id provided by merchant. It is an alphanumeric and non-empty value.
-          type: string
-          example: MERCHANT-ORDER-ID-123
-    OrderItemsTopLevel:
-      type: object
-      description: Representation of a list of order items according to the JSON API specification.
-      properties:
-        links:
-          $ref: '#/components/schemas/Links'
-        data:
-          description: List of Order Items Resource Objects.
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderItem'
-        meta:
-          $ref: '#/components/schemas/Meta'
-        included:
-          description: Include Resource Objects requested by the client.
-          type: array
-          items:
-            $ref: '#/components/schemas/ItemResourceObject'
-    Address:
-      type: object
-      description: The representation of an address.
-      required:
-      - first_name
-      - last_name
-      - address_type
-      - address_line_1
-      - city
-      - country_code
-      properties:
-        first_name:
-          description: The first name.
-          type: string
-          example: Joe
-        last_name:
-          description: The last name.
-          type: string
-          example: Smith
-        address_line_1:
-          description: The name of the main street.
-          type: string
-          example: Charles Street 1337
-        address_line_2:
-          description: Possible additional information / address schemes.
-          type: string
-          example: Dallas Ranch
-        address_line_3:
-          description: Possible additional information / address schemes.
-          type: string
-          example: SW area
-        zip_code:
-          description: The zip code to use.
-          type: string
-          example: 10178
-        city:
-          description: The city.
-          type: string
-          example: Dallas
-        country_code:
-          description: The two-digit country code. In ISO 3166-1 alpha 2 format.
-          type: string
-          example: US
-        address_type:
-          description: The type of the address.
-          type: string
-          x-extensible-enum:
-          - HOME_ADDRESS
-          - PACK_STATION
-          - PICKUP_POINT
-          example: PICKUP_POINT
-        service_point_details:
-          $ref: '#/components/schemas/ServicePointDetails'
-    OrdersTopLevel:
-      type: object
-      description: Representation of a list of orders according to the JSON API specification.
-      properties:
-        links:
-          $ref: '#/components/schemas/Links'
-        data:
-          description: A list of orders.
-          type: array
-          items:
-            $ref: '#/components/schemas/Order'
-        meta:
-          $ref: '#/components/schemas/Meta'
-        included:
-          description: Include Resource Objects requested by the client.
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderResourceObject'
-    OrderUpdateTopLevel:
-      type: object
-      description: Representation of an order update according to the JSON API specification.
-      properties:
-        data:
-          $ref: '#/components/schemas/OrderUpdateData'
-    Meta:
-      type: object
-      description: Meta
-      required:
-      - copyright
-      properties:
-        copyright:
-          description: Zalando SE Copyright notice.
-          type: string
-          example: Zalando SE 2019 All rights reserved.
-        number_of_results:
-          description: Number of results found in response.
-          type: integer
-          format: int32
-          example: 2
-        possible_status_transitions:
-          description: Possible values for the next status transition of an Order Line based on its current status.
-          type: array
-          items:
-            type: string
-          example:
-          - reserved
-          - shipped
-          - canceled
-    DeletionRequests:
-      type: object
-      description: Representation of a deletion request containing list of orders with details to be deleted
-      properties:
-        cursor:
-          $ref: '#/components/schemas/Cursor'
-        items:
-          description: Order list for deletion.
-          type: array
-          items:
-            $ref: '#/components/schemas/DeletionRequestOrder'
-    TransitionData:
-      type: object
-      description: Transition resource object.
-      properties:
-        type:
-          description: Type of resource.
-          type: string
-        id:
-          description: Identifier of a resource.
-          type: string
-          example: 1029384756
-        attributes:
-          $ref: '#/components/schemas/TransitionAttributes'
-        links:
-          $ref: '#/components/schemas/Links'
-        meta:
-          $ref: '#/components/schemas/Meta'
-    OrderStatus:
-      type: string
-      enum:
-      - initial
-      - approved
-      - fulfilled
-      description: The status of an order.
     Error:
       type: object
       description: Error object
@@ -1811,38 +1743,112 @@ components:
           example: The order 123 does not exist.
         source:
           $ref: '#/components/schemas/ErrorSource'
-    OrderUpdateData:
+    OrderLineTopLevel:
       type: object
-      description: Data of an order update.
-      required:
-      - type
-      - id
-      - attributes
-      properties:
-        type:
-          description: Type of the order.
-          type: string
-          example: Order
-        id:
-          description: The identifier of an order to update.
-          type: string
-          example: '123'
-        attributes:
-          $ref: '#/components/schemas/OrderUpdateAttributes'
-    OrderTopLevel:
-      type: object
-      description: Representation of an order according to the JSON API specification.
+      description: Representation of an Order Line according to the JSON API specification.
       properties:
         links:
           $ref: '#/components/schemas/Links'
         data:
-          $ref: '#/components/schemas/Order'
+          $ref: '#/components/schemas/OrderLine'
         meta:
           $ref: '#/components/schemas/Meta'
         included:
+          description: Include Resource Objects requested by the client.
           type: array
           items:
-            $ref: '#/components/schemas/OrderResourceObject'
+            $ref: '#/components/schemas/LineResourceObject'
+    Errors:
+      type: object
+      description: An array of error objects.
+      properties:
+        errors:
+          description: All errors.
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    OrderLine:
+      type: object
+      description: OrderLine resource object
+      properties:
+        type:
+          description: Type of resource.
+          type: string
+        id:
+          description: Identifier of a resource.
+          type: string
+        attributes:
+          $ref: '#/components/schemas/OrderLineAttributes'
+        links:
+          $ref: '#/components/schemas/Links'
+        relationships:
+          $ref: '#/components/schemas/OrderLineRelationships'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    Links:
+      type: object
+      description: Links response
+      properties:
+        self:
+          description: The link that generated the current response document.
+          type: string
+          example: http://www.zalando.de/orders/1
+        related:
+          description: A related resource link when the primary data represents a resource relationship.
+          type: string
+          example: http://www.zalando.de/customer/2/orders
+        first:
+          description: The first page of data.
+          type: string
+          example: http://www.zalando.de/merchantX/orders?page=1
+        last:
+          description: The last page of data.
+          type: string
+          example: http://www.zalando.de/merchantX/orders?page=999
+        prev:
+          description: The previous page of data.
+          type: string
+          example: http://www.zalando.de/merchantX/orders?page=997
+        next:
+          description: The next page of data.
+          type: string
+          example: http://www.zalando.de/merchantX/orders?page=999
+    OrderLineUpdateAttributes:
+      type: object
+      description: Attribute belonging to an Order Line update.
+      required:
+      - status
+      properties:
+        status:
+          description: The new status of the Order Line.
+          type: string
+          example: shipped
+        reason:
+          description: Optional integer code if the line is Returned.
+          type: integer
+          format: int32
+          example: 9
+        outbound_logistic_center_id:
+          description: Optional unique identifier of the outbound logistic center.
+          type: string
+          format: uuid
+          example: 57be9d4a-28d6-4b83-94de-b784899cabc9
+    ResourceIdentifierObject:
+      type: object
+      description: Resource Identifier Object which uniquely identifies a Resource Object.
+      required:
+      - type
+      - id
+      properties:
+        type:
+          description: Type of resource.
+          type: string
+        id:
+          description: Identifier of a resource.
+          type: string
+    LineResourceObject:
+      oneOf:
+      - $ref: '#/components/schemas/TransitionData'
     OrderLinesTopLevel:
       type: object
       description: Representation of a list of Order Lines according to the JSON API specification.
@@ -1861,205 +1867,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LineResourceObject'
-    OrderLineUpdateData:
-      type: object
-      description: Data of an Order Line update.
-      required:
-      - type
-      - id
-      - attributes
-      properties:
-        type:
-          description: Type of the Order Line.
-          type: string
-          example: OrderLine
-        id:
-          description: The identifier of an Order Line to update.
-          type: string
-          example: '123'
-        attributes:
-          $ref: '#/components/schemas/OrderLineUpdateAttributes'
-    OrderLineTopLevel:
-      type: object
-      description: Representation of an Order Line according to the JSON API specification.
-      properties:
-        links:
-          $ref: '#/components/schemas/Links'
-        data:
-          $ref: '#/components/schemas/OrderLine'
-        meta:
-          $ref: '#/components/schemas/Meta'
-        included:
-          description: Include Resource Objects requested by the client.
-          type: array
-          items:
-            $ref: '#/components/schemas/LineResourceObject'
-    OrderItemTopLevel:
-      type: object
-      description: Representation of an order item according to the JSON API specification.
-      properties:
-        links:
-          $ref: '#/components/schemas/Links'
-        data:
-          $ref: '#/components/schemas/OrderItem'
-        meta:
-          $ref: '#/components/schemas/Meta'
-        included:
-          description: Include Resource Objects requested by the client.
-          type: array
-          items:
-            $ref: '#/components/schemas/ItemResourceObject'
-    OrderItemRelationships:
-      type: object
-      description: Order Item relationships.
-      properties:
-        order_lines:
-          type: object
-          $ref: '#/components/schemas/Relationships'
-    OrderRelationships:
-      type: object
-      description: Order relationships.
-      properties:
-        order_items:
-          type: object
-          $ref: '#/components/schemas/Relationships'
-        order_transitions:
-          type: object
-          $ref: '#/components/schemas/Relationships'
-    Weight:
-      type: object
-      description: The weight measurement
-      required:
-      - value
-      - unit
-      properties:
-        value:
-          type: integer
-          description: The numerical value of the weight
-          format: int32
-          example: 1250
-        unit:
-          type: string
-          description: The unit of measurement for the weight
-          example: g
-          x-extensible-enum:
-          - g
-    OrderLineUpdateTopLevel:
-      type: object
-      description: Representation of an Order Line update according to the JSON API specification.
-      properties:
-        data:
-          $ref: '#/components/schemas/OrderLineUpdateData'
-    OrderItemAttributes:
-      type: object
-      description: An Order Item contains a summarized view with quantities of the underlying Order Lines.
-      required:
-      - article_id
-      - quantity_initial
-      - quantity_reserved
-      - quantity_shipped
-      - quantity_returned
-      - quantity_canceled
-      properties:
-        order_item_id:
-          type: string
-          format: uuid
-          description: Unique identifier of an Order Item.
-          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
-        order_id:
-          type: string
-          format: uuid
-          description: Unique identifier of an Order.
-          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
-        article_id:
-          description: Zalando's product identifier.
-          type: string
-          example: DU341A00M-1020375000
-        external_id:
-          description: The merchant's product identifier.
-          type: string
-          example: 123AXL
-        description:
-          description: A short description of the ordered product.
-          type: string
-          example: Ladies handwoven rayon fully lined jacket with contrasting silk/rayon velvet notched collar and cuffs. Side seam pockets with 4-bone button closure and polyester lining. XS-XL. Made in XYZ.
-        quantity_initial:
-          description: The initial quantity.
-          type: integer
-          format: int32
-          example: 1
-        quantity_reserved:
-          description: The reserved quantity.
-          type: integer
-          format: int32
-          example: 1
-        quantity_shipped:
-          description: The shipped quantity.
-          type: integer
-          format: int32
-          example: 1
-        quantity_returned:
-          description: The returned quantity.
-          type: integer
-          format: int32
-          example: 0
-        quantity_canceled:
-          description: The canceled quantity.
-          type: integer
-          format: int32
-          example: 0
-        created_by:
-          description: The user who created the order item.
-          type: string
-          example: joe.smith@zalando.de
-        created_at:
-          description: The timestamp of the order item creation.
-          type: string
-          format: date-time
-          example: '2014-12-31T23:00:00.000Z'
-        modified_by:
-          description: The last modified user.
-          type: string
-          example: joe.smith@zalando.de
-        modified_at:
-          description: The last modified timestamp.
-          type: string
-          format: date-time
-          example: '2014-12-31T23:00:00.000Z'
-    DeletionRequestOrder:
-      type: object
-      description: Representation of an order to be deleted.
-      properties:
-        merchant_id:
-          type: string
-          format: uuid
-          description: A unique identifier for the Merchant that this order belongs to. The merchant identifies who owns the stock.
-          example: 26caa95a-174f-41be-8585-0ce49055874d
-        sales_channel_id:
-          description: The sales channel on which the order was sold.
-          type: string
-          format: uuid
-          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
-        customer_number:
-          description: The number of the Zalando customer who placed the order.
-          type: string
-          example: '31400820597'
-        order_id:
-          type: string
-          format: uuid
-          description: Unique identifier of an Order.
-          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
-        order_number:
-          type: string
-          description: Zalando's unique order identifier.
-          example: '1040970000502251'
-        requested_at:
-          description: The timestamp of the deletion-request creation.
-          type: string
-          format: date-time
-          example: '2014-12-31T23:00:00.000Z'
-        shipping_address:
-          $ref: '#/components/schemas/Address'
     OrderLineAttributes:
       type: object
       description: A detailed view of an Order Item - a single line of possible multiple Order Lines.
@@ -2131,6 +1938,39 @@ components:
           format: uuid
           description: Optional unique identifier of the stock location to which the order line was returned.
           example: 30EC0E5B-EC23-42C8-AAF2-DD1E6C2CC296
+    Weight:
+      type: object
+      description: The weight measurement
+      required:
+      - value
+      - unit
+      properties:
+        value:
+          type: integer
+          description: The numerical value of the weight
+          format: int32
+          example: 1250
+        unit:
+          type: string
+          description: The unit of measurement for the weight
+          example: g
+          x-extensible-enum:
+          - g
+    Money:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: decimal
+          example: 99.95
+          description: Amount with 2 digits after the decimal separator.
+        currency:
+          type: string
+          format: iso-4217
+          example: EUR
+      required:
+      - amount
+      - currency
     ErrorSource:
       type: object
       description: Indicate the source of error.
@@ -2143,58 +1983,197 @@ components:
           description: A string indicating which URI query parameter caused the error.
           type: string
           example: order_number
-    Links:
+    ShipmentStatus:
+      type: string
+      description: The status of the shipment.
+      x-extensible-enum:
+      - initial
+      - shipped
+      - canceled
+      example: initial
+    OrderStatus:
+      type: string
+      enum:
+      - initial
+      - approved
+      - fulfilled
+      description: The status of an order.
+    OrderUpdateData:
       type: object
-      description: Links response
-      properties:
-        self:
-          description: The link that generated the current response document.
-          type: string
-          example: http://www.zalando.de/orders/1
-        related:
-          description: A related resource link when the primary data represents a resource relationship.
-          type: string
-          example: http://www.zalando.de/customer/2/orders
-        first:
-          description: The first page of data.
-          type: string
-          example: http://www.zalando.de/merchantX/orders?page=1
-        last:
-          description: The last page of data.
-          type: string
-          example: http://www.zalando.de/merchantX/orders?page=999
-        prev:
-          description: The previous page of data.
-          type: string
-          example: http://www.zalando.de/merchantX/orders?page=997
-        next:
-          description: The next page of data.
-          type: string
-          example: http://www.zalando.de/merchantX/orders?page=999
-    OrderLine:
-      type: object
-      description: OrderLine resource object
-      properties:
-        type:
-          description: Type of resource.
-          type: string
-        id:
-          description: Identifier of a resource.
-          type: string
-        attributes:
-          $ref: '#/components/schemas/OrderLineAttributes'
-        links:
-          $ref: '#/components/schemas/Links'
-        relationships:
-          $ref: '#/components/schemas/OrderLineRelationships'
-        meta:
-          $ref: '#/components/schemas/Meta'
-    ResourceIdentifierObject:
-      type: object
-      description: Resource Identifier Object which uniquely identifies a Resource Object.
+      description: Data of an order update.
       required:
       - type
       - id
+      - attributes
+      properties:
+        type:
+          description: Type of the order.
+          type: string
+          example: Order
+        id:
+          description: The identifier of an order to update.
+          type: string
+          example: '123'
+        attributes:
+          $ref: '#/components/schemas/OrderUpdateAttributes'
+    Cursor:
+      type: object
+      description: The representation of a cursor for fetching paginated list of orders for deletion.
+      properties:
+        next:
+          description: The cursor pointer for the next data to be fetched.
+          type: string
+          example: HSOD896
+    ShipmentOrderLine:
+      type: object
+      description: Shipment related attributes of an order line
+      required:
+      - order_line_id
+      properties:
+        merchant_specified_identifier:
+          description: Optional merchant specific identifier associated with the order line (such as UPOS identifier)
+          type: object
+          required:
+          - type
+          - value
+          properties:
+            type:
+              type: string
+              description: Value indicating the format of the identifier provided
+              example: UPOS-15
+              x-extensible-enum:
+              - UPOS-15
+            value:
+              type: string
+              description: The identifier for the order line in the format as indicated by the `type` field
+              example: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+        order_line_id:
+          description: Identifier of an order line.
+          type: string
+          format: uuid
+          example: 0178b487-262c-4638-b88e-6bb1aa5a166d
+    OrderLineUpdateData:
+      type: object
+      description: Data of an Order Line update.
+      required:
+      - type
+      - id
+      - attributes
+      properties:
+        type:
+          description: Type of the Order Line.
+          type: string
+          example: OrderLine
+        id:
+          description: The identifier of an Order Line to update.
+          type: string
+          example: '123'
+        attributes:
+          $ref: '#/components/schemas/OrderLineUpdateAttributes'
+    OrderTopLevel:
+      type: object
+      description: Representation of an order according to the JSON API specification.
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+        data:
+          $ref: '#/components/schemas/Order'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        included:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderResourceObject'
+    Shipments:
+      type: object
+      description: A collection of shipments for this order.
+      properties:
+        shipments:
+          type: array
+          description: A list of shipments associated with this order.
+          items:
+            $ref: '#/components/schemas/Shipment'
+    OrderItemTopLevel:
+      type: object
+      description: Representation of an order item according to the JSON API specification.
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+        data:
+          $ref: '#/components/schemas/OrderItem'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        included:
+          description: Include Resource Objects requested by the client.
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemResourceObject'
+    OrderUpdateTopLevel:
+      type: object
+      description: Representation of an order update according to the JSON API specification.
+      properties:
+        data:
+          $ref: '#/components/schemas/OrderUpdateData'
+    TransitionAttributes:
+      type: object
+      description: Details of a state transition for an Order or Order Line
+      required:
+      - original_status
+      - final_status
+      - created_at
+      - created_by
+      properties:
+        original_status:
+          description: The original status of the transition.
+          type: string
+          example: initial
+        final_status:
+          description: The final status of the transition.
+          type: string
+          example: approved
+        transition_reason:
+          $ref: '#/components/schemas/TransitionReason'
+        created_at:
+          description: The timestamp of the transition.
+          type: string
+          format: date-time
+          example: '2014-12-31T23:00:00.000Z'
+        created_by:
+          description: The user who triggered the status change.
+          type: string
+          example: jow.smith@zalando.de
+    DeletionRequests:
+      type: object
+      description: Representation of a deletion request containing list of orders with details to be deleted
+      properties:
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+        items:
+          description: Order list for deletion.
+          type: array
+          items:
+            $ref: '#/components/schemas/DeletionRequestOrder'
+    OrderLineRelationships:
+      type: object
+      description: Order Line relationships.
+      properties:
+        order_line_transitions:
+          type: object
+          $ref: '#/components/schemas/Relationships'
+    ItemResourceObject:
+      oneOf:
+      - $ref: '#/components/schemas/OrderLine'
+      - $ref: '#/components/schemas/TransitionData'
+    OrderItemRelationships:
+      type: object
+      description: Order Item relationships.
+      properties:
+        order_lines:
+          type: object
+          $ref: '#/components/schemas/Relationships'
+    TransitionData:
+      type: object
+      description: Transition resource object.
       properties:
         type:
           description: Type of resource.
@@ -2202,14 +2181,36 @@ components:
         id:
           description: Identifier of a resource.
           type: string
-    LineResourceObject:
-      oneOf:
-      - $ref: '#/components/schemas/TransitionData'
+          example: 1029384756
+        attributes:
+          $ref: '#/components/schemas/TransitionAttributes'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    OrdersTopLevel:
+      type: object
+      description: Representation of a list of orders according to the JSON API specification.
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+        data:
+          description: A list of orders.
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        included:
+          description: Include Resource Objects requested by the client.
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderResourceObject'
   parameters:
-    ordersInclude:
+    linesInclude:
       name: include
       in: query
-      description: 'Comma separated field names to be included. Allowed fields: order_transitions, order_items, order_lines, order_lines.order_line_transitions, shipments'
+      description: 'Comma separated field names to be included. Allowed fields: order_lines.order_line_transitions'
       required: false
       schema:
         type: string
@@ -2221,14 +2222,6 @@ components:
       schema:
         type: integer
         default: 0
-    merchantId:
-      name: merchant-id
-      in: path
-      description: To identify a merchant for which this operation is carried out.
-      required: true
-      schema:
-        type: string
-        format: uuid
     sort:
       name: sort
       in: query
@@ -2237,6 +2230,29 @@ components:
       schema:
         type: string
         default: -modified_at
+    merchantId:
+      name: merchant-id
+      in: path
+      description: To identify a merchant for which this operation is carried out.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    itemsInclude:
+      name: include
+      in: query
+      description: 'Comma separated field names to be included. Allowed fields: order_lines, order_lines.order_line_transitions'
+      required: false
+      schema:
+        type: string
+    salesChannelId:
+      name: sales_channel_id
+      in: query
+      description: Query filter specifying a sales channel.
+      required: false
+      schema:
+        type: string
+        format: uuid
     limit:
       name: page[size]
       in: query
@@ -2245,20 +2261,6 @@ components:
       schema:
         type: integer
         default: 50
-    itemsInclude:
-      name: include
-      in: query
-      description: 'Comma separated field names to be included. Allowed fields: order_lines, order_lines.order_line_transitions'
-      required: false
-      schema:
-        type: string
-    linesInclude:
-      name: include
-      in: query
-      description: 'Comma separated field names to be included. Allowed fields: order_lines.order_line_transitions'
-      required: false
-      schema:
-        type: string
     x-flow-id:
       name: X-Flow-Id
       in: header
@@ -2269,14 +2271,13 @@ components:
         format: uuid
       x-doc:
         excluded: true
-    Authorization:
-      name: Authorization
-      in: header
-      description: Bearer access token.
-      required: true
+    ordersInclude:
+      name: include
+      in: query
+      description: 'Comma separated field names to be included. Allowed fields: order_transitions, order_items, order_lines, order_lines.order_line_transitions, shipments'
+      required: false
       schema:
         type: string
-        format: JWT token
     cursor:
       name: cursor
       in: query
@@ -2285,11 +2286,21 @@ components:
       schema:
         type: string
       example: Y3Vyc29yCg
-    salesChannelId:
-      name: sales_channel_id
-      in: query
-      description: Query filter specifying a sales channel.
-      required: false
+    Authorization:
+      name: Authorization
+      in: header
+      description: Bearer access token.
+      required: true
       schema:
         type: string
-        format: uuid
+        format: JWT token
+  securitySchemes:
+    merchant_platform:
+      type: oauth2
+      description: This API uses OAuth2 OIDC with Client Credentials flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+          scopes:
+            orders/read: Read access.
+            orders/write: Write access.

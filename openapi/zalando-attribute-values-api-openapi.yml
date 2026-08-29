@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns attribute-values API
+  title: Article Requirements Attribute Values API
   version: 1.0.0
   x-audience: external-merchant
   x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
@@ -87,8 +87,9 @@ components:
           example:
             en-gb: waterproof_7825
         value:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           description: Optional free-form value payload
           additionalProperties: true
           example:

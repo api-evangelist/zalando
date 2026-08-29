@@ -1,12 +1,19 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns prices API
-  version: 1.0.0
-  x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+  title: Merchant Price Service Prices API
+  description: 'The Merchant Price Service (mPrice) API is part of the Article Lifecycle Management and the Zalando zDirect Platform.
+
+    This API provides capabilities to update Price per Product and Merchant.
 
     '
+  x-api-id: dfe727b9-67c3-4b53-bb7c-70010f2d52d4
+  x-audience: external-partner
+  version: 1.1.2
+servers:
+- url: api.merchants.zalando.com
+  description: Production Environment
+- url: api-sandbox.merchants.zalando.com
+  description: Sandbox Environment
 tags:
 - name: prices
 paths:
@@ -50,177 +57,10 @@ paths:
                 $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
 components:
   schemas:
-    PriceUpdateRequest:
-      type: object
-      description: The request for processing a list of Product Price Updates.
-      required:
-      - product_prices
-      properties:
-        product_prices:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductPrice'
-    IgnoreWarnings:
-      type: boolean
-      description: When this flag is true, the price update will be applied ignoring the warnings (but not the errors) generated from the validation engine.
-      example: false
-    PriceUpdateResponse:
-      type: object
-      description: The result of processing a list of Product Price Updates.
-      properties:
-        results:
-          type: array
-          items:
-            type: object
-            description: The result of processing a Product Price Update.
-            properties:
-              product_price:
-                $ref: '#/components/schemas/ProductPriceResult'
-              status:
-                $ref: '#/components/schemas/BasePriceStatus'
-              code:
-                $ref: '#/components/schemas/BasePriceCode'
-              description:
-                $ref: '#/components/schemas/Description'
-            required:
-            - product_price
-            - status
-            - code
-      required:
-      - results
-    ScheduleCode:
-      type: integer
-      format: int32
-      x-extensible-enum:
-      - 0
-      - 101
-      - 102
-      - 106
-      - 107
-      - 108
-      description: 'Machine readable status code.
-
-        -   0: Update Successful
-
-        - 101: Validation failed
-
-        - 102: Submission failed due to internal errors
-
-        - 106: Update failed because some prices were less than minimum threshold
-
-        - 107: Update failed becaues some prices were more than maximum threshold
-
-        - 108: Update failed because discount exceeded max discount
-
-        '
-    ProductPriceResult:
-      type: object
-      description: The result of the Product Price.
-      properties:
-        ean:
-          type: string
-          format: gtin13
-          description: Global Trade Item Number (GTIN-13)
-          example: '5901234123457'
-        sales_channel_id:
-          type: string
-          format: uuid
-          example: fc0aba96-7802-11e5-9e27-10ddb1ee7671
-        regular_price:
-          $ref: '#/components/schemas/RegularPrice'
-        promotional_price:
-          $ref: '#/components/schemas/PromotionalPrice'
-        scheduled_prices:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduledPriceResult'
-        ignore_warnings:
-          $ref: '#/components/schemas/IgnoreWarnings'
-      required:
-      - ean
-      - sales_channel_id
-      - regular_price
-      - ignore_warnings
-    ScheduledPrice:
-      type: object
-      description: Represents a scheduled price update for a given EAN and Sales Channel Id.
-      properties:
-        regular_price:
-          $ref: '#/components/schemas/RegularPrice'
-        promotional_price:
-          $ref: '#/components/schemas/PromotionalPrice'
-        start_time:
-          $ref: '#/components/schemas/ScheduledPriceStartTime'
-        end_time:
-          $ref: '#/components/schemas/ScheduledPriceEndTime'
-      required:
-      - regular_price
-      - start_time
-    ProductPrice:
-      type: object
-      description: A Product Price object.
-      properties:
-        ean:
-          type: string
-          format: gtin13
-          description: Global Trade Item Number (GTIN-13)
-          example: '5901234123457'
-        sales_channel_id:
-          type: string
-          format: uuid
-          example: fc0aba96-7802-11e5-9e27-10ddb1ee7671
-        regular_price:
-          $ref: '#/components/schemas/RegularPrice'
-        promotional_price:
-          $ref: '#/components/schemas/PromotionalPrice'
-        scheduled_prices:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduledPrice'
-      required:
-      - ean
-      - sales_channel_id
-      - regular_price
-    BasePriceStatus:
-      type: string
-      x-extensible-enum:
-      - ACCEPTED
-      - PARTIALLY_ACCEPTED
-      - REJECTED
-      - FAILED
-      description: 'Indicates result of the Product Price Update.
-
-        - ACCEPTED indicates a successful submission of the base price and all the scheduled prices (if provided).
-
-        - PARTIALLY_ACCEPTED indicates a successful submission of the base price, but the scheduled_prices field must be checked since there are schedules that were REJECTED or FAILED.
-
-        - REJECTED indicates validation errors for the base price, where a detailed description can be found in the `description` field. All scheduled prices (if provided) will be ignored and marked as REJECTED.
-
-        - FAILED indicates a failed submission for the base price due to internal errors. All scheduled prices (if provided) will be ignored and marked as FAILED.
-
-        In case an unlisted status is received it must be treated as `FAILED`.
-
-        '
-    ScheduleStatus:
-      type: string
-      x-extensible-enum:
-      - ACCEPTED
-      - REJECTED
-      - FAILED
-      description: 'Indicates result of the Schedule.
-
-        - ACCEPTED indicates a successful submission of the schedule.
-
-        - REJECTED indicates validation errors for the schedule. If one schedule is REJECTED due to validation errors, all schedules for this EAN and Sales Channel Id will be rejected.
-
-        - FAILED indicates a failed submission of the schedule due to internal errors.
-
-        In case an unlisted status is received it must be treated as `FAILED`.
-
-        '
-    Description:
-      type: string
-      description: Detailed error message regarding the status.
+    RegularPrice:
+      allOf:
+      - $ref: '#/components/schemas/Money'
+      - description: Regular, non-promotional price, described as decimal number.
     Timestamp:
       type: string
       format: date-time
@@ -239,34 +79,21 @@ components:
         * https://en.wikipedia.org/wiki/ISO_8601#Time_offsets_from_UTC
 
         '
-    Money:
+    ScheduledPrice:
       type: object
-      description: Used to represent Regular Price & Promotional Price
+      description: Represents a scheduled price update for a given EAN and Sales Channel Id.
       properties:
-        amount:
-          type: number
-          description: Amount expressed as a decimal number of major currency units
-          format: decimal
-          minimum: 0.01
-          example: 89.95
-        currency:
-          type: string
-          description: 3 letter currency code as defined by ISO-4217
-          format: iso-4217
-          example: EUR
+        regular_price:
+          $ref: '#/components/schemas/RegularPrice'
+        promotional_price:
+          $ref: '#/components/schemas/PromotionalPrice'
+        start_time:
+          $ref: '#/components/schemas/ScheduledPriceStartTime'
+        end_time:
+          $ref: '#/components/schemas/ScheduledPriceEndTime'
       required:
-      - amount
-      - currency
-    ScheduledPriceStartTime:
-      allOf:
-      - $ref: '#/components/schemas/Timestamp'
-      - description: 'Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.
-
-          '
-    PromotionalPrice:
-      allOf:
-      - $ref: '#/components/schemas/Money'
-      - description: Promotional price, described as decimal number. Must be less than regular price.
+      - regular_price
+      - start_time
     ScheduledPriceEndTime:
       allOf:
       - $ref: '#/components/schemas/Timestamp'
@@ -309,10 +136,125 @@ components:
         - 108: Update failed because discount exceeded max discount
 
         '
-    RegularPrice:
+    ScheduleCode:
+      type: integer
+      format: int32
+      x-extensible-enum:
+      - 0
+      - 101
+      - 102
+      - 106
+      - 107
+      - 108
+      description: 'Machine readable status code.
+
+        -   0: Update Successful
+
+        - 101: Validation failed
+
+        - 102: Submission failed due to internal errors
+
+        - 106: Update failed because some prices were less than minimum threshold
+
+        - 107: Update failed becaues some prices were more than maximum threshold
+
+        - 108: Update failed because discount exceeded max discount
+
+        '
+    PromotionalPrice:
       allOf:
       - $ref: '#/components/schemas/Money'
-      - description: Regular, non-promotional price, described as decimal number.
+      - description: Promotional price, described as decimal number. Must be less than regular price.
+    Description:
+      type: string
+      description: Detailed error message regarding the status.
+    ProductPrice:
+      type: object
+      description: A Product Price object.
+      properties:
+        ean:
+          type: string
+          format: gtin13
+          description: Global Trade Item Number (GTIN-13)
+          example: '5901234123457'
+        sales_channel_id:
+          type: string
+          format: uuid
+          example: fc0aba96-7802-11e5-9e27-10ddb1ee7671
+        regular_price:
+          $ref: '#/components/schemas/RegularPrice'
+        promotional_price:
+          $ref: '#/components/schemas/PromotionalPrice'
+        scheduled_prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduledPrice'
+      required:
+      - ean
+      - sales_channel_id
+      - regular_price
+    PriceUpdateRequest:
+      type: object
+      description: The request for processing a list of Product Price Updates.
+      required:
+      - product_prices
+      properties:
+        product_prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrice'
+    PriceUpdateResponse:
+      type: object
+      description: The result of processing a list of Product Price Updates.
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            description: The result of processing a Product Price Update.
+            properties:
+              product_price:
+                $ref: '#/components/schemas/ProductPriceResult'
+              status:
+                $ref: '#/components/schemas/BasePriceStatus'
+              code:
+                $ref: '#/components/schemas/BasePriceCode'
+              description:
+                $ref: '#/components/schemas/Description'
+            required:
+            - product_price
+            - status
+            - code
+      required:
+      - results
+    ProductPriceResult:
+      type: object
+      description: The result of the Product Price.
+      properties:
+        ean:
+          type: string
+          format: gtin13
+          description: Global Trade Item Number (GTIN-13)
+          example: '5901234123457'
+        sales_channel_id:
+          type: string
+          format: uuid
+          example: fc0aba96-7802-11e5-9e27-10ddb1ee7671
+        regular_price:
+          $ref: '#/components/schemas/RegularPrice'
+        promotional_price:
+          $ref: '#/components/schemas/PromotionalPrice'
+        scheduled_prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduledPriceResult'
+        ignore_warnings:
+          $ref: '#/components/schemas/IgnoreWarnings'
+      required:
+      - ean
+      - sales_channel_id
+      - regular_price
+      - ignore_warnings
     ScheduledPriceResult:
       type: object
       description: The result of a scheduled price update for a given EAN and Sales Channel Id.
@@ -329,3 +271,76 @@ components:
       - scheduled_price
       - status
       - code
+    ScheduledPriceStartTime:
+      allOf:
+      - $ref: '#/components/schemas/Timestamp'
+      - description: 'Timestamp (in format defined by https://tools.ietf.org/html/rfc3339#section-5.6) indicating when the scheduled price should start.
+
+          '
+    Money:
+      type: object
+      description: Used to represent Regular Price & Promotional Price
+      properties:
+        amount:
+          type: number
+          description: Amount expressed as a decimal number of major currency units
+          format: decimal
+          minimum: 0.01
+          example: 89.95
+        currency:
+          type: string
+          description: 3 letter currency code as defined by ISO-4217
+          format: iso-4217
+          example: EUR
+      required:
+      - amount
+      - currency
+    BasePriceStatus:
+      type: string
+      x-extensible-enum:
+      - ACCEPTED
+      - PARTIALLY_ACCEPTED
+      - REJECTED
+      - FAILED
+      description: 'Indicates result of the Product Price Update.
+
+        - ACCEPTED indicates a successful submission of the base price and all the scheduled prices (if provided).
+
+        - PARTIALLY_ACCEPTED indicates a successful submission of the base price, but the scheduled_prices field must be checked since there are schedules that were REJECTED or FAILED.
+
+        - REJECTED indicates validation errors for the base price, where a detailed description can be found in the `description` field. All scheduled prices (if provided) will be ignored and marked as REJECTED.
+
+        - FAILED indicates a failed submission for the base price due to internal errors. All scheduled prices (if provided) will be ignored and marked as FAILED.
+
+        In case an unlisted status is received it must be treated as `FAILED`.
+
+        '
+    ScheduleStatus:
+      type: string
+      x-extensible-enum:
+      - ACCEPTED
+      - REJECTED
+      - FAILED
+      description: 'Indicates result of the Schedule.
+
+        - ACCEPTED indicates a successful submission of the schedule.
+
+        - REJECTED indicates validation errors for the schedule. If one schedule is REJECTED due to validation errors, all schedules for this EAN and Sales Channel Id will be rejected.
+
+        - FAILED indicates a failed submission of the schedule due to internal errors.
+
+        In case an unlisted status is received it must be treated as `FAILED`.
+
+        '
+    IgnoreWarnings:
+      type: boolean
+      description: When this flag is true, the price update will be applied ignoring the warnings (but not the errors) generated from the validation engine.
+      example: false
+  securitySchemes:
+    merchant_platform:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.merchants.zalando.com/auth/token
+          scopes:
+            products/price/write: Grant write access to product prices.

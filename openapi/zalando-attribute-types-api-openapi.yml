@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns attribute-types API
+  title: Article Requirements Attribute Types API
   version: 1.0.0
   x-audience: external-merchant
   x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae

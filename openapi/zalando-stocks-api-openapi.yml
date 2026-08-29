@@ -1,12 +1,21 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns stocks API
-  version: 1.0.0
-  x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
+  title: Merchant Stock Service Stocks API
+  description: 'The Merchant Stock Service (mStock) API is part of the Article Lifecycle Management and the Zalando Merchant Platform.
+
+    This API provides capabilities to update Stock Quantities per Merchant''s Article in a Sales Channel.
 
     '
+  x-api-id: 8fe636b1-3ac8-4d1b-97b7-51ef41847d70
+  x-audience: external-partner
+  version: 1.1.0
+  contact:
+    url: https://developers.merchants.zalando.com/
+servers:
+- url: api.merchants.zalando.com
+  description: Production Environment
+- url: api-sandbox.merchants.zalando.com
+  description: Sandbox Environment
 tags:
 - name: stocks
 paths:
@@ -54,6 +63,17 @@ paths:
                 $ref: https://opensource.zalando.com/restful-api-guidelines/problem-1.0.1.yaml#/Problem
 components:
   schemas:
+    StockUpdatesRequest:
+      type: object
+      description: The request containing a batch of up to 1000 Stock Updates to process.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockUpdatePerSalesChannel'
+          maxItems: 1000
+      required:
+      - items
     StockUpdatePerSalesChannel:
       type: object
       description: Stock Level for a particular article in a particular Sales Channel.
@@ -77,9 +97,24 @@ components:
       - sales_channel_id
       - ean
       - quantity
-    ResponseDescription:
-      type: string
-      description: Detailed error message regarding the status.
+    StockUpdatesResponse:
+      type: object
+      description: The response containing results of Stock Updates processing.
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              item:
+                $ref: '#/components/schemas/StockUpdatePerSalesChannel'
+              result:
+                $ref: '#/components/schemas/StockUpdateResult'
+            required:
+            - item
+            - result
+      required:
+      - results
     ResponseStatus:
       type: string
       x-extensible-enum:
@@ -96,6 +131,9 @@ components:
 
         '
       example: ACCEPTED
+    ResponseDescription:
+      type: string
+      description: Detailed error message regarding the status.
     ResponseCode:
       type: integer
       format: int32
@@ -128,32 +166,11 @@ components:
       required:
       - status
       - code
-    StockUpdatesResponse:
-      type: object
-      description: The response containing results of Stock Updates processing.
-      properties:
-        results:
-          type: array
-          items:
-            type: object
-            properties:
-              item:
-                $ref: '#/components/schemas/StockUpdatePerSalesChannel'
-              result:
-                $ref: '#/components/schemas/StockUpdateResult'
-            required:
-            - item
-            - result
-      required:
-      - results
-    StockUpdatesRequest:
-      type: object
-      description: The request containing a batch of up to 1000 Stock Updates to process.
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/StockUpdatePerSalesChannel'
-          maxItems: 1000
-      required:
-      - items
+  securitySchemes:
+    merchant_platform:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.merchants.zalando.com/auth/token
+          scopes:
+            products/stock/write: Grant write access for stocks to external Merchants.

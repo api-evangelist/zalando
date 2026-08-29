@@ -1,12 +1,10 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns Discovery API API
-  version: 1.0.0
+  version: '1.1'
+  title: 'OpenAPI Specification: Products Discovery API'
+  description: This specification describes the Products API of the Zalando Merchant Platform.
   x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
-
-    '
+  x-api-id: 49e51b92-1b36-447f-adb1-be1305faaea6
 tags:
 - name: Discovery API
 paths:
@@ -30,6 +28,27 @@ paths:
         default:
           $ref: '#/components/responses/GenericError'
 components:
+  responses:
+    LookUpResponse:
+      description: 'Successfully looked up product detail information
+
+        '
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/LookUp'
+    ConflictError:
+      description: The request is semantically correct, but it cannot be processed due to business reasons. e.g. A product with same id was already submitted. Please refer to the response.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    GenericError:
+      description: Error occurred - see status code and problem object for more information.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
   schemas:
     LookUp:
       properties:
@@ -42,6 +61,11 @@ components:
       example:
         items:
         - ean: '9780679762881'
+    EAN:
+      description: The International Article Number or also known as European Article Number.
+      type: string
+      format: gtin13
+      example: '9780679762881'
     Problem:
       properties:
         type:
@@ -73,8 +97,7 @@ components:
 
             '
           minimum: 100
-          maximum: 600
-          exclusiveMaximum: true
+          exclusiveMaximum: 600
         detail:
           type: string
           description: 'A human readable explanation specific to this occurrence of the
@@ -95,32 +118,6 @@ components:
         title: Service Unavailable
         status: 503
         detail: Connection to database timed out
-    EAN:
-      description: The International Article Number or also known as European Article Number.
-      type: string
-      format: gtin13
-      example: '9780679762881'
-  responses:
-    LookUpResponse:
-      description: 'Successfully looked up product detail information
-
-        '
-      content:
-        application/json;charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/LookUp'
-    GenericError:
-      description: Error occurred - see status code and problem object for more information.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    ConflictError:
-      description: The request is semantically correct, but it cannot be processed due to business reasons. e.g. A product with same id was already submitted. Please refer to the response.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
   parameters:
     ean:
       name: ean
@@ -129,3 +126,13 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/EAN'
+  securitySchemes:
+    merchant_platform:
+      type: oauth2
+      description: The Products service uses the OpenID Connect (OIDC) authentication layer of OAuth 2 to handle the client credentials process flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+          scopes:
+            products/read: scope to read a product
+            products/write: scope to create or update a product

@@ -1,12 +1,13 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns Shipments API
-  version: 1.0.0
-  x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
-
-    '
+  title: zDirect Platform Orders Shipments API
+  description: This specification describes the Orders API of the Zalando Merchant Platform.
+  version: 1.1.1
+  contact: {}
+servers:
+- url: https://api-sandbox.merchants.zalando.com
+security:
+- merchant_platform: []
 tags:
 - name: Shipments
 paths:
@@ -339,6 +340,56 @@ paths:
                 $ref: '#/components/schemas/Errors'
 components:
   schemas:
+    Error:
+      type: object
+      description: Error object
+      properties:
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+          example: 404
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+          example: 123A
+        title:
+          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+          example: The resource requested could not be found.
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The order 123 does not exist.
+        source:
+          $ref: '#/components/schemas/ErrorSource'
+    ShipmentOrderLine:
+      type: object
+      description: Shipment related attributes of an order line
+      required:
+      - order_line_id
+      properties:
+        merchant_specified_identifier:
+          description: Optional merchant specific identifier associated with the order line (such as UPOS identifier)
+          type: object
+          required:
+          - type
+          - value
+          properties:
+            type:
+              type: string
+              description: Value indicating the format of the identifier provided
+              example: UPOS-15
+              x-extensible-enum:
+              - UPOS-15
+            value:
+              type: string
+              description: The identifier for the order line in the format as indicated by the `type` field
+              example: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+        order_line_id:
+          description: Identifier of an order line.
+          type: string
+          format: uuid
+          example: 0178b487-262c-4638-b88e-6bb1aa5a166d
     Errors:
       type: object
       description: An array of error objects.
@@ -348,6 +399,60 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Error'
+    Shipments:
+      type: object
+      description: A collection of shipments for this order.
+      properties:
+        shipments:
+          type: array
+          description: A list of shipments associated with this order.
+          items:
+            $ref: '#/components/schemas/Shipment'
+    Weight:
+      type: object
+      description: The weight measurement
+      required:
+      - value
+      - unit
+      properties:
+        value:
+          type: integer
+          description: The numerical value of the weight
+          format: int32
+          example: 1250
+        unit:
+          type: string
+          description: The unit of measurement for the weight
+          example: g
+          x-extensible-enum:
+          - g
+    RateLimitError:
+      type: object
+      description: Error object for rate limit.
+      properties:
+        message:
+          description: A string containing the error message for exceeding the rate limit
+          type: string
+    ErrorSource:
+      type: object
+      description: Indicate the source of error.
+      properties:
+        pointer:
+          description: A JSON Pointer [RFC6901] to the associated entity in the request document, for example, '/data' for a primary data object, or '/data/attributes/title' for a specific attribute.
+          type: string
+          example: /data/attributes/order_number
+        parameter:
+          description: A string indicating which URI query parameter caused the error.
+          type: string
+          example: order_number
+    ShipmentStatus:
+      type: string
+      description: The status of the shipment.
+      x-extensible-enum:
+      - initial
+      - shipped
+      - canceled
+      example: initial
     Shipment:
       type: object
       description: 'A shipment represents the delivery of specific order lines from an order in a single parcel. It includes additional details such as tracking numbers, the stock location ID from which the shipment is sent and the shipment weight (in grams)
@@ -399,119 +504,7 @@ components:
           type: string
           format: date-time
           description: The last modified timestamp.
-    Error:
-      type: object
-      description: Error object
-      properties:
-        status:
-          description: The HTTP status code applicable to this problem, expressed as a string value.
-          type: string
-          example: 404
-        code:
-          description: An application-specific error code, expressed as a string value.
-          type: string
-          example: 123A
-        title:
-          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          type: string
-          example: The resource requested could not be found.
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-          example: The order 123 does not exist.
-        source:
-          $ref: '#/components/schemas/ErrorSource'
-    ShipmentOrderLine:
-      type: object
-      description: Shipment related attributes of an order line
-      required:
-      - order_line_id
-      properties:
-        merchant_specified_identifier:
-          description: Optional merchant specific identifier associated with the order line (such as UPOS identifier)
-          type: object
-          required:
-          - type
-          - value
-          properties:
-            type:
-              type: string
-              description: Value indicating the format of the identifier provided
-              example: UPOS-15
-              x-extensible-enum:
-              - UPOS-15
-            value:
-              type: string
-              description: The identifier for the order line in the format as indicated by the `type` field
-              example: ABCDEFGHIJKLMNOPQRSTUVWXYZ
-        order_line_id:
-          description: Identifier of an order line.
-          type: string
-          format: uuid
-          example: 0178b487-262c-4638-b88e-6bb1aa5a166d
-    Weight:
-      type: object
-      description: The weight measurement
-      required:
-      - value
-      - unit
-      properties:
-        value:
-          type: integer
-          description: The numerical value of the weight
-          format: int32
-          example: 1250
-        unit:
-          type: string
-          description: The unit of measurement for the weight
-          example: g
-          x-extensible-enum:
-          - g
-    Shipments:
-      type: object
-      description: A collection of shipments for this order.
-      properties:
-        shipments:
-          type: array
-          description: A list of shipments associated with this order.
-          items:
-            $ref: '#/components/schemas/Shipment'
-    ShipmentStatus:
-      type: string
-      description: The status of the shipment.
-      x-extensible-enum:
-      - initial
-      - shipped
-      - canceled
-      example: initial
-    ErrorSource:
-      type: object
-      description: Indicate the source of error.
-      properties:
-        pointer:
-          description: A JSON Pointer [RFC6901] to the associated entity in the request document, for example, '/data' for a primary data object, or '/data/attributes/title' for a specific attribute.
-          type: string
-          example: /data/attributes/order_number
-        parameter:
-          description: A string indicating which URI query parameter caused the error.
-          type: string
-          example: order_number
-    RateLimitError:
-      type: object
-      description: Error object for rate limit.
-      properties:
-        message:
-          description: A string containing the error message for exceeding the rate limit
-          type: string
   parameters:
-    Authorization:
-      name: Authorization
-      in: header
-      description: Bearer access token.
-      required: true
-      schema:
-        type: string
-        format: JWT token
     merchantId:
       name: merchant-id
       in: path
@@ -520,6 +513,14 @@ components:
       schema:
         type: string
         format: uuid
+    Authorization:
+      name: Authorization
+      in: header
+      description: Bearer access token.
+      required: true
+      schema:
+        type: string
+        format: JWT token
     x-flow-id:
       name: X-Flow-Id
       in: header
@@ -530,3 +531,13 @@ components:
         format: uuid
       x-doc:
         excluded: true
+  securitySchemes:
+    merchant_platform:
+      type: oauth2
+      description: This API uses OAuth2 OIDC with Client Credentials flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+          scopes:
+            orders/read: Read access.
+            orders/write: Write access.

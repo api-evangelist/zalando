@@ -1,12 +1,15 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns Reports API
-  version: 1.0.0
-  x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
-
-    '
+  version: 4.2.0
+  x-api-id: cc2c30ca-2969-403e-87b1-e27df78ed655
+  x-audience: external-partner
+  title: zDirect Platform ZFS Stock Movements Reports API
+  description: "The Stock Movements API is a service offered by Zalando Fulfillment Solutions (ZFS).\n\nThe API makes ZFS business to business movements processes more transparent for partners.\nThe API enables increased transparency for:\n  - Inbound receive process\n  - Outbound return process\n  - Liquidation Data\n\n!!! note\n\n  The retention time for data in this service is 100 days. After that, data may be deleted without notice.  \n  Please note that this limitation has been removed for `GET /reports/received-items/{merchant-id}` endpoint. Now it is the current year and previous year.\n\n\n## Inbound receive process\n\nThe inbound receive process is the process of receiving items in the warehouse (goods receipt) that were delivered by any partner.\n\nEvery item will get a unique ID the Quality Label (QL) that later identifies the item through all warehouse processes.\n\n## Outbound return process\n\nThe outbound return process is the process of returning items from the warehouse to the owning partner.\n\nThe information is enhanced by the quality of the good, if it is known.\n\n## Liquidation Data\n\n  This call returns all items that have been liquidated for a merchant within a specified time frame.\n\n```http\n  GET /zfs/stock-movements/liquidated-items/{merchant_ID}?from=$FROM_DATE&to=$TO_DATE&purchase_order_number=$PURCHASE_ORDER_NUMBER\n```\n  **Note that>>**\n\n  In exceptional scenarios such as system lags or integration delays,\nthere is a possibility that `From` & `To` dates may not fecth 100% items which were liquidated in that duration. In such cases, we request you to retry the report in next 48 hours.\n\n## Fetch strategy\n\nTo get a constant stream of received events the partner has to call the endpoint in regular intervals.\nThe client has to ensure that the intervals (`from` and `to` query parameter) will not lead to data gaps on client side.\n\nSo partners can:\n\n  * build a complete copy of received/returned items in it's database\n  * Can read a \"constant\" stream of item receive/return information\n\nLimitations / Suggestions:\n\n  * Use `GET /returned-items/{merchant_id}?from=&to=` endpoint\n  * Use fetch intervals between 15 and 60 minutes, this ensures that:\n    * the data sets are not too big\n    * the partner get regular updates\n  * The request intervals must not have gaps in between\n  * Request intervals are allowed to overlap. The client has to ensure to not consume received items more than once.\n    * The `quality_label` is unique. It should be used to ensure to not consume `receive-items` more than once.\n  * The query field `from` and `to` relates to `consumed_timestamp`\n  * In case of every non `200` response the result should be ignored and refetched after interval of at least 2 minutes.\n\n## Fetch strategy for the received items endpoint\n\nReceived items endpoint uses a cursor based pagination to fetch the data. Partners do\nnot have to split requested time interval to smaller chunks. Thus we recommend the following way to retrieve the data:\n  * Use `GET /reports/received-items/{merchant_id}` endpoint without cursor query parameter\n  * Use received cursor (if not empty) from the response to fetch the next page of data (include the cursor in the next request)\n  * Repeat the previous step until the cursor in the response is empty"
+servers:
+- url: api.merchants.zalando.com/zfs/stock-movements
+  description: Production instance
+- url: api-sandbox.merchants.zalando.com/zfs/stock-movements
+  description: Sandbox instance for merchant center
 tags:
 - name: Reports
 paths:
@@ -77,33 +80,6 @@ paths:
       - Reports
 components:
   schemas:
-    DateTime:
-      type: string
-      format: date-time
-      description: Date time
-      example: '2017-07-21T17:32:28Z'
-    Ean13:
-      type: string
-      format: ean
-      pattern: ^[0-9]{13}$
-      maxLength: 13
-      description: A 13-digit EAN
-      example: 0191476239145
-    InboundedItemsResponse:
-      type: object
-      properties:
-        received_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InboundedItem'
-        next:
-          type: string
-          description: Cursor reference. Used to fetch the next page of results.
-          example: MjAxNy0wNy0yMVQxNzozMjoyOFoK
-    AdviceId:
-      type: string
-      pattern: ^[0-9]{8}$
-      example: 99200001
     InboundedItem:
       type: object
       description: Inbounded Item
@@ -143,3 +119,39 @@ components:
       - quality_label
       - location_id
       - received_timestamp
+    DateTime:
+      type: string
+      format: date-time
+      description: Date time
+      example: '2017-07-21T17:32:28Z'
+    AdviceId:
+      type: string
+      pattern: ^[0-9]{8}$
+      example: 99200001
+    InboundedItemsResponse:
+      type: object
+      properties:
+        received_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InboundedItem'
+        next:
+          type: string
+          description: Cursor reference. Used to fetch the next page of results.
+          example: MjAxNy0wNy0yMVQxNzozMjoyOFoK
+    Ean13:
+      type: string
+      format: ean
+      pattern: ^[0-9]{13}$
+      maxLength: 13
+      description: A 13-digit EAN
+      example: 0191476239145
+  securitySchemes:
+    merchant_platform:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+          scopes:
+            zfs/received-item/read: Access to ZFS received items of a merchant.
+            zfs/returned-item/read: Access to ZFS returned items of a merchant.

@@ -1,12 +1,15 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns Cross Border Movements API
-  version: 1.0.0
-  x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
-
-    '
+  version: 1.1.0
+  x-api-id: 01930bb8-3237-7fd0-bb8a-9e352f10515a
+  x-audience: external-partner
+  title: Cross-Border Movements Report Cross Border Movements API
+  description: "The Cross-Border Movements API provides data on cross-border movements of items between Zalando logistics facilities. In other words, if an item moved from a Zalando logistics facility in one country to a Zalando logistics facility in another country, that movement will be captured in the reports that can be fetched from this endpoint.\n\n\nThis API endpoint allows merchants, or integrators acting on behalf of merchants, to request data on cross-border movements for the specified date range. The date range refers to the `report_date` in the response, which describes when the transaction was recorded as a cross-border movement. Each day, a report is generated that captures all cross-border movements recorded on the previous day; when you call the cross-border movements endpoint, you are fetching the data contained in these reports. \n\n\nLimitations / Suggestions:\n\n  * Use `GET /cross-border-movements/{merchant-id}?from={from}&to={to}` endpoint\n  * All daily reports for the specified date range will be fetched.\n  * It is recommended to fetch the report for the previous day after 12:00 UTC.\n  * In case of a non `200` response, the result should be ignored and refetched after an interval of at least 2 minutes.\n  * The `transaction_date` in the result reflects when the item was received at the destination warehouse. Transaction dates may fall outside the `report_date` range that was fetched."
+servers:
+- url: api.merchants.zalando.com/zfs
+  description: Production instance
+- url: api-sandbox.merchants.zalando.com/zfs
+  description: Sandbox instance for merchant center
 tags:
 - name: Cross Border Movements
 paths:
@@ -206,3 +209,11 @@ components:
       maxLength: 13
       description: A 13-digit EAN
       example: 0123456789123
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+          scopes:
+            zfs.icm-reports.read: Access to ZFS ICM and Cross-border Reports of a merchant.

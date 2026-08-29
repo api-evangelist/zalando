@@ -1,12 +1,10 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns Attributes API
-  version: 1.0.0
+  version: 0.0.9
+  title: 'OpenAPI Specification: Merchant Product Attributes API'
+  description: This service enumerates and describes Zalando product attributes.
   x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
-
-    '
+  x-api-id: 84689b31-793f-4583-91e5-9ab195be36ca
 tags:
 - name: Attributes
 paths:
@@ -47,21 +45,13 @@ paths:
           $ref: '#/components/responses/GenericError'
 components:
   schemas:
-    Attribute:
-      required:
-      - label
-      - value
-      - name
-      properties:
-        label:
-          type: string
-          example: color_code
-        name:
-          $ref: '#/components/schemas/Name'
-        value:
-          $ref: '#/components/schemas/AttributeValue'
-        _meta:
-          $ref: '#/components/schemas/AttributeMeta'
+    AttributeMeta:
+      type: object
+      description: 'Optional additional information for the attribute.
+
+        There are no guarantees or fixed structure on this field.
+
+        '
     Name:
       description: 'Map of language to text, key must follow (rfc-2616, section
 
@@ -79,13 +69,6 @@ components:
         en: The name
         de: Der Name
         es: El nombre
-    AttributeMeta:
-      type: object
-      description: 'Optional additional information for the attribute.
-
-        There are no guarantees or fixed structure on this field.
-
-        '
     AttributeValue:
       description: 'Holder for the value of an attribute.
 
@@ -130,13 +113,58 @@ components:
           fi: tummanharmaa
           'no': mørkegrå
           pl: ciemnoszary
+    Attribute:
+      required:
+      - label
+      - value
+      - name
+      properties:
+        label:
+          type: string
+          example: color_code
+        name:
+          $ref: '#/components/schemas/Name'
+        value:
+          $ref: '#/components/schemas/AttributeValue'
+        _meta:
+          $ref: '#/components/schemas/AttributeMeta'
+  parameters:
+    flow_id:
+      name: X-Flow-Id
+      description: 'A custom header that will be passed onto any further requests and can be
+
+        used for diagnosing.
+
+        '
+      in: header
+      required: false
+      schema:
+        type: string
+    type_label:
+      name: type_label
+      in: path
+      description: Label of the attribute type
+      required: true
+      schema:
+        type: string
+        format: string
+    merchant_id:
+      name: merchant_id
+      in: path
+      description: Id of the merchant
+      required: true
+      schema:
+        type: string
+        format: string
+    attribute_label:
+      name: attribute_label
+      in: path
+      description: Label of the attribute
+      required: true
+      schema:
+        type: string
+        format: string
   responses:
-    AttributeResponse:
-      description: a single attribute
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Attribute'
     AttributesPagedResponse:
       description: list of attributes
       content:
@@ -159,39 +187,18 @@ components:
         application/problem+json:
           schema:
             $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
-  parameters:
-    attribute_label:
-      name: attribute_label
-      in: path
-      description: Label of the attribute
-      required: true
-      schema:
-        type: string
-        format: string
-    type_label:
-      name: type_label
-      in: path
-      description: Label of the attribute type
-      required: true
-      schema:
-        type: string
-        format: string
-    flow_id:
-      name: X-Flow-Id
-      description: 'A custom header that will be passed onto any further requests and can be
-
-        used for diagnosing.
-
-        '
-      in: header
-      required: false
-      schema:
-        type: string
-    merchant_id:
-      name: merchant_id
-      in: path
-      description: Id of the merchant
-      required: true
-      schema:
-        type: string
-        format: string
+    AttributeResponse:
+      description: a single attribute
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Attribute'
+  securitySchemes:
+    merchant_platform:
+      type: oauth2
+      description: The Products service uses the OpenID Connect (OIDC) authentication layer of OAuth 2 to handle the client credentials process flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.merchants.zalando.com/auth/token
+          scopes:
+            products/attributes/read: scope to read a product

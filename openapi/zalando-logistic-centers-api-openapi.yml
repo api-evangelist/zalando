@@ -1,12 +1,14 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: Article Requirements AnnouncedReturns Logistic Centers API
-  version: 1.0.0
-  x-audience: external-merchant
-  x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
-
-    '
+  title: 'OpenAPI Specification: Logistic Centers API'
+  version: '1.0'
+  description: API to fetch merchants logistic centers information
+  x-audience: external-partner
+servers:
+- url: api.merchants.zalando.com
+  description: Production Environment
+- url: api-sandbox.merchants.zalando.com
+  description: Sandbox Environment
 tags:
 - name: Logistic Centers
 paths:
@@ -95,29 +97,6 @@ components:
         type: string
         format: uuid
   schemas:
-    LogisticCenter:
-      description: Representation of a logistic center with its address and type
-      type: object
-      required:
-      - logistic_center_id
-      - name
-      - type
-      - address
-      properties:
-        logistic_center_id:
-          description: The unique UUID of a Logistic Center
-          type: string
-          format: uuid
-        name:
-          description: The name given to the Logistic Center
-          type: string
-        type:
-          description: The type of Logistic Center
-          type: string
-          x-extensible-enum:
-          - OUTBOUND_WAREHOUSE
-        address:
-          $ref: '#/components/schemas/Address'
     Address:
       description: The address of the Logistic Center
       type: object
@@ -159,3 +138,35 @@ components:
       - city
       - zip
       - country_code
+    LogisticCenter:
+      description: Representation of a logistic center with its address and type
+      type: object
+      required:
+      - logistic_center_id
+      - name
+      - type
+      - address
+      properties:
+        logistic_center_id:
+          description: The unique UUID of a Logistic Center
+          type: string
+          format: uuid
+        name:
+          description: The name given to the Logistic Center
+          type: string
+        type:
+          description: The type of Logistic Center
+          type: string
+          x-extensible-enum:
+          - OUTBOUND_WAREHOUSE
+        address:
+          $ref: '#/components/schemas/Address'
+  securitySchemes:
+    merchant_platform:
+      type: oauth2
+      description: The Products service uses the OpenID Connect (OIDC) authentication layer of OAuth 2 to handle the client credentials process flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.merchants.zalando.com/auth/token
+          scopes:
+            profile/logistic-centers/read: scope to get logistic centers

@@ -99,7 +99,7 @@ apis:
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
   tags:
-  - Attribute Types
+  - attribute-types
   tags_raw:
   - attribute-types
   properties:
@@ -135,7 +135,7 @@ apis:
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
   tags:
-  - Attribute Values
+  - attribute-values
   tags_raw:
   - attribute-values
   properties:
@@ -481,7 +481,7 @@ apis:
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
   tags:
-  - Prices
+  - prices
   tags_raw:
   - prices
   properties:
@@ -619,7 +619,7 @@ apis:
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
   tags:
-  - Sales Channels
+  - SalesChannels
   tags_raw:
   - SalesChannels
   properties:
@@ -689,7 +689,7 @@ apis:
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
   tags:
-  - Stocks
+  - stocks
   tags_raw:
   - stocks
   properties:

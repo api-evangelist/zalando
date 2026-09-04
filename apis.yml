@@ -791,8 +791,9 @@ common:
   type: Blog
 - url: https://opensource.zalando.com/restful-api-guidelines/
   type: Guidelines
-- type: MCPServer
+- type: X-MCPServerCandidate
   url: mcp/zalando-mcp.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
   name: zDirect candidate MCP (derived)
   description: Candidate MCP tool list derived from zDirect OpenAPI operations; no official server published.
 - type: LLMsTxt

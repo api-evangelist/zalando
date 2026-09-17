@@ -278,8 +278,9 @@ apis:
     url: https://developers.merchants.zalando.com/docs/openapi/cross-border-movements.html
 - aid: zalando:zalando-history-of-price-update-attempts-api
   name: Zalando History of Price Update Attempts API
-  description: The History of Price Update Attempts API from Zalando — 1 operation(s) for history of price
-    update attempts.
+  description: >-
+    The History of Price Update Attempts API from Zalando — 1 operation(s) for history of price update
+    attempts.
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
   tags:
@@ -621,42 +622,6 @@ apis:
     url: https://developers.merchants.zalando.com/docs/openapi/stock-movements.html
   - type: APIReference
     url: https://developers.merchants.zalando.com/docs/openapi/cross-border-movements.html
-- aid: zalando:zalando-saleschannels-api
-  name: Zalando SalesChannels API
-  description: The SalesChannels API from Zalando — 1 operation(s) for saleschannels.
-  humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
-  baseURL: https://api.merchants.zalando.com
-  tags:
-  - Sales Channels
-  tags_raw:
-  - SalesChannels
-  properties:
-  - type: OpenAPI
-    url: openapi/zalando-saleschannels-api-openapi.yml
-  - type: APIReference
-    url: https://developers.merchants.zalando.com/docs/openapi/orders.html
-  - type: APIReference
-    url: https://developers.merchants.zalando.com/docs/openapi/products.html
-  - type: APIReference
-    url: https://developers.merchants.zalando.com/docs/openapi/product-attributes.html
-  - type: APIReference
-    url: https://developers.merchants.zalando.com/docs/openapi/article-requirements.html
-  - type: APIReference
-    url: https://developers.merchants.zalando.com/docs/openapi/prices.html
-  - type: APIReference
-    url: https://developers.merchants.zalando.com/docs/openapi/price-reporting.html
-  - type: APIReference
-    url: https://developers.merchants.zalando.com/docs/openapi/stocks.html
-  - type: APIReference
-    url: https://developers.merchants.zalando.com/docs/openapi/offer-blocking.html
-  - type: APIReference
-    url: https://developers.merchants.zalando.com/docs/openapi/sales-channels.html
-  - type: APIReference
-    url: https://developers.merchants.zalando.com/docs/openapi/logistic-centers.html
-  - type: APIReference
-    url: https://developers.merchants.zalando.com/docs/openapi/stock-movements.html
-  - type: APIReference
-    url: https://developers.merchants.zalando.com/docs/openapi/cross-border-movements.html
 - aid: zalando:zalando-shipments-api
   name: Zalando Shipments API
   description: The Shipments API from Zalando — 2 operation(s) for shipments.
@@ -737,6 +702,40 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/zalando-types-api-openapi.yml
+  - type: APIReference
+    url: https://developers.merchants.zalando.com/docs/openapi/orders.html
+  - type: APIReference
+    url: https://developers.merchants.zalando.com/docs/openapi/products.html
+  - type: APIReference
+    url: https://developers.merchants.zalando.com/docs/openapi/product-attributes.html
+  - type: APIReference
+    url: https://developers.merchants.zalando.com/docs/openapi/article-requirements.html
+  - type: APIReference
+    url: https://developers.merchants.zalando.com/docs/openapi/prices.html
+  - type: APIReference
+    url: https://developers.merchants.zalando.com/docs/openapi/price-reporting.html
+  - type: APIReference
+    url: https://developers.merchants.zalando.com/docs/openapi/stocks.html
+  - type: APIReference
+    url: https://developers.merchants.zalando.com/docs/openapi/offer-blocking.html
+  - type: APIReference
+    url: https://developers.merchants.zalando.com/docs/openapi/sales-channels.html
+  - type: APIReference
+    url: https://developers.merchants.zalando.com/docs/openapi/logistic-centers.html
+  - type: APIReference
+    url: https://developers.merchants.zalando.com/docs/openapi/stock-movements.html
+  - type: APIReference
+    url: https://developers.merchants.zalando.com/docs/openapi/cross-border-movements.html
+- aid: zalando:zalando-sales-channels-api
+  name: Zalando Sales Channels API
+  description: The Sales Channels API from Zalando — 1 operation(s) for sales channels.
+  humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
+  baseURL: https://api.merchants.zalando.com
+  tags:
+  - Sales Channels
+  properties:
+  - type: OpenAPI
+    url: openapi/zalando-sales-channels-api-openapi.yml
   - type: APIReference
     url: https://developers.merchants.zalando.com/docs/openapi/orders.html
   - type: APIReference

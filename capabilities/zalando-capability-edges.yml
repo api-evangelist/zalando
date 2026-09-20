@@ -11,8 +11,19 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 5
+edge_count: 10
 edges:
+- tag: Attributes
+  spec_file: zalando-attributes-api-openapi.yml
+  capability_id: BC-2370.10
+  capability_id_l1: BC-2370
+  capability_name: Item Master Data Management
+  confidence: 0.8
+  evidence: '"This service enumerates and describes Zalando product attributes."; List all attributes
+    of the given attribute type; schemas Attribute, AttributeValue'
+  reason: Enumeration and description of product attribute types and permitted values is item master attribute/taxonomy
+    definition underpinning product information management.
+  recovered_from: vertical-retail-consumer-goods-edges.json
 - tag: Orders
   spec_file: zalando-orders-api-openapi.yml
   capability_id: BC-520.40
@@ -47,6 +58,17 @@ edges:
   reason: Operations report on the status and history of price submissions for merchant articles, i.e.
     maintenance and verification of the price book for products. Maps to Price List Management; it is
     reporting on price updates rather than setting prices, hence not higher.
+- tag: Product Association
+  spec_file: zalando-product-association-api-openapi.yml
+  capability_id: BC-2370.10
+  capability_id_l1: BC-2370
+  capability_name: Item Master Data Management
+  confidence: 0.72
+  evidence: '"Creates a new simple already known by Zalando by registering the Merchant identifiers in
+    the Zalando system."; schemas EAN, MerchantProductId, MerchantModelId'
+  reason: Registers merchant product identifiers (EAN/model/config) against the catalogue item record
+    — item master data / identifier management.
+  recovered_from: vertical-retail-consumer-goods-edges.json
 - tag: stocks
   spec_file: zalando-stocks-api-openapi.yml
   capability_id: BC-530.10
@@ -58,6 +80,18 @@ edges:
   reason: Merchants push available stock quantities per article and sales channel, which is stock level
     maintenance for the marketplace. Sub-capability choice (stock level vs. allocation across channels)
     carries some uncertainty.
+- tag: Discovery API
+  spec_file: zalando-discovery-api-api-openapi.yml
+  capability_id: BC-2370.10
+  capability_id_l1: BC-2370
+  capability_name: Item Master Data Management
+  confidence: 0.7
+  evidence: GET /products/identifiers/{ean}  Look up the existing product details in Zalando platform;
+    schemas LookUp, EAN
+  reason: Lookup of an existing product record by GTIN/EAN in the platform's product catalogue is item
+    master data access, part of product information management. Single read-only operation keeps confidence
+    moderate.
+  recovered_from: vertical-retail-consumer-goods-edges.json
 - tag: Reports
   spec_file: zalando-reports-api-openapi.yml
   capability_id: BC-2460.10
@@ -70,3 +104,26 @@ edges:
   reason: Exposes goods-receipt data from Zalando Fulfillment Solutions warehouses to partners, i.e. visibility
     over the inbound receive process of a third-party fulfilment operation. Maps to Inbound Operations
     Management; it is reporting on inbound rather than executing putaway, so not higher.
+- tag: Shipments
+  spec_file: zalando-shipments-api-openapi.yml
+  capability_id: BC-520.40
+  capability_id_l1: BC-520
+  capability_name: Order Fulfilment Management
+  confidence: 0.7
+  evidence: '"Create a shipment.", "Update a shipment", "Get shipments for the order"; schemas Shipment,
+    ShipmentOrderLine, ShipmentStatus'
+  reason: Creation and tracking of shipments against merchant orders — execution of order fulfilment.
+    Could also be read as logistics execution, hence not higher.
+  recovered_from: vertical-retail-consumer-goods-edges.json
+- tag: attribute-values
+  spec_file: zalando-attribute-values-api-openapi.yml
+  capability_id: BC-2370.10
+  capability_id_l1: BC-2370
+  capability_name: Item Master Data Management
+  confidence: 0.7
+  evidence: '"retrieve UAF article requirement outlines, attribute types, and attribute values for a given
+    business partner"; "List attribute values for an attribute type"'
+  reason: Read-only reference API for article/product attribute definitions used to enrich item records
+    — supports item master attribute management (product information management). Confidence moderate
+    as it is a lookup of attribute metadata rather than authoring item records.
+  recovered_from: vertical-retail-consumer-goods-edges.json

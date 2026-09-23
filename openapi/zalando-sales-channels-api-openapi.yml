@@ -10,14 +10,14 @@ servers:
 - url: api-sandbox.merchants.zalando.com
   description: Sandbox Environment
 tags:
-- name: SalesChannels
+- name: Sales Channels
 paths:
   /sales-channels:
     get:
       summary: List sales channels for the given merchant IDs
       description: Retrieves all the sales channels in which merchant has any contract
       tags:
-      - SalesChannels
+      - Sales Channels
       security:
       - OAuth2:
         - profile/sales-channels/read
@@ -48,8 +48,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Errors'
+      operationId: getSalesChannels
+      x-operation-id-source: derived
 components:
   schemas:
+    SalesChannel:
+      type: object
+      description: representation of one sales channel
+      properties:
+        sales_channel_id:
+          type: string
+          format: uuid
+          example: 01924c48-49bb-40c2-9c32-ab582e6db6f4
+        country_name:
+          type: string
+          example: Germany
+        country_code:
+          type: string
+          example: de
+        live:
+          type: boolean
+          example: true
     Error:
       type: object
       description: Error object
@@ -87,23 +106,6 @@ components:
         parameter:
           description: A string indicating which URI query parameter caused the error.
           type: string
-    SalesChannel:
-      type: object
-      description: representation of one sales channel
-      properties:
-        sales_channel_id:
-          type: string
-          format: uuid
-          example: 01924c48-49bb-40c2-9c32-ab582e6db6f4
-        country_name:
-          type: string
-          example: Germany
-        country_code:
-          type: string
-          example: de
-        live:
-          type: boolean
-          example: true
     SalesChannels:
       type: object
       description: list of sales channels

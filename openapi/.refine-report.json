@@ -76,7 +76,8 @@
     "zalando-zfs-stock-movements-openapi.yml: tagged paths GET /liquidated-items/{merchant-id} -> Liquidated Items",
     "zalando-zfs-stock-movements-openapi.yml: declared missing tag: Liquidated Items",
     "zalando-zfs-stock-movements-openapi.yml: declared missing tag: Reports",
-    "zalando-zfs-stock-movements-openapi.yml: declared missing tag: Returned Items"
+    "zalando-zfs-stock-movements-openapi.yml: declared missing tag: Returned Items",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "zalando-announcedreturns-api-openapi.yml: previously refined output, superseded by openapi/_original/",

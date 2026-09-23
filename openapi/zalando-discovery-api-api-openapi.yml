@@ -10,9 +10,7 @@ tags:
 paths:
   /products/identifiers/{ean}:
     get:
-      summary: 'Look up the existing product details in Zalando platform
-
-        '
+      summary: Look up the existing product details in Zalando platform
       tags:
       - Discovery API
       security:
@@ -27,28 +25,9 @@ paths:
           $ref: '#/components/responses/ConflictError'
         default:
           $ref: '#/components/responses/GenericError'
+      operationId: getProductsIdentifiersByEan
+      x-operation-id-source: derived
 components:
-  responses:
-    LookUpResponse:
-      description: 'Successfully looked up product detail information
-
-        '
-      content:
-        application/json;charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/LookUp'
-    ConflictError:
-      description: The request is semantically correct, but it cannot be processed due to business reasons. e.g. A product with same id was already submitted. Please refer to the response.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    GenericError:
-      description: Error occurred - see status code and problem object for more information.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
   schemas:
     LookUp:
       properties:
@@ -61,11 +40,6 @@ components:
       example:
         items:
         - ean: '9780679762881'
-    EAN:
-      description: The International Article Number or also known as European Article Number.
-      type: string
-      format: gtin13
-      example: '9780679762881'
     Problem:
       properties:
         type:
@@ -118,6 +92,32 @@ components:
         title: Service Unavailable
         status: 503
         detail: Connection to database timed out
+    EAN:
+      description: The International Article Number or also known as European Article Number.
+      type: string
+      format: gtin13
+      example: '9780679762881'
+  responses:
+    ConflictError:
+      description: The request is semantically correct, but it cannot be processed due to business reasons. e.g. A product with same id was already submitted. Please refer to the response.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    GenericError:
+      description: Error occurred - see status code and problem object for more information.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    LookUpResponse:
+      description: 'Successfully looked up product detail information
+
+        '
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/LookUp'
   parameters:
     ean:
       name: ean

@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Price Reporting History of Price Update Attempts API
-  description: 'The Price Reporting API is part of the Article Lifecycle Management and the Zalando zDirect Platform. This API provides capabilities to retrieve the current price status of merchant articles and a history of the price update attempts.
-
-    '
+  description: The Price Reporting API is part of the Article Lifecycle Management and the Zalando zDirect Platform. This API provides capabilities to retrieve the current price status of merchant articles and a history of the price update attempts.
   x-api-id: 59e08368-1423-411e-a7b0-6203181f4982
   x-audience: external-partner
   version: 1.0.0
@@ -54,8 +52,17 @@ paths:
             application/problem+json:
               schema:
                 $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+      summary: Create merchants by merchant id price attempts
+      x-summary-source: derived
+      operationId: postMerchantsByMerchantIdPriceAttempts
+      x-operation-id-source: derived
 components:
   schemas:
+    AttemptFilterPageSize:
+      type: integer
+      example: 200
+      default: 100
+      description: Maximum number of price attempts per page, between 1 and 1000
     AttemptStatus:
       type: string
       example: SCHEDULED
@@ -87,59 +94,29 @@ components:
         AWAITING_ONBOARDING = The price has been accepted, but the article has not yet been onboarded. The price will be applied when onboarding is completed.
 
         '
-    Timestamp:
-      type: string
-      format: date-time
-      example: '2020-05-30T00:00:00.00Z'
-      description: 'Timestamp in ISO-8601 extended date-time format with an offset from UTC, as defined by RFC 3339, section 5.6.
-
-        Supports resolution up to a microsecond.
-
-
-        See:
-
-        * https://tools.ietf.org/html/rfc3339#section-5.6
-
-        * https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations
-
-        * https://en.wikipedia.org/wiki/ISO_8601#Time_offsets_from_UTC
-
-        '
-    ScheduleEndDateTime:
-      allOf:
-      - $ref: '#/components/schemas/Timestamp'
-      - description: 'The time (in format defined by RFC 3339, section 5.6) when this price should become inactive.
-
-          '
-    MerchantId:
-      type: string
-      format: uuid
-      example: e2ad171a-6b52-4db0-8ae3-54709720458b
-      description: The business partner ID of the Merchant.
-    PriceAttempt:
+    AttemptStatusTransition:
       type: object
       properties:
-        ean:
-          $ref: '#/components/schemas/EAN'
-        sales_channel_id:
-          $ref: '#/components/schemas/SalesChannelId'
-        base_price:
-          $ref: '#/components/schemas/AttemptedPrice'
-        scheduled_prices:
+        from:
+          $ref: '#/components/schemas/AttemptStatus'
+        to:
+          $ref: '#/components/schemas/AttemptStatus'
+        timestamp:
+          $ref: '#/components/schemas/AttemptStatusTransitionDateTime'
+        messages:
           type: array
           items:
-            $ref: '#/components/schemas/AttemptedScheduledPrice'
-        ignore_warnings:
-          $ref: '#/components/schemas/IgnoreWarnings'
+            $ref: '#/components/schemas/AttemptStatusMessage'
       required:
-      - ean
-      - sales_channel_id
-      - base_price
-      - ignore_warnings
-    AttemptFilterModifiedSince:
+      - from
+      - to
+      - timestamp
+    AttemptFilterModifiedUntil:
       allOf:
       - $ref: '#/components/schemas/Timestamp'
-      - description: 'If set, the response will only contain attempts which had their status updated after this time (in format defined by RFC 3339, section 5.6).
+      - description: 'If set, the response will only contain attempts which had their status updated before this time (in format defined by RFC 3339, section 5.6).
+
+          If `modified_since` is set, but `modified_until` is not set, then the time when the first page was requested will be used for `modified_until` implicitly.
 
 
           Cannot be used together with `start` or `end` criteria.
@@ -168,25 +145,16 @@ components:
       - start
       - status
       - status_transitions
-    SalesChannelId:
+    MerchantId:
       type: string
       format: uuid
-      example: fc0aba96-7802-11e5-9e27-10ddb1ee7671
-      description: The Sales Channel ID for which the prices were submitted.
-    AttemptFilterPageSize:
-      type: integer
-      example: 200
-      default: 100
-      description: Maximum number of price attempts per page, between 1 and 1000
-    AttemptFilterEndDateTime:
-      allOf:
-      - $ref: '#/components/schemas/Timestamp'
-      - description: 'If set, the response will only contain attempts made before this time (in format defined by RFC 3339, section 5.6).
-
-
-          Cannot be used together with `modified_since` or `modified_until` criteria.
-
-          '
+      example: e2ad171a-6b52-4db0-8ae3-54709720458b
+      description: The business partner ID of the Merchant.
+    AttemptCursorUrl:
+      type: string
+      format: uri
+      example: https://api-sandbox.merchants.com/merchants/e2ad171a-6b52-4db0-8ae3-54709720458b/price-attempts?cursor=ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9
+      description: The location where you can find the next batch of price update attempts.
     AttemptedPrice:
       type: object
       description: An attempted Article Price with detailed information on the status transitions.
@@ -205,19 +173,6 @@ components:
       - regular_price
       - status
       - status_transitions
-    PriceAttemptsResponse:
-      type: object
-      properties:
-        cursors:
-          $ref: '#/components/schemas/PriceAttemptCursors'
-        query:
-          $ref: '#/components/schemas/PriceAttemptFilter'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceAttempt'
-      required:
-      - items
     AttemptStatusMessage:
       type: object
       required:
@@ -238,44 +193,83 @@ components:
           type: string
           description: A messaging indicating warnings or errors regarding the price.
           example: Promotional Price '14.99' is more than 70% below Regular Price '199.99'
-    ScheduleStartDateTime:
+    ScheduleEndDateTime:
       allOf:
       - $ref: '#/components/schemas/Timestamp'
-      - description: 'The time (in format defined by RFC 3339, section 5.6) when this price should become active.
+      - description: 'The time (in format defined by RFC 3339, section 5.6) when this price should become inactive.
 
           '
-    AttemptCursorUrl:
-      type: string
-      format: uri
-      example: https://api-sandbox.merchants.com/merchants/e2ad171a-6b52-4db0-8ae3-54709720458b/price-attempts?cursor=ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9
-      description: The location where you can find the next batch of price update attempts.
-    EAN:
-      type: string
-      format: gtin13
-      description: Global Trade Item Number (GTIN-13).
-      example: '5901234123457'
+    PriceAttemptCursors:
+      type: object
+      properties:
+        next:
+          $ref: '#/components/schemas/AttemptCursorUrl'
+    AttemptFilterEndDateTime:
+      allOf:
+      - $ref: '#/components/schemas/Timestamp'
+      - description: 'If set, the response will only contain attempts made before this time (in format defined by RFC 3339, section 5.6).
+
+
+          Cannot be used together with `modified_since` or `modified_until` criteria.
+
+          '
+    AttemptFilterStartDateTime:
+      allOf:
+      - $ref: '#/components/schemas/Timestamp'
+      - description: 'If set, the response will only contain attempts made after this time (in format defined by RFC 3339, section 5.6).
+
+
+          Cannot be used together with `modified_since` or `modified_until` criteria.
+
+          '
+    PriceAttempt:
+      type: object
+      properties:
+        ean:
+          $ref: '#/components/schemas/EAN'
+        sales_channel_id:
+          $ref: '#/components/schemas/SalesChannelId'
+        base_price:
+          $ref: '#/components/schemas/AttemptedPrice'
+        scheduled_prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttemptedScheduledPrice'
+        ignore_warnings:
+          $ref: '#/components/schemas/IgnoreWarnings'
+      required:
+      - ean
+      - sales_channel_id
+      - base_price
+      - ignore_warnings
     Cursor:
       type: string
       format: byte
       example: ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9
       description: A value indicating that there are more results than could be returned immediately. Pass it in the next request to get the next batch of results. If there is no cursor in the response, it means that there are no more results left.
-    AttemptStatusTransition:
-      type: object
-      properties:
-        from:
-          $ref: '#/components/schemas/AttemptStatus'
-        to:
-          $ref: '#/components/schemas/AttemptStatus'
-        timestamp:
-          $ref: '#/components/schemas/AttemptStatusTransitionDateTime'
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttemptStatusMessage'
-      required:
-      - from
-      - to
-      - timestamp
+    Timestamp:
+      type: string
+      format: date-time
+      example: '2020-05-30T00:00:00.00Z'
+      description: 'Timestamp in ISO-8601 extended date-time format with an offset from UTC, as defined by RFC 3339, section 5.6.
+
+        Supports resolution up to a microsecond.
+
+
+        See:
+
+        * https://tools.ietf.org/html/rfc3339#section-5.6
+
+        * https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations
+
+        * https://en.wikipedia.org/wiki/ISO_8601#Time_offsets_from_UTC
+
+        '
+    EAN:
+      type: string
+      format: gtin13
+      description: Global Trade Item Number (GTIN-13).
+      example: '5901234123457'
     PriceAttemptFilter:
       type: object
       description: 'Describes the article query to be used when retrieving results. The query filter criteria are cumulative.
@@ -309,41 +303,49 @@ components:
           $ref: '#/components/schemas/AttemptFilterModifiedUntil'
         page_size:
           $ref: '#/components/schemas/AttemptFilterPageSize'
-    AttemptFilterStartDateTime:
+    IgnoreWarnings:
+      type: boolean
+      description: When this flag is true, the price update will be applied ignoring the warnings (but not the errors) generated from the validation engine.
+      default: false
+    SalesChannelId:
+      type: string
+      format: uuid
+      example: fc0aba96-7802-11e5-9e27-10ddb1ee7671
+      description: The Sales Channel ID for which the prices were submitted.
+    AttemptFilterModifiedSince:
       allOf:
       - $ref: '#/components/schemas/Timestamp'
-      - description: 'If set, the response will only contain attempts made after this time (in format defined by RFC 3339, section 5.6).
+      - description: 'If set, the response will only contain attempts which had their status updated after this time (in format defined by RFC 3339, section 5.6).
 
 
-          Cannot be used together with `modified_since` or `modified_until` criteria.
+          Cannot be used together with `start` or `end` criteria.
 
           '
-    PriceAttemptCursors:
-      type: object
-      properties:
-        next:
-          $ref: '#/components/schemas/AttemptCursorUrl'
     AttemptStatusTransitionDateTime:
       allOf:
       - $ref: '#/components/schemas/Timestamp'
       - description: 'The time (in format defined by RFC 3339, section 5.6) when a price attempt transitioned from one state to another.
 
           '
-    AttemptFilterModifiedUntil:
+    ScheduleStartDateTime:
       allOf:
       - $ref: '#/components/schemas/Timestamp'
-      - description: 'If set, the response will only contain attempts which had their status updated before this time (in format defined by RFC 3339, section 5.6).
-
-          If `modified_since` is set, but `modified_until` is not set, then the time when the first page was requested will be used for `modified_until` implicitly.
-
-
-          Cannot be used together with `start` or `end` criteria.
+      - description: 'The time (in format defined by RFC 3339, section 5.6) when this price should become active.
 
           '
-    IgnoreWarnings:
-      type: boolean
-      description: When this flag is true, the price update will be applied ignoring the warnings (but not the errors) generated from the validation engine.
-      default: false
+    PriceAttemptsResponse:
+      type: object
+      properties:
+        cursors:
+          $ref: '#/components/schemas/PriceAttemptCursors'
+        query:
+          $ref: '#/components/schemas/PriceAttemptFilter'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceAttempt'
+      required:
+      - items
   securitySchemes:
     merchant_platform:
       type: oauth2

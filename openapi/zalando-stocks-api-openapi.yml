@@ -3,9 +3,7 @@ info:
   title: Merchant Stock Service Stocks API
   description: 'The Merchant Stock Service (mStock) API is part of the Article Lifecycle Management and the Zalando Merchant Platform.
 
-    This API provides capabilities to update Stock Quantities per Merchant''s Article in a Sales Channel.
-
-    '
+    This API provides capabilities to update Stock Quantities per Merchant''s Article in a Sales Channel.'
   x-api-id: 8fe636b1-3ac8-4d1b-97b7-51ef41847d70
   x-audience: external-partner
   version: 1.1.0
@@ -17,13 +15,13 @@ servers:
 - url: api-sandbox.merchants.zalando.com
   description: Sandbox Environment
 tags:
-- name: stocks
+- name: Stocks
 paths:
   /merchants/{merchant-id}/stocks:
     post:
-      summary: Update stock quantities for a set of articles.
+      summary: Update stock quantities for a set of articles
       tags:
-      - stocks
+      - Stocks
       security:
       - merchant_platform:
         - products/stock/write
@@ -61,8 +59,79 @@ paths:
             application/problem+json:
               schema:
                 $ref: https://opensource.zalando.com/restful-api-guidelines/problem-1.0.1.yaml#/Problem
+      operationId: postMerchantsByMerchantIdStocks
+      x-operation-id-source: derived
 components:
   schemas:
+    StockUpdatesResponse:
+      type: object
+      description: The response containing results of Stock Updates processing.
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              item:
+                $ref: '#/components/schemas/StockUpdatePerSalesChannel'
+              result:
+                $ref: '#/components/schemas/StockUpdateResult'
+            required:
+            - item
+            - result
+      required:
+      - results
+    ResponseCode:
+      type: integer
+      format: int32
+      x-extensible-enum:
+      - 0
+      - 101
+      - 102
+      - 104
+      description: 'Machine readable status code.
+
+        -   0: Update Successful
+
+        - 101: Validation failed
+
+        - 102: Submission failed due to internal errors
+
+        - 104: Update pending - waiting for the article to be onboarded
+
+        '
+    ResponseStatus:
+      type: string
+      x-extensible-enum:
+      - ACCEPTED
+      - REJECTED
+      - FAILED
+      description: 'Indicates result of the Product Stock Update.
+
+        - ACCEPTED indicates a successful submission
+
+        - REJECTED indicates validation errors where a detailed description can be found in the `description` field
+
+        - FAILED indicates a failed submission due to internal errors.
+
+        '
+      example: ACCEPTED
+    ResponseDescription:
+      type: string
+      description: Detailed error message regarding the status.
+    StockUpdateResult:
+      type: object
+      description: The result of Stock Update processing.
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        code:
+          $ref: '#/components/schemas/ResponseCode'
+        description:
+          $ref: '#/components/schemas/ResponseDescription'
+      required:
+      - status
+      - code
     StockUpdatesRequest:
       type: object
       description: The request containing a batch of up to 1000 Stock Updates to process.
@@ -97,75 +166,6 @@ components:
       - sales_channel_id
       - ean
       - quantity
-    StockUpdatesResponse:
-      type: object
-      description: The response containing results of Stock Updates processing.
-      properties:
-        results:
-          type: array
-          items:
-            type: object
-            properties:
-              item:
-                $ref: '#/components/schemas/StockUpdatePerSalesChannel'
-              result:
-                $ref: '#/components/schemas/StockUpdateResult'
-            required:
-            - item
-            - result
-      required:
-      - results
-    ResponseStatus:
-      type: string
-      x-extensible-enum:
-      - ACCEPTED
-      - REJECTED
-      - FAILED
-      description: 'Indicates result of the Product Stock Update.
-
-        - ACCEPTED indicates a successful submission
-
-        - REJECTED indicates validation errors where a detailed description can be found in the `description` field
-
-        - FAILED indicates a failed submission due to internal errors.
-
-        '
-      example: ACCEPTED
-    ResponseDescription:
-      type: string
-      description: Detailed error message regarding the status.
-    ResponseCode:
-      type: integer
-      format: int32
-      x-extensible-enum:
-      - 0
-      - 101
-      - 102
-      - 104
-      description: 'Machine readable status code.
-
-        -   0: Update Successful
-
-        - 101: Validation failed
-
-        - 102: Submission failed due to internal errors
-
-        - 104: Update pending - waiting for the article to be onboarded
-
-        '
-    StockUpdateResult:
-      type: object
-      description: The result of Stock Update processing.
-      properties:
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-        code:
-          $ref: '#/components/schemas/ResponseCode'
-        description:
-          $ref: '#/components/schemas/ResponseDescription'
-      required:
-      - status
-      - code
   securitySchemes:
     merchant_platform:
       type: oauth2

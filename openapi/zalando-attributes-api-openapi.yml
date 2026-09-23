@@ -25,6 +25,8 @@ paths:
           $ref: '#/components/responses/AttributesPagedResponse'
         default:
           $ref: '#/components/responses/GenericError'
+      operationId: getMerchantsByMerchantIdAttributeTypesByTypeLabelAttributes
+      x-operation-id-source: derived
   /merchants/{merchant_id}/attribute-types/{type_label}/attributes/{attribute_label}:
     get:
       summary: Return a given attribute of the given attribute type
@@ -43,6 +45,8 @@ paths:
           $ref: '#/components/responses/AttributeResponse'
         default:
           $ref: '#/components/responses/GenericError'
+      operationId: getMerchantsByMerchantIdAttributeTypesByTypeLabelAttributesByAttributeLabel
+      x-operation-id-source: derived
 components:
   schemas:
     AttributeMeta:
@@ -129,29 +133,18 @@ components:
         _meta:
           $ref: '#/components/schemas/AttributeMeta'
   parameters:
-    flow_id:
-      name: X-Flow-Id
-      description: 'A custom header that will be passed onto any further requests and can be
-
-        used for diagnosing.
-
-        '
-      in: header
-      required: false
-      schema:
-        type: string
-    type_label:
-      name: type_label
-      in: path
-      description: Label of the attribute type
-      required: true
-      schema:
-        type: string
-        format: string
     merchant_id:
       name: merchant_id
       in: path
       description: Id of the merchant
+      required: true
+      schema:
+        type: string
+        format: string
+    type_label:
+      name: type_label
+      in: path
+      description: Label of the attribute type
       required: true
       schema:
         type: string
@@ -164,7 +157,34 @@ components:
       schema:
         type: string
         format: string
+    flow_id:
+      name: X-Flow-Id
+      description: 'A custom header that will be passed onto any further requests and can be
+
+        used for diagnosing.
+
+        '
+      in: header
+      required: false
+      schema:
+        type: string
   responses:
+    AttributeResponse:
+      description: a single attribute
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Attribute'
+    GenericError:
+      description: 'error occurred - see status code and problem object for more
+
+        information.
+
+        '
+      content:
+        application/problem+json:
+          schema:
+            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
     AttributesPagedResponse:
       description: list of attributes
       content:
@@ -177,22 +197,6 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/Attribute'
-    GenericError:
-      description: 'error occurred - see status code and problem object for more
-
-        information.
-
-        '
-      content:
-        application/problem+json:
-          schema:
-            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
-    AttributeResponse:
-      description: a single attribute
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Attribute'
   securitySchemes:
     merchant_platform:
       type: oauth2

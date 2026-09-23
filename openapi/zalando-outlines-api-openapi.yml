@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   version: 0.0.9
-  title: 'OpenAPI Specification: Merchant Product Attributes Outlines API'
+  title: 'OpenAPI Specification: Merchant Product Attributes Outlines…'
   description: This service enumerates and describes Zalando product attributes.
   x-audience: external-merchant
   x-api-id: 84689b31-793f-4583-91e5-9ab195be36ca
@@ -10,14 +10,10 @@ tags:
 paths:
   /merchants/{merchant_id}/outlines:
     get:
-      summary: 'List sellable outlines for the merchant
-
-        '
+      summary: List sellable outlines for the merchant
       description: 'Returns a list of product outlines that a given merchant can sell. The
 
-        merchant can use these outlines to create a new product.
-
-        '
+        merchant can use these outlines to create a new product.'
       tags:
       - Outlines
       security:
@@ -31,12 +27,12 @@ paths:
           $ref: '#/components/responses/OutlinesPagedResponse'
         default:
           $ref: '#/components/responses/GenericError'
+      operationId: getMerchantsByMerchantIdOutlines
+      x-operation-id-source: derived
   /merchants/{merchant_id}/outlines/{outline_label}:
     get:
       summary: Return the outline
-      description: 'Provide the structure of the outline.
-
-        '
+      description: Provide the structure of the outline.
       tags:
       - Outlines
       security:
@@ -51,8 +47,76 @@ paths:
           $ref: '#/components/responses/OutlinesPagedResponse'
         default:
           $ref: '#/components/responses/GenericError'
+      operationId: getMerchantsByMerchantIdOutlinesByOutlineLabel
+      x-operation-id-source: derived
 components:
+  parameters:
+    merchant_id:
+      name: merchant_id
+      in: path
+      description: Id of the merchant
+      required: true
+      schema:
+        type: string
+        format: string
+    outline_label:
+      name: outline_label
+      in: path
+      description: Label of the outline
+      required: true
+      schema:
+        type: string
+        format: string
+    flow_id:
+      name: X-Flow-Id
+      description: 'A custom header that will be passed onto any further requests and can be
+
+        used for diagnosing.
+
+        '
+      in: header
+      required: false
+      schema:
+        type: string
   schemas:
+    Description:
+      description: 'Map of language to text, key must follow (rfc-2616, section
+
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+
+
+        This mapping is only a human readable description of the entity.
+
+        Building logic dependant on the this field should be avoided.
+
+        '
+      additionalProperties:
+        type: string
+      example:
+        en: Description
+        de: Beschreibung
+        es: Descripción
+    Outline:
+      description: 'Provides an outline of a product, etc., defining the types of attributes
+
+        that must be present, and those which may be present, and also some
+
+        optional additional constraints on the attributes of those types.
+
+        '
+      required:
+      - label
+      - tiers
+      properties:
+        label:
+          type: string
+          example: shoe
+        name:
+          $ref: '#/components/schemas/Name'
+        description:
+          $ref: '#/components/schemas/Description'
+        tiers:
+          $ref: '#/components/schemas/Tiers'
     Name:
       description: 'Map of language to text, key must follow (rfc-2616, section
 
@@ -145,44 +209,6 @@ components:
               description:
                 en: Please specify the material composition if the product has filling.
               hint_type: mandatory_if_applicable
-    Description:
-      description: 'Map of language to text, key must follow (rfc-2616, section
-
-        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
-
-
-        This mapping is only a human readable description of the entity.
-
-        Building logic dependant on the this field should be avoided.
-
-        '
-      additionalProperties:
-        type: string
-      example:
-        en: Description
-        de: Beschreibung
-        es: Descripción
-    Outline:
-      description: 'Provides an outline of a product, etc., defining the types of attributes
-
-        that must be present, and those which may be present, and also some
-
-        optional additional constraints on the attributes of those types.
-
-        '
-      required:
-      - label
-      - tiers
-      properties:
-        label:
-          type: string
-          example: shoe
-        name:
-          $ref: '#/components/schemas/Name'
-        description:
-          $ref: '#/components/schemas/Description'
-        tiers:
-          $ref: '#/components/schemas/Tiers'
     AttributePerType:
       type: object
       description: 'Define a relation between an (outline, type) and its allowed values.
@@ -209,6 +235,16 @@ components:
         simple:
           $ref: '#/components/schemas/OutlineTier'
   responses:
+    GenericError:
+      description: 'error occurred - see status code and problem object for more
+
+        information.
+
+        '
+      content:
+        application/problem+json:
+          schema:
+            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
     OutlinesPagedResponse:
       description: list of outlines
       content:
@@ -221,44 +257,6 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/Outline'
-    GenericError:
-      description: 'error occurred - see status code and problem object for more
-
-        information.
-
-        '
-      content:
-        application/problem+json:
-          schema:
-            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
-  parameters:
-    flow_id:
-      name: X-Flow-Id
-      description: 'A custom header that will be passed onto any further requests and can be
-
-        used for diagnosing.
-
-        '
-      in: header
-      required: false
-      schema:
-        type: string
-    merchant_id:
-      name: merchant_id
-      in: path
-      description: Id of the merchant
-      required: true
-      schema:
-        type: string
-        format: string
-    outline_label:
-      name: outline_label
-      in: path
-      description: Label of the outline
-      required: true
-      schema:
-        type: string
-        format: string
   securitySchemes:
     merchant_platform:
       type: oauth2

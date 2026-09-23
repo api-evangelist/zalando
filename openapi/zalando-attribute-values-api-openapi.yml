@@ -4,18 +4,16 @@ info:
   version: 1.0.0
   x-audience: external-merchant
   x-api-id: e655a9cb-4cda-466d-a552-13a50c4b02ae
-  description: 'This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
-
-    '
+  description: This API provides endpoints to retrieve UAF article requirement outlines, attribute types, and attribute values for a given business partner. This API is in pilot phase and only available to a limited set of partners.
 tags:
-- name: attribute-values
+- name: Attribute Values
 paths:
   /partners/{businessPartnerId}/attribute-types/{typeLabel}/attributes:
     get:
       summary: List attribute values for an attribute type
       description: Returns all attribute values for the given attribute type label.
       tags:
-      - attribute-values
+      - Attribute Values
       parameters:
       - name: businessPartnerId
         in: path
@@ -37,12 +35,14 @@ paths:
                 $ref: '#/components/schemas/AttributeValuesListResponse'
         '404':
           description: Attribute type not found
+      operationId: getPartnersByBusinessPartnerIdAttributeTypesByTypeLabelAttributes
+      x-operation-id-source: derived
   /partners/{businessPartnerId}/attribute-types/{typeLabel}/attributes/{attributeLabel}:
     get:
       summary: Get a single attribute value
       description: Returns the attribute value with the given label for the given attribute type.
       tags:
-      - attribute-values
+      - Attribute Values
       parameters:
       - name: businessPartnerId
         in: path
@@ -69,6 +69,8 @@ paths:
                 $ref: '#/components/schemas/AttributeValueResponse'
         '404':
           description: Attribute type or attribute value not found
+      operationId: getPartnersByBusinessPartnerIdAttributeTypesByTypeLabelAttributesByAttributeLabel
+      x-operation-id-source: derived
 components:
   schemas:
     AttributeValueResponse:

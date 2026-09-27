@@ -89,6 +89,63 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    CrossBorderMovement:
+      type: object
+      description: Cross-border Movement
+      properties:
+        movement_id:
+          type: string
+          format: uuid
+          description: Identifier for the movement.
+        report_date:
+          type: string
+          format: date
+          description: Report date of the movement.
+          example: '2019-01-08'
+        transaction_date:
+          type: string
+          format: date
+          description: Transaction date of the movement.
+          example: '2019-01-08'
+        product_sku:
+          type: string
+          description: Unique Identifier of the product.
+        ean:
+          $ref: '#/components/schemas/Ean13'
+        merchant_sku:
+          type: string
+          description: Merchant product identifier
+        movement_type:
+          type: string
+          x-extensible-enum:
+          - relocation_inbound
+          - customer_return_inbound
+          - external_treatment_inbound
+          - reconciliation_inbound
+          description: Type of movement.
+        source_stock_location:
+          $ref: '#/components/schemas/StockLocationV2'
+        destination_stock_location:
+          $ref: '#/components/schemas/StockLocationV2'
+        order_id:
+          type: string
+          description: Corresponding order id for the movement when applicable.
+      required:
+      - movement_id
+      - report_date
+      - transaction_date
+      - product_sku
+      - ean
+      - destination_stock_location
+      - source_stock_location
+      - movement_type
+    Ean13:
+      type: string
+      format: ean
+      pattern: ^[0-9]{13}$
+      maxLength: 13
+      description: A 13-digit EAN
+      example: 0123456789123
     StockLocationV2:
       type: object
       description: Details of the Stock Location
@@ -154,63 +211,6 @@ components:
               default: 1000
       required:
       - merchant_id
-    Ean13:
-      type: string
-      format: ean
-      pattern: ^[0-9]{13}$
-      maxLength: 13
-      description: A 13-digit EAN
-      example: 0123456789123
-    CrossBorderMovement:
-      type: object
-      description: Cross-border Movement
-      properties:
-        movement_id:
-          type: string
-          format: uuid
-          description: Identifier for the movement.
-        report_date:
-          type: string
-          format: date
-          description: Report date of the movement.
-          example: '2019-01-08'
-        transaction_date:
-          type: string
-          format: date
-          description: Transaction date of the movement.
-          example: '2019-01-08'
-        product_sku:
-          type: string
-          description: Unique Identifier of the product.
-        ean:
-          $ref: '#/components/schemas/Ean13'
-        merchant_sku:
-          type: string
-          description: Merchant product identifier
-        movement_type:
-          type: string
-          x-extensible-enum:
-          - relocation_inbound
-          - customer_return_inbound
-          - external_treatment_inbound
-          - reconciliation_inbound
-          description: Type of movement.
-        source_stock_location:
-          $ref: '#/components/schemas/StockLocationV2'
-        destination_stock_location:
-          $ref: '#/components/schemas/StockLocationV2'
-        order_id:
-          type: string
-          description: Corresponding order id for the movement when applicable.
-      required:
-      - movement_id
-      - report_date
-      - transaction_date
-      - product_sku
-      - ean
-      - destination_stock_location
-      - source_stock_location
-      - movement_type
   securitySchemes:
     OAuth2:
       type: oauth2

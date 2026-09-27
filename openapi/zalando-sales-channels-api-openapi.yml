@@ -52,23 +52,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    SalesChannel:
-      type: object
-      description: representation of one sales channel
-      properties:
-        sales_channel_id:
-          type: string
-          format: uuid
-          example: 01924c48-49bb-40c2-9c32-ab582e6db6f4
-        country_name:
-          type: string
-          example: Germany
-        country_code:
-          type: string
-          example: de
-        live:
-          type: boolean
-          example: true
     Error:
       type: object
       description: Error object
@@ -87,15 +70,23 @@ components:
           type: string
         source:
           $ref: '#/components/schemas/ErrorSource'
-    Errors:
+    SalesChannel:
       type: object
-      description: Array of error objects
+      description: representation of one sales channel
       properties:
-        errors:
-          description: All errors
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
+        sales_channel_id:
+          type: string
+          format: uuid
+          example: 01924c48-49bb-40c2-9c32-ab582e6db6f4
+        country_name:
+          type: string
+          example: Germany
+        country_code:
+          type: string
+          example: de
+        live:
+          type: boolean
+          example: true
     ErrorSource:
       type: object
       description: Indicate the source of error
@@ -106,6 +97,15 @@ components:
         parameter:
           description: A string indicating which URI query parameter caused the error.
           type: string
+    Errors:
+      type: object
+      description: Array of error objects
+      properties:
+        errors:
+          description: All errors
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
     SalesChannels:
       type: object
       description: list of sales channels

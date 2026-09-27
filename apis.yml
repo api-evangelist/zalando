@@ -103,7 +103,7 @@ apis:
   - type: APIReference
     url: https://developers.merchants.zalando.com/docs/openapi/cross-border-movements.html
 - aid: zalando:zalando-attribute-types-api
-  name: Zalando attribute-types API
+  name: Zalando Attribute Types API
   description: The attribute-types API from Zalando — 2 operation(s) for attribute-types.
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
@@ -139,7 +139,7 @@ apis:
   - type: APIReference
     url: https://developers.merchants.zalando.com/docs/openapi/cross-border-movements.html
 - aid: zalando:zalando-attribute-values-api
-  name: Zalando attribute-values API
+  name: Zalando Attribute Values API
   description: The attribute-values API from Zalando — 2 operation(s) for attribute-values.
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
@@ -381,7 +381,7 @@ apis:
   - type: APIReference
     url: https://developers.merchants.zalando.com/docs/openapi/cross-border-movements.html
 - aid: zalando:zalando-offer-blockers-api
-  name: Zalando offer-blockers API
+  name: Zalando Offer Blockers API
   description: The offer-blockers API from Zalando — 2 operation(s) for offer-blockers.
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
@@ -485,7 +485,7 @@ apis:
   - type: APIReference
     url: https://developers.merchants.zalando.com/docs/openapi/cross-border-movements.html
 - aid: zalando:zalando-prices-api
-  name: Zalando prices API
+  name: Zalando Prices API
   description: The prices API from Zalando — 1 operation(s) for prices.
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com
@@ -657,7 +657,7 @@ apis:
   - type: APIReference
     url: https://developers.merchants.zalando.com/docs/openapi/cross-border-movements.html
 - aid: zalando:zalando-stocks-api
-  name: Zalando stocks API
+  name: Zalando Stocks API
   description: The stocks API from Zalando — 1 operation(s) for stocks.
   humanURL: https://developers.merchants.zalando.com/docs/openapi/orders.html
   baseURL: https://api.merchants.zalando.com

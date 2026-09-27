@@ -51,18 +51,18 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
-    merchant_id:
-      name: merchant_id
-      in: path
-      description: Id of the merchant
-      required: true
-      schema:
-        type: string
-        format: string
     outline_label:
       name: outline_label
       in: path
       description: Label of the outline
+      required: true
+      schema:
+        type: string
+        format: string
+    merchant_id:
+      name: merchant_id
+      in: path
+      description: Id of the merchant
       required: true
       schema:
         type: string
@@ -79,6 +79,23 @@ components:
       schema:
         type: string
   schemas:
+    AttributePerType:
+      type: object
+      description: 'Define a relation between an (outline, type) and its allowed values.
+
+        '
+      properties:
+        type:
+          type: object
+          properties:
+            label:
+              type: string
+            version:
+              type: string
+        values:
+          type: array
+          items:
+            type: string
     Description:
       description: 'Map of language to text, key must follow (rfc-2616, section
 
@@ -117,23 +134,6 @@ components:
           $ref: '#/components/schemas/Description'
         tiers:
           $ref: '#/components/schemas/Tiers'
-    Name:
-      description: 'Map of language to text, key must follow (rfc-2616, section
-
-        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
-
-
-        This mapping is only a human readable name of the entity.
-
-        Building logic dependant on this field should be avoided.
-
-        '
-      additionalProperties:
-        type: string
-      example:
-        en: The name
-        de: Der Name
-        es: El nombre
     OutlineTier:
       description: 'Defines the optional and mandatory attributes and attribute constraints
 
@@ -209,23 +209,23 @@ components:
               description:
                 en: Please specify the material composition if the product has filling.
               hint_type: mandatory_if_applicable
-    AttributePerType:
-      type: object
-      description: 'Define a relation between an (outline, type) and its allowed values.
+    Name:
+      description: 'Map of language to text, key must follow (rfc-2616, section
+
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+
+
+        This mapping is only a human readable name of the entity.
+
+        Building logic dependant on this field should be avoided.
 
         '
-      properties:
-        type:
-          type: object
-          properties:
-            label:
-              type: string
-            version:
-              type: string
-        values:
-          type: array
-          items:
-            type: string
+      additionalProperties:
+        type: string
+      example:
+        en: The name
+        de: Der Name
+        es: El nombre
     Tiers:
       properties:
         model:

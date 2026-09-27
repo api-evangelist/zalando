@@ -113,11 +113,6 @@ components:
         total_price:
           type: number
           format: double
-    Date:
-      type: string
-      format: date
-      description: Date
-      example: '2018-03-17'
     LiquidatedItemsQueryResult:
       type: object
       properties:
@@ -125,6 +120,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LiquidatedItem'
+    Date:
+      type: string
+      format: date
+      description: Date
+      example: '2018-03-17'
     Ean13:
       type: string
       format: ean

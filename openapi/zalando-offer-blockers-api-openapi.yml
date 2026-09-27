@@ -197,15 +197,46 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    UpdatedSince:
+    UpdatedUntil:
       type: string
       format: date-time
       example: '2020-05-30T00:00:00.00Z'
-      description: 'If set, the response will only contain Offer Blockers which were created or updated after this time.
+      description: 'If set, the response will only contain Offer Blockers which were created or updated before this time.
 
         The date-time format is defined as in RFC 3339, section 5.6.
 
         '
+    ResponseDescription:
+      type: string
+      description: Detailed message regarding the request status.
+    Ean:
+      description: Global Trade Item Number (GTIN-13).
+      type: string
+      format: gtin-13
+      example: '5901234123457'
+    MerchantId:
+      description: The ID of the Merchant.
+      type: string
+      format: uuid
+    NewProductBlocker:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/NewOfferBlockerId'
+        reason:
+          $ref: '#/components/schemas/OfferBlockerReason'
+        description:
+          $ref: '#/components/schemas/OfferBlockerDescription'
+        criteria:
+          $ref: '#/components/schemas/ProductOfferBlockerCriteria'
+      required:
+      - reason
+      - criteria
+    NewOfferBlockerId:
+      description: The ID of the newly-created Offer Blocker.
+      type: string
+      format: uuid
+      readOnly: true
     ResponseStatus:
       type: string
       enum:
@@ -222,35 +253,21 @@ components:
 
         '
       example: ACCEPTED
-    CursorUrl:
-      type: string
-      format: uri
-      example: https://api-sandbox.merchants.com/merchants/e2ad171a-6b52-4db0-8ae3-54709720458b/offer-blockers?cursor=ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9
-      description: The location where you can find the next selected batch of Offer Blockers.
-    UpdatedUntil:
-      type: string
-      format: date-time
-      example: '2020-05-30T00:00:00.00Z'
-      description: 'If set, the response will only contain Offer Blockers which were created or updated before this time.
+    ProductOfferBlockerCriteria:
+      description: 'Criteria describing which articles are blocked by this Offer Blocker.
 
-        The date-time format is defined as in RFC 3339, section 5.6.
+        The EAN is required. Criteria are combined using logical "AND".
 
         '
-    OfferBlockerReason:
-      type: string
-      enum:
-      - PAUSE_01
-      - PAUSE_02
-      - PAUSE_03
-      - PAUSE_04
-      - PAUSE_05
-      - PAUSE_06
-      - PABLO_01
-      - PABLO_02
-      - PABLO_03
-      - PABLO_04
-      description: "Indicates result of the Offer Blocker request.\n- PAUSE_01: End of season/removal from assortment\n- PAUSE_02: High return rate     \n- PAUSE_03: Stock issue Low sales performance\n- PAUSE_04: Quality issues  \n- PAUSE_05: Legal issues\n- PAUSE_06: Other reasons\n- PABLO_01: Generic issue (PABLO codes will be deprecated in the future)\n- PABLO_02: Price issue (PABLO codes will be deprecated in the future)\n- PABLO_03: Stock issue (PABLO codes will be deprecated in the future)\n- PABLO_04: Product launch (PABLO codes will be deprecated in the future)\n"
-      example: PAUSE_01
+      type: object
+      properties:
+        sales_channel_id:
+          $ref: '#/components/schemas/SalesChannelId'
+        ean:
+          $ref: '#/components/schemas/Ean'
+      required:
+      - ean
+      - sales_channel_id
     OfferBlocker:
       type: object
       properties:
@@ -266,37 +283,39 @@ components:
       - id
       - reason
       - criteria
+    SalesChannelId:
+      description: The ID of the Sales Channel.
+      type: string
+      format: uuid
+    OfferBlockerReason:
+      type: string
+      enum:
+      - PAUSE_01
+      - PAUSE_02
+      - PAUSE_03
+      - PAUSE_04
+      - PAUSE_05
+      - PAUSE_06
+      - PABLO_01
+      - PABLO_02
+      - PABLO_03
+      - PABLO_04
+      description: "Indicates result of the Offer Blocker request.\n- PAUSE_01: End of season/removal from assortment\n- PAUSE_02: High return rate     \n- PAUSE_03: Stock issue Low sales performance\n- PAUSE_04: Quality issues  \n- PAUSE_05: Legal issues\n- PAUSE_06: Other reasons\n- PABLO_01: Generic issue (PABLO codes will be deprecated in the future)\n- PABLO_02: Price issue (PABLO codes will be deprecated in the future)\n- PABLO_03: Stock issue (PABLO codes will be deprecated in the future)\n- PABLO_04: Product launch (PABLO codes will be deprecated in the future)\n"
+      example: PAUSE_01
+    Cursor:
+      type: string
+      format: byte
+      example: ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9
+      description: 'A value indicating that there are more results than could be returned immediately.
+
+        Pass it in the next request to get the next batch of results.
+
+        If there is no cursor in the response, it means that there are no more results left.
+
+        '
     OfferBlockerDescription:
       description: "Human-readable description explaining why this blocker exists. \nYou can include any identifier in the description to distinguish the blocker source \n(e.g., system name, id, process identifier).\n"
       type: string
-    OfferBlockerResult:
-      type: object
-      description: The result of processing an Offer Blocker request.
-      properties:
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-        description:
-          $ref: '#/components/schemas/ResponseDescription'
-      required:
-      - status
-    Cursors:
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/CursorUrl'
-        next:
-          $ref: '#/components/schemas/CursorUrl'
-      required:
-      - self
-      description: 'There are three cursor directions available:
-
-        - self: returns the current batch
-
-        - prev: returns the previous batch
-
-        - next: returns the next batch
-
-        '
     NewOfferBlocker:
       type: object
       properties:
@@ -311,8 +330,18 @@ components:
       required:
       - reason
       - criteria
-    MerchantId:
-      description: The ID of the Merchant.
+    CreateOfferBlockersRequest:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewProductBlocker'
+          maxItems: 5
+      required:
+      - items
+    OfferBlockerId:
+      description: The ID of the Offer Blocker.
       type: string
       format: uuid
     CreateOfferBlockersResponse:
@@ -332,66 +361,6 @@ components:
             - result
       required:
       - results
-    OfferBlockerId:
-      description: The ID of the Offer Blocker.
-      type: string
-      format: uuid
-    ProductOfferBlockerCriteria:
-      description: 'Criteria describing which articles are blocked by this Offer Blocker.
-
-        The EAN is required. Criteria are combined using logical "AND".
-
-        '
-      type: object
-      properties:
-        sales_channel_id:
-          $ref: '#/components/schemas/SalesChannelId'
-        ean:
-          $ref: '#/components/schemas/Ean'
-      required:
-      - ean
-      - sales_channel_id
-    OfferBlockerCriteria:
-      description: 'Criteria describing which articles are blocked by this Offer Blocker.
-
-        Any combination of conditions can be provided. They are combined using logical "AND".
-
-        If no conditions are provided, this means "all articles".
-
-        '
-      type: object
-      properties:
-        sales_channel_id:
-          $ref: '#/components/schemas/SalesChannelId'
-        ean:
-          $ref: '#/components/schemas/Ean'
-    ResponseDescription:
-      type: string
-      description: Detailed message regarding the request status.
-    CreateOfferBlockersRequest:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewProductBlocker'
-          maxItems: 5
-      required:
-      - items
-    NewProductBlocker:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/NewOfferBlockerId'
-        reason:
-          $ref: '#/components/schemas/OfferBlockerReason'
-        description:
-          $ref: '#/components/schemas/OfferBlockerDescription'
-        criteria:
-          $ref: '#/components/schemas/ProductOfferBlockerCriteria'
-      required:
-      - reason
-      - criteria
     ListOfferBlockersResponse:
       type: object
       properties:
@@ -407,38 +376,33 @@ components:
       - query
       - items
       - cursors
-    ListOfferBlockersQuery:
-      description: 'Object containing the query filters applied in the search request to filter Offer Blockers.
-
-        '
+    Cursors:
       type: object
       properties:
-        ean:
-          $ref: '#/components/schemas/Ean'
-        sales_channel_id:
-          $ref: '#/components/schemas/SalesChannelId'
-        updated_since:
-          $ref: '#/components/schemas/UpdatedSince'
-        updated_until:
-          $ref: '#/components/schemas/UpdatedUntil'
-        page_size:
-          $ref: '#/components/schemas/PageSize'
-    Cursor:
-      type: string
-      format: byte
-      example: ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9
-      description: 'A value indicating that there are more results than could be returned immediately.
+        self:
+          $ref: '#/components/schemas/CursorUrl'
+        next:
+          $ref: '#/components/schemas/CursorUrl'
+      required:
+      - self
+      description: 'There are three cursor directions available:
 
-        Pass it in the next request to get the next batch of results.
+        - self: returns the current batch
 
-        If there is no cursor in the response, it means that there are no more results left.
+        - prev: returns the previous batch
+
+        - next: returns the next batch
 
         '
-    NewOfferBlockerId:
-      description: The ID of the newly-created Offer Blocker.
+    UpdatedSince:
       type: string
-      format: uuid
-      readOnly: true
+      format: date-time
+      example: '2020-05-30T00:00:00.00Z'
+      description: 'If set, the response will only contain Offer Blockers which were created or updated after this time.
+
+        The date-time format is defined as in RFC 3339, section 5.6.
+
+        '
     DeleteOfferBlockersResponse:
       type: object
       properties:
@@ -456,10 +420,6 @@ components:
             - result
       required:
       - results
-    SalesChannelId:
-      description: The ID of the Sales Channel.
-      type: string
-      format: uuid
     PageSize:
       type: integer
       minimum: 1
@@ -468,6 +428,20 @@ components:
       description: 'A positive value indicating how many results should be returned for one request.
 
         '
+    OfferBlockerCriteria:
+      description: 'Criteria describing which articles are blocked by this Offer Blocker.
+
+        Any combination of conditions can be provided. They are combined using logical "AND".
+
+        If no conditions are provided, this means "all articles".
+
+        '
+      type: object
+      properties:
+        sales_channel_id:
+          $ref: '#/components/schemas/SalesChannelId'
+        ean:
+          $ref: '#/components/schemas/Ean'
     DeleteOfferBlockersRequest:
       type: object
       properties:
@@ -478,11 +452,37 @@ components:
           maxItems: 5
       required:
       - items
-    Ean:
-      description: Global Trade Item Number (GTIN-13).
+    ListOfferBlockersQuery:
+      description: 'Object containing the query filters applied in the search request to filter Offer Blockers.
+
+        '
+      type: object
+      properties:
+        ean:
+          $ref: '#/components/schemas/Ean'
+        sales_channel_id:
+          $ref: '#/components/schemas/SalesChannelId'
+        updated_since:
+          $ref: '#/components/schemas/UpdatedSince'
+        updated_until:
+          $ref: '#/components/schemas/UpdatedUntil'
+        page_size:
+          $ref: '#/components/schemas/PageSize'
+    CursorUrl:
       type: string
-      format: gtin-13
-      example: '5901234123457'
+      format: uri
+      example: https://api-sandbox.merchants.com/merchants/e2ad171a-6b52-4db0-8ae3-54709720458b/offer-blockers?cursor=ewpsYXN0OiAyNTkKb3JkZXI6IGFzYwp9
+      description: The location where you can find the next selected batch of Offer Blockers.
+    OfferBlockerResult:
+      type: object
+      description: The result of processing an Offer Blocker request.
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        description:
+          $ref: '#/components/schemas/ResponseDescription'
+      required:
+      - status
   securitySchemes:
     merchant_platform:
       type: oauth2

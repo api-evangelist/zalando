@@ -36,7 +36,9 @@
     "zalando-reports-api-openapi.yml",
     "zalando-returned-items-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -77,7 +79,8 @@
     "zalando-zfs-stock-movements-openapi.yml: declared missing tag: Liquidated Items",
     "zalando-zfs-stock-movements-openapi.yml: declared missing tag: Reports",
     "zalando-zfs-stock-movements-openapi.yml: declared missing tag: Returned Items",
-    "apis.yml register: already-registered"
+    "superseded outputs removed: zalando-sales-channels-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 20 total)"
   ],
   "skipped": [
     "zalando-announcedreturns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -96,7 +99,7 @@
     "zalando-product-association-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "zalando-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "zalando-returned-items-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "zalando-saleschannels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zalando-sales-channels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "zalando-shipments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "zalando-stocks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "zalando-types-api-openapi.yml: previously refined output, superseded by openapi/_original/"

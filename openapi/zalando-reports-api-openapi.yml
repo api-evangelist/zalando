@@ -82,6 +82,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    DateTime:
+      type: string
+      format: date-time
+      description: Date time
+      example: '2017-07-21T17:32:28Z'
+    Ean13:
+      type: string
+      format: ean
+      pattern: ^[0-9]{13}$
+      maxLength: 13
+      description: A 13-digit EAN
+      example: 0191476239145
     InboundedItem:
       type: object
       description: Inbounded Item
@@ -136,18 +148,6 @@ components:
           type: string
           description: Cursor reference. Used to fetch the next page of results.
           example: MjAxNy0wNy0yMVQxNzozMjoyOFoK
-    DateTime:
-      type: string
-      format: date-time
-      description: Date time
-      example: '2017-07-21T17:32:28Z'
-    Ean13:
-      type: string
-      format: ean
-      pattern: ^[0-9]{13}$
-      maxLength: 13
-      description: A 13-digit EAN
-      example: 0191476239145
   securitySchemes:
     merchant_platform:
       type: oauth2

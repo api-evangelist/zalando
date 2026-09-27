@@ -48,31 +48,87 @@ paths:
       operationId: getMerchantsByMerchantIdAttributeTypesByTypeLabelAttributesByAttributeLabel
       x-operation-id-source: derived
 components:
-  schemas:
-    AttributeMeta:
-      type: object
-      description: 'Optional additional information for the attribute.
-
-        There are no guarantees or fixed structure on this field.
-
-        '
-    Name:
-      description: 'Map of language to text, key must follow (rfc-2616, section
-
-        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
-
-
-        This mapping is only a human readable name of the entity.
-
-        Building logic dependant on this field should be avoided.
-
-        '
-      additionalProperties:
+  parameters:
+    attribute_label:
+      name: attribute_label
+      in: path
+      description: Label of the attribute
+      required: true
+      schema:
         type: string
-      example:
-        en: The name
-        de: Der Name
-        es: El nombre
+        format: string
+    type_label:
+      name: type_label
+      in: path
+      description: Label of the attribute type
+      required: true
+      schema:
+        type: string
+        format: string
+    merchant_id:
+      name: merchant_id
+      in: path
+      description: Id of the merchant
+      required: true
+      schema:
+        type: string
+        format: string
+    flow_id:
+      name: X-Flow-Id
+      description: 'A custom header that will be passed onto any further requests and can be
+
+        used for diagnosing.
+
+        '
+      in: header
+      required: false
+      schema:
+        type: string
+  responses:
+    AttributesPagedResponse:
+      description: list of attributes
+      content:
+        application/json:
+          schema:
+            required:
+            - items
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attribute'
+    AttributeResponse:
+      description: a single attribute
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Attribute'
+    GenericError:
+      description: 'error occurred - see status code and problem object for more
+
+        information.
+
+        '
+      content:
+        application/problem+json:
+          schema:
+            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+  schemas:
+    Attribute:
+      required:
+      - label
+      - value
+      - name
+      properties:
+        label:
+          type: string
+          example: color_code
+        name:
+          $ref: '#/components/schemas/Name'
+        value:
+          $ref: '#/components/schemas/AttributeValue'
+        _meta:
+          $ref: '#/components/schemas/AttributeMeta'
     AttributeValue:
       description: 'Holder for the value of an attribute.
 
@@ -117,86 +173,30 @@ components:
           fi: tummanharmaa
           'no': mørkegrå
           pl: ciemnoszary
-    Attribute:
-      required:
-      - label
-      - value
-      - name
-      properties:
-        label:
-          type: string
-          example: color_code
-        name:
-          $ref: '#/components/schemas/Name'
-        value:
-          $ref: '#/components/schemas/AttributeValue'
-        _meta:
-          $ref: '#/components/schemas/AttributeMeta'
-  parameters:
-    merchant_id:
-      name: merchant_id
-      in: path
-      description: Id of the merchant
-      required: true
-      schema:
-        type: string
-        format: string
-    type_label:
-      name: type_label
-      in: path
-      description: Label of the attribute type
-      required: true
-      schema:
-        type: string
-        format: string
-    attribute_label:
-      name: attribute_label
-      in: path
-      description: Label of the attribute
-      required: true
-      schema:
-        type: string
-        format: string
-    flow_id:
-      name: X-Flow-Id
-      description: 'A custom header that will be passed onto any further requests and can be
+    AttributeMeta:
+      type: object
+      description: 'Optional additional information for the attribute.
 
-        used for diagnosing.
+        There are no guarantees or fixed structure on this field.
 
         '
-      in: header
-      required: false
-      schema:
-        type: string
-  responses:
-    AttributeResponse:
-      description: a single attribute
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Attribute'
-    GenericError:
-      description: 'error occurred - see status code and problem object for more
+    Name:
+      description: 'Map of language to text, key must follow (rfc-2616, section
 
-        information.
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+
+
+        This mapping is only a human readable name of the entity.
+
+        Building logic dependant on this field should be avoided.
 
         '
-      content:
-        application/problem+json:
-          schema:
-            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
-    AttributesPagedResponse:
-      description: list of attributes
-      content:
-        application/json:
-          schema:
-            required:
-            - items
-            properties:
-              items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Attribute'
+      additionalProperties:
+        type: string
+      example:
+        en: The name
+        de: Der Name
+        es: El nombre
   securitySchemes:
     merchant_platform:
       type: oauth2

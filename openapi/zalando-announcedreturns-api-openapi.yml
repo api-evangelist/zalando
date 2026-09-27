@@ -79,6 +79,143 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      type: object
+      description: Error object
+      properties:
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+          example: 404
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+          example: 123A
+        title:
+          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+          example: The resource requested could not be found.
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: The order 123 does not exist.
+        source:
+          $ref: '#/components/schemas/ErrorSource'
+    AnnouncedReturns:
+      type: object
+      required:
+      - data
+      - links
+      description: A collection of returns announced by customers via Zalando website.
+      properties:
+        data:
+          type: array
+          description: An array of returns announced by customers via Zalando website.
+          items:
+            $ref: '#/components/schemas/AnnouncedReturn'
+        links:
+          $ref: '#/components/schemas/BaseLinks'
+    AnnouncedReturnOrder:
+      type: object
+      description: The Order information in the announced return.
+      required:
+      - order_id
+      - order_number
+      properties:
+        order_id:
+          type: string
+          format: uuid
+          description: Unique identifier of an Order.
+          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
+        order_number:
+          type: string
+          description: Zalando's unique order identifier.
+          example: '1040970000502251'
+        merchant_order_id:
+          type: string
+          description: Merchant's unique order identifier.
+          example: '1040970000502251'
+        order_lines:
+          type: array
+          minItems: 1
+          description: Order lines being returned within this order.
+          items:
+            $ref: '#/components/schemas/AnnouncedReturnOrderLine'
+    ErrorSource:
+      type: object
+      description: Indicate the source of error.
+      properties:
+        pointer:
+          description: A JSON Pointer [RFC6901] to the associated entity in the request document, for example, '/data' for a primary data object, or '/data/attributes/title' for a specific attribute.
+          type: string
+          example: /data/attributes/order_number
+        parameter:
+          description: A string indicating which URI query parameter caused the error.
+          type: string
+          example: order_number
+    AnnouncedReturnOrderLine:
+      type: object
+      description: The Order Line information in the announced return.
+      required:
+      - order_line_id
+      - order_item_id
+      - return_reason
+      properties:
+        order_line_id:
+          type: string
+          format: uuid
+          description: Unique identifier of an Order Line.
+          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
+        order_item_id:
+          type: string
+          format: uuid
+          description: Unique identifier of the Order Item this Order Line belongs to.
+          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
+        return_reason:
+          type: string
+          description: 'The reason for returning this order line, for example TOO_LARGE, TOO_SMALL, or DONT_LIKE.
+
+
+            Note: this is a free-form string and is not limited to a predefined set of return reasons or a specific format.
+
+            '
+    RateLimitError:
+      type: object
+      description: Error object for rate limit.
+      properties:
+        message:
+          description: A string containing the error message for exceeding the rate limit
+          type: string
+    Errors:
+      type: object
+      description: An array of error objects.
+      properties:
+        errors:
+          description: All errors.
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    BaseLinks:
+      type: object
+      required:
+      - self
+      description: Links for cursor-based navigation.
+      properties:
+        prev:
+          description: Simplified hypertext control referencing the previous page. If this link is absent, there is no previous page to iterate.
+          type: string
+          format: uri
+          example: https://api-sandbox.merchant-center.zalan.do/resources?cursor=Y3Vyc29yCg
+        self:
+          description: Simplified hypertext control referencing the current page.
+          type: string
+          format: uri
+          example: https://api-sandbox.merchants.zalando.com/resources?cursor=Y3Vyc29yCg
+        next:
+          description: Simplified hypertext control referencing the next page. If this link is absent, there is no next page to iterate. In rare cases the next link may return an empty collection.
+          type: string
+          format: uri
+          example: https://api-sandbox.merchants.zalando.com/resources?cursor=Y3Vyc29yCg
     AnnouncedReturn:
       type: object
       description: A return announced by a customer via Zalando website. It's possible that a single announced return contains items from multiple orders.
@@ -117,152 +254,7 @@ components:
           type: string
           format: date-time
           example: '2014-12-31T23:00:00.000Z'
-    AnnouncedReturnOrderLine:
-      type: object
-      description: The Order Line information in the announced return.
-      required:
-      - order_line_id
-      - order_item_id
-      - return_reason
-      properties:
-        order_line_id:
-          type: string
-          format: uuid
-          description: Unique identifier of an Order Line.
-          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
-        order_item_id:
-          type: string
-          format: uuid
-          description: Unique identifier of the Order Item this Order Line belongs to.
-          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
-        return_reason:
-          type: string
-          description: 'The reason for returning this order line, for example TOO_LARGE, TOO_SMALL, or DONT_LIKE.
-
-
-            Note: this is a free-form string and is not limited to a predefined set of return reasons or a specific format.
-
-            '
-    Error:
-      type: object
-      description: Error object
-      properties:
-        status:
-          description: The HTTP status code applicable to this problem, expressed as a string value.
-          type: string
-          example: 404
-        code:
-          description: An application-specific error code, expressed as a string value.
-          type: string
-          example: 123A
-        title:
-          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          type: string
-          example: The resource requested could not be found.
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-          example: The order 123 does not exist.
-        source:
-          $ref: '#/components/schemas/ErrorSource'
-    AnnouncedReturnOrder:
-      type: object
-      description: The Order information in the announced return.
-      required:
-      - order_id
-      - order_number
-      properties:
-        order_id:
-          type: string
-          format: uuid
-          description: Unique identifier of an Order.
-          example: bf48ba35-149d-4b76-8ac9-d08d126b517f
-        order_number:
-          type: string
-          description: Zalando's unique order identifier.
-          example: '1040970000502251'
-        merchant_order_id:
-          type: string
-          description: Merchant's unique order identifier.
-          example: '1040970000502251'
-        order_lines:
-          type: array
-          minItems: 1
-          description: Order lines being returned within this order.
-          items:
-            $ref: '#/components/schemas/AnnouncedReturnOrderLine'
-    RateLimitError:
-      type: object
-      description: Error object for rate limit.
-      properties:
-        message:
-          description: A string containing the error message for exceeding the rate limit
-          type: string
-    AnnouncedReturns:
-      type: object
-      required:
-      - data
-      - links
-      description: A collection of returns announced by customers via Zalando website.
-      properties:
-        data:
-          type: array
-          description: An array of returns announced by customers via Zalando website.
-          items:
-            $ref: '#/components/schemas/AnnouncedReturn'
-        links:
-          $ref: '#/components/schemas/BaseLinks'
-    Errors:
-      type: object
-      description: An array of error objects.
-      properties:
-        errors:
-          description: All errors.
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
-    BaseLinks:
-      type: object
-      required:
-      - self
-      description: Links for cursor-based navigation.
-      properties:
-        prev:
-          description: Simplified hypertext control referencing the previous page. If this link is absent, there is no previous page to iterate.
-          type: string
-          format: uri
-          example: https://api-sandbox.merchant-center.zalan.do/resources?cursor=Y3Vyc29yCg
-        self:
-          description: Simplified hypertext control referencing the current page.
-          type: string
-          format: uri
-          example: https://api-sandbox.merchants.zalando.com/resources?cursor=Y3Vyc29yCg
-        next:
-          description: Simplified hypertext control referencing the next page. If this link is absent, there is no next page to iterate. In rare cases the next link may return an empty collection.
-          type: string
-          format: uri
-          example: https://api-sandbox.merchants.zalando.com/resources?cursor=Y3Vyc29yCg
-    ErrorSource:
-      type: object
-      description: Indicate the source of error.
-      properties:
-        pointer:
-          description: A JSON Pointer [RFC6901] to the associated entity in the request document, for example, '/data' for a primary data object, or '/data/attributes/title' for a specific attribute.
-          type: string
-          example: /data/attributes/order_number
-        parameter:
-          description: A string indicating which URI query parameter caused the error.
-          type: string
-          example: order_number
   parameters:
-    Authorization:
-      name: Authorization
-      in: header
-      description: Bearer access token.
-      required: true
-      schema:
-        type: string
-        format: JWT token
     conventionalLimit:
       name: limit
       in: query
@@ -276,6 +268,14 @@ components:
       in: path
       description: To identify a merchant for which this operation is carried out.
       required: true
+      schema:
+        type: string
+        format: uuid
+    salesChannelId:
+      name: sales_channel_id
+      in: query
+      description: Query filter specifying a sales channel.
+      required: false
       schema:
         type: string
         format: uuid
@@ -297,14 +297,14 @@ components:
         format: uuid
       x-doc:
         excluded: true
-    salesChannelId:
-      name: sales_channel_id
-      in: query
-      description: Query filter specifying a sales channel.
-      required: false
+    Authorization:
+      name: Authorization
+      in: header
+      description: Bearer access token.
+      required: true
       schema:
         type: string
-        format: uuid
+        format: JWT token
   responses:
     Default:
       description: error occurred - see status code and error/problem objects for more information.

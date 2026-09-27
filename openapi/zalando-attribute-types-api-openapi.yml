@@ -61,36 +61,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AttributeTypeLabelsListResponse:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            type: string
-          example:
-          - brand_code
-          - color_code.primary
-          - color_code.secondary
-    AttributeTypeVariantResponse:
-      type: object
-      required:
-      - label
-      - name
-      properties:
-        label:
-          type: string
-        name:
-          type: object
-          description: Locale-keyed display names
-          additionalProperties:
-            type: string
-          example:
-            en: Metric
-            de: Metrisch
-            fr: Métrique
     AttributeTypeResponse:
       type: object
       required:
@@ -154,3 +124,33 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AttributeTypeVariantResponse'
+    AttributeTypeVariantResponse:
+      type: object
+      required:
+      - label
+      - name
+      properties:
+        label:
+          type: string
+        name:
+          type: object
+          description: Locale-keyed display names
+          additionalProperties:
+            type: string
+          example:
+            en: Metric
+            de: Metrisch
+            fr: Métrique
+    AttributeTypeLabelsListResponse:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+          example:
+          - brand_code
+          - color_code.primary
+          - color_code.secondary

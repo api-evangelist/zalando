@@ -59,6 +59,51 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    DateTime:
+      type: string
+      format: date-time
+      description: Date time
+      example: '2017-07-21T17:32:28Z'
+    Ean13:
+      type: string
+      format: ean
+      pattern: ^[0-9]{13}$
+      maxLength: 13
+      description: A 13-digit EAN
+      example: 0191476239145
+    Address:
+      type: object
+      description: Destination address to which the items are sent.
+      properties:
+        city:
+          type: string
+        country_code:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        salutation:
+          type: string
+        street:
+          type: string
+        zip:
+          type: string
+      required:
+      - city
+      - country_code
+      - first_name
+      - last_name
+      - salutation
+      - street
+      - zip
+    returnedItemsQueryResult:
+      type: object
+      properties:
+        returned_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/returnedItem'
     DefectLevels:
       type: object
       description: Defines a detailed summary of the defect reason.
@@ -72,25 +117,6 @@ components:
       required:
       - level_1
       - level_2
-    DateTime:
-      type: string
-      format: date-time
-      description: Date time
-      example: '2017-07-21T17:32:28Z'
-    returnedItemsQueryResult:
-      type: object
-      properties:
-        returned_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/returnedItem'
-    Ean13:
-      type: string
-      format: ean
-      pattern: ^[0-9]{13}$
-      maxLength: 13
-      description: A 13-digit EAN
-      example: 0191476239145
     returnedItem:
       type: object
       description: Returned Item
@@ -165,32 +191,6 @@ components:
       - destination
       - defect_levels
       - parent
-    Address:
-      type: object
-      description: Destination address to which the items are sent.
-      properties:
-        city:
-          type: string
-        country_code:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        salutation:
-          type: string
-        street:
-          type: string
-        zip:
-          type: string
-      required:
-      - city
-      - country_code
-      - first_name
-      - last_name
-      - salutation
-      - street
-      - zip
   securitySchemes:
     merchant_platform:
       type: oauth2

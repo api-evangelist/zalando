@@ -63,22 +63,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ResponseDescription:
-      type: string
-      description: Detailed error message regarding the status.
-    StockUpdateResult:
-      type: object
-      description: The result of Stock Update processing.
-      properties:
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-        code:
-          $ref: '#/components/schemas/ResponseCode'
-        description:
-          $ref: '#/components/schemas/ResponseDescription'
-      required:
-      - status
-      - code
     StockUpdatesResponse:
       type: object
       description: The response containing results of Stock Updates processing.
@@ -97,6 +81,22 @@ components:
             - result
       required:
       - results
+    ResponseStatus:
+      type: string
+      x-extensible-enum:
+      - ACCEPTED
+      - REJECTED
+      - FAILED
+      description: 'Indicates result of the Product Stock Update.
+
+        - ACCEPTED indicates a successful submission
+
+        - REJECTED indicates validation errors where a detailed description can be found in the `description` field
+
+        - FAILED indicates a failed submission due to internal errors.
+
+        '
+      example: ACCEPTED
     StockUpdatePerSalesChannel:
       type: object
       description: Stock Level for a particular article in a particular Sales Channel.
@@ -120,6 +120,9 @@ components:
       - sales_channel_id
       - ean
       - quantity
+    ResponseDescription:
+      type: string
+      description: Detailed error message regarding the status.
     StockUpdatesRequest:
       type: object
       description: The request containing a batch of up to 1000 Stock Updates to process.
@@ -131,22 +134,19 @@ components:
           maxItems: 1000
       required:
       - items
-    ResponseStatus:
-      type: string
-      x-extensible-enum:
-      - ACCEPTED
-      - REJECTED
-      - FAILED
-      description: 'Indicates result of the Product Stock Update.
-
-        - ACCEPTED indicates a successful submission
-
-        - REJECTED indicates validation errors where a detailed description can be found in the `description` field
-
-        - FAILED indicates a failed submission due to internal errors.
-
-        '
-      example: ACCEPTED
+    StockUpdateResult:
+      type: object
+      description: The result of Stock Update processing.
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        code:
+          $ref: '#/components/schemas/ResponseCode'
+        description:
+          $ref: '#/components/schemas/ResponseDescription'
+      required:
+      - status
+      - code
     ResponseCode:
       type: integer
       format: int32

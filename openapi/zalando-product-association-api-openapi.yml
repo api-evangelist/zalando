@@ -41,23 +41,31 @@ paths:
       operationId: putMerchantsByMerchantIdProductsIdentifiersByEan
       x-operation-id-source: derived
 components:
-  parameters:
-    ean:
-      name: ean
-      in: path
-      description: The International Article Number or also known as European Article Number.
-      required: true
-      schema:
-        $ref: '#/components/schemas/EAN'
-    merchant_id:
-      name: merchant_id
-      in: path
-      description: Id of the merchant
-      required: true
-      schema:
-        type: string
-        format: string
   schemas:
+    ProductAssociationSchema:
+      description: Information of the product to associate with
+      type: object
+      required:
+      - merchant_product_simple_id
+      properties:
+        merchant_product_simple_id:
+          $ref: '#/components/schemas/MerchantProductId'
+        merchant_product_config_id:
+          $ref: '#/components/schemas/MerchantConfigId'
+        merchant_product_model_id:
+          $ref: '#/components/schemas/MerchantModelId'
+    MerchantModelId:
+      description: 'Merchant product model identifier. Model is a top level tier of a product, contains target age groups, brand, size charts, etc.
+
+        '
+      type: string
+      example: MODEL-ID-ABC
+    MerchantProductId:
+      description: 'Merchant product simple identifier. Simples is a bottom level tier of a product, contains sizes, metrics, etc.
+
+        '
+      type: string
+      example: ED-7-09349-5443-L
     Problem:
       properties:
         type:
@@ -110,70 +118,20 @@ components:
         title: Service Unavailable
         status: 503
         detail: Connection to database timed out
+    EAN:
+      description: The International Article Number or also known as European Article Number.
+      type: string
+      format: gtin13
+      example: '9780679762881'
     MerchantConfigId:
       description: 'Merchant product config identifier. Config is a second tier of a product, contains colors, materials, etc.
 
         '
       type: string
       example: A213-1232SF-SDG62G-213G
-    EAN:
-      description: The International Article Number or also known as European Article Number.
-      type: string
-      format: gtin13
-      example: '9780679762881'
-    ProductAssociationSchema:
-      description: Information of the product to associate with
-      type: object
-      required:
-      - merchant_product_simple_id
-      properties:
-        merchant_product_simple_id:
-          $ref: '#/components/schemas/MerchantProductId'
-        merchant_product_config_id:
-          $ref: '#/components/schemas/MerchantConfigId'
-        merchant_product_model_id:
-          $ref: '#/components/schemas/MerchantModelId'
-    MerchantProductId:
-      description: 'Merchant product simple identifier. Simples is a bottom level tier of a product, contains sizes, metrics, etc.
-
-        '
-      type: string
-      example: ED-7-09349-5443-L
-    MerchantModelId:
-      description: 'Merchant product model identifier. Model is a top level tier of a product, contains target age groups, brand, size charts, etc.
-
-        '
-      type: string
-      example: MODEL-ID-ABC
-  requestBodies:
-    ProductAssociationBody:
-      description: Information of the product to associate with
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProductAssociationSchema'
   responses:
-    NotFoundError:
+    InvalidBodyError:
       description: No product with the given EAN could be found for this merchant
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    GenericError:
-      description: Error occurred - see status code and problem object for more information.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    ConflictError:
-      description: The request is semantically correct, but it cannot be processed due to business reasons. e.g. A product with same id was already submitted. Please refer to the response.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    TooManyRequestsError:
-      description: Too Many Requests. Server busy, please retry later.
       content:
         application/problem+json:
           schema:
@@ -184,12 +142,54 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-    InvalidBodyError:
+    TooManyRequestsError:
+      description: Too Many Requests. Server busy, please retry later.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    ConflictError:
+      description: The request is semantically correct, but it cannot be processed due to business reasons. e.g. A product with same id was already submitted. Please refer to the response.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    GenericError:
+      description: Error occurred - see status code and problem object for more information.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFoundError:
       description: No product with the given EAN could be found for this merchant
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
+  parameters:
+    merchant_id:
+      name: merchant_id
+      in: path
+      description: Id of the merchant
+      required: true
+      schema:
+        type: string
+        format: string
+    ean:
+      name: ean
+      in: path
+      description: The International Article Number or also known as European Article Number.
+      required: true
+      schema:
+        $ref: '#/components/schemas/EAN'
+  requestBodies:
+    ProductAssociationBody:
+      description: Information of the product to associate with
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductAssociationSchema'
   securitySchemes:
     merchant_platform:
       type: oauth2

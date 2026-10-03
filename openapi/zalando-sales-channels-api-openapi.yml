@@ -51,7 +51,55 @@ paths:
       operationId: getSalesChannels
       x-operation-id-source: derived
 components:
+  parameters:
+    FlowId:
+      name: X-Flow-Id
+      description: 'A custom header that will be passed onto any further requests and can be
+
+        used for diagnosing
+
+        '
+      in: header
+      required: false
+      schema:
+        type: string
   schemas:
+    ErrorSource:
+      type: object
+      description: Indicate the source of error
+      properties:
+        pointer:
+          description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. "/data" for a primary data object, or "/data/attributes/title" for a specific attribute].
+          type: string
+        parameter:
+          description: A string indicating which URI query parameter caused the error.
+          type: string
+    SalesChannel:
+      type: object
+      description: representation of one sales channel
+      properties:
+        sales_channel_id:
+          type: string
+          format: uuid
+          example: 01924c48-49bb-40c2-9c32-ab582e6db6f4
+        country_name:
+          type: string
+          example: Germany
+        country_code:
+          type: string
+          example: de
+        live:
+          type: boolean
+          example: true
+    Errors:
+      type: object
+      description: Array of error objects
+      properties:
+        errors:
+          description: All errors
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
     Error:
       type: object
       description: Error object
@@ -70,42 +118,6 @@ components:
           type: string
         source:
           $ref: '#/components/schemas/ErrorSource'
-    SalesChannel:
-      type: object
-      description: representation of one sales channel
-      properties:
-        sales_channel_id:
-          type: string
-          format: uuid
-          example: 01924c48-49bb-40c2-9c32-ab582e6db6f4
-        country_name:
-          type: string
-          example: Germany
-        country_code:
-          type: string
-          example: de
-        live:
-          type: boolean
-          example: true
-    ErrorSource:
-      type: object
-      description: Indicate the source of error
-      properties:
-        pointer:
-          description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. "/data" for a primary data object, or "/data/attributes/title" for a specific attribute].
-          type: string
-        parameter:
-          description: A string indicating which URI query parameter caused the error.
-          type: string
-    Errors:
-      type: object
-      description: Array of error objects
-      properties:
-        errors:
-          description: All errors
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
     SalesChannels:
       type: object
       description: list of sales channels
@@ -114,18 +126,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SalesChannel'
-  parameters:
-    FlowId:
-      name: X-Flow-Id
-      description: 'A custom header that will be passed onto any further requests and can be
-
-        used for diagnosing
-
-        '
-      in: header
-      required: false
-      schema:
-        type: string
   securitySchemes:
     merchant_platform:
       type: oauth2

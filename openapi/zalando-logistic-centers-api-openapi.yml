@@ -80,6 +80,29 @@ paths:
                 $ref: https://opensource.zalando.com/restful-api-guidelines/models/problem-1.0.1.yaml#/Problem
 components:
   schemas:
+    LogisticCenter:
+      description: Representation of a logistic center with its address and type
+      type: object
+      required:
+      - logistic_center_id
+      - name
+      - type
+      - address
+      properties:
+        logistic_center_id:
+          description: The unique UUID of a Logistic Center
+          type: string
+          format: uuid
+        name:
+          description: The name given to the Logistic Center
+          type: string
+        type:
+          description: The type of Logistic Center
+          type: string
+          x-extensible-enum:
+          - OUTBOUND_WAREHOUSE
+        address:
+          $ref: '#/components/schemas/Address'
     Address:
       description: The address of the Logistic Center
       type: object
@@ -121,29 +144,6 @@ components:
       - city
       - zip
       - country_code
-    LogisticCenter:
-      description: Representation of a logistic center with its address and type
-      type: object
-      required:
-      - logistic_center_id
-      - name
-      - type
-      - address
-      properties:
-        logistic_center_id:
-          description: The unique UUID of a Logistic Center
-          type: string
-          format: uuid
-        name:
-          description: The name given to the Logistic Center
-          type: string
-        type:
-          description: The type of Logistic Center
-          type: string
-          x-extensible-enum:
-          - OUTBOUND_WAREHOUSE
-        address:
-          $ref: '#/components/schemas/Address'
   parameters:
     PathLogisticCenterId:
       name: logisticCenterId

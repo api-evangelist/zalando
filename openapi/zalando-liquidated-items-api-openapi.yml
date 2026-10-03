@@ -65,6 +65,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Ean13:
+      type: string
+      format: ean
+      pattern: ^[0-9]{13}$
+      maxLength: 13
+      description: A 13-digit EAN
+      example: 0191476239145
+    Date:
+      type: string
+      format: date
+      description: Date
+      example: '2018-03-17'
     LiquidatedItem:
       type: object
       description: Liquidated Item
@@ -120,18 +132,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LiquidatedItem'
-    Date:
-      type: string
-      format: date
-      description: Date
-      example: '2018-03-17'
-    Ean13:
-      type: string
-      format: ean
-      pattern: ^[0-9]{13}$
-      maxLength: 13
-      description: A 13-digit EAN
-      example: 0191476239145
   securitySchemes:
     merchant_platform:
       type: oauth2

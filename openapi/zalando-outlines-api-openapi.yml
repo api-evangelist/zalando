@@ -50,90 +50,15 @@ paths:
       operationId: getMerchantsByMerchantIdOutlinesByOutlineLabel
       x-operation-id-source: derived
 components:
-  parameters:
-    outline_label:
-      name: outline_label
-      in: path
-      description: Label of the outline
-      required: true
-      schema:
-        type: string
-        format: string
-    merchant_id:
-      name: merchant_id
-      in: path
-      description: Id of the merchant
-      required: true
-      schema:
-        type: string
-        format: string
-    flow_id:
-      name: X-Flow-Id
-      description: 'A custom header that will be passed onto any further requests and can be
-
-        used for diagnosing.
-
-        '
-      in: header
-      required: false
-      schema:
-        type: string
   schemas:
-    AttributePerType:
-      type: object
-      description: 'Define a relation between an (outline, type) and its allowed values.
-
-        '
+    Tiers:
       properties:
-        type:
-          type: object
-          properties:
-            label:
-              type: string
-            version:
-              type: string
-        values:
-          type: array
-          items:
-            type: string
-    Description:
-      description: 'Map of language to text, key must follow (rfc-2616, section
-
-        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
-
-
-        This mapping is only a human readable description of the entity.
-
-        Building logic dependant on the this field should be avoided.
-
-        '
-      additionalProperties:
-        type: string
-      example:
-        en: Description
-        de: Beschreibung
-        es: Descripción
-    Outline:
-      description: 'Provides an outline of a product, etc., defining the types of attributes
-
-        that must be present, and those which may be present, and also some
-
-        optional additional constraints on the attributes of those types.
-
-        '
-      required:
-      - label
-      - tiers
-      properties:
-        label:
-          type: string
-          example: shoe
-        name:
-          $ref: '#/components/schemas/Name'
-        description:
-          $ref: '#/components/schemas/Description'
-        tiers:
-          $ref: '#/components/schemas/Tiers'
+        model:
+          $ref: '#/components/schemas/OutlineTier'
+        config:
+          $ref: '#/components/schemas/OutlineTier'
+        simple:
+          $ref: '#/components/schemas/OutlineTier'
     OutlineTier:
       description: 'Defines the optional and mandatory attributes and attribute constraints
 
@@ -226,25 +151,62 @@ components:
         en: The name
         de: Der Name
         es: El nombre
-    Tiers:
-      properties:
-        model:
-          $ref: '#/components/schemas/OutlineTier'
-        config:
-          $ref: '#/components/schemas/OutlineTier'
-        simple:
-          $ref: '#/components/schemas/OutlineTier'
-  responses:
-    GenericError:
-      description: 'error occurred - see status code and problem object for more
+    Description:
+      description: 'Map of language to text, key must follow (rfc-2616, section
 
-        information.
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+
+
+        This mapping is only a human readable description of the entity.
+
+        Building logic dependant on the this field should be avoided.
 
         '
-      content:
-        application/problem+json:
-          schema:
-            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+      additionalProperties:
+        type: string
+      example:
+        en: Description
+        de: Beschreibung
+        es: Descripción
+    AttributePerType:
+      type: object
+      description: 'Define a relation between an (outline, type) and its allowed values.
+
+        '
+      properties:
+        type:
+          type: object
+          properties:
+            label:
+              type: string
+            version:
+              type: string
+        values:
+          type: array
+          items:
+            type: string
+    Outline:
+      description: 'Provides an outline of a product, etc., defining the types of attributes
+
+        that must be present, and those which may be present, and also some
+
+        optional additional constraints on the attributes of those types.
+
+        '
+      required:
+      - label
+      - tiers
+      properties:
+        label:
+          type: string
+          example: shoe
+        name:
+          $ref: '#/components/schemas/Name'
+        description:
+          $ref: '#/components/schemas/Description'
+        tiers:
+          $ref: '#/components/schemas/Tiers'
+  responses:
     OutlinesPagedResponse:
       description: list of outlines
       content:
@@ -257,6 +219,44 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/Outline'
+    GenericError:
+      description: 'error occurred - see status code and problem object for more
+
+        information.
+
+        '
+      content:
+        application/problem+json:
+          schema:
+            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+  parameters:
+    outline_label:
+      name: outline_label
+      in: path
+      description: Label of the outline
+      required: true
+      schema:
+        type: string
+        format: string
+    merchant_id:
+      name: merchant_id
+      in: path
+      description: Id of the merchant
+      required: true
+      schema:
+        type: string
+        format: string
+    flow_id:
+      name: X-Flow-Id
+      description: 'A custom header that will be passed onto any further requests and can be
+
+        used for diagnosing.
+
+        '
+      in: header
+      required: false
+      schema:
+        type: string
   securitySchemes:
     merchant_platform:
       type: oauth2

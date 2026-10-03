@@ -89,6 +89,43 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Ean13:
+      type: string
+      format: ean
+      pattern: ^[0-9]{13}$
+      maxLength: 13
+      description: A 13-digit EAN
+      example: 0123456789123
+    StockLocationV2:
+      type: object
+      description: Details of the Stock Location
+      properties:
+        location_id:
+          type: string
+          format: uuid
+          description: Unique identifier for the Stock Location.
+        name:
+          type: string
+          description: The name / location of the Stock Location.
+          example: Erfurt
+        country_code:
+          type: string
+          description: Country code in ISO 3166-1 alpha-2 of the country that the Stock Location is in.
+          example: DE
+        inbound_active:
+          type: boolean
+          description: Whether the stock location is active for inbound or not.
+          example: true
+        outbound_active:
+          type: boolean
+          description: Whether the stock location is active for outbound or not.
+          example: true
+      required:
+      - location_id
+      - name
+      - country_code
+      - inbound_active
+      - outbound_active
     CrossBorderMovement:
       type: object
       description: Cross-border Movement
@@ -139,43 +176,6 @@ components:
       - destination_stock_location
       - source_stock_location
       - movement_type
-    Ean13:
-      type: string
-      format: ean
-      pattern: ^[0-9]{13}$
-      maxLength: 13
-      description: A 13-digit EAN
-      example: 0123456789123
-    StockLocationV2:
-      type: object
-      description: Details of the Stock Location
-      properties:
-        location_id:
-          type: string
-          format: uuid
-          description: Unique identifier for the Stock Location.
-        name:
-          type: string
-          description: The name / location of the Stock Location.
-          example: Erfurt
-        country_code:
-          type: string
-          description: Country code in ISO 3166-1 alpha-2 of the country that the Stock Location is in.
-          example: DE
-        inbound_active:
-          type: boolean
-          description: Whether the stock location is active for inbound or not.
-          example: true
-        outbound_active:
-          type: boolean
-          description: Whether the stock location is active for outbound or not.
-          example: true
-      required:
-      - location_id
-      - name
-      - country_code
-      - inbound_active
-      - outbound_active
     CrossBorderReportResponse:
       type: object
       properties:

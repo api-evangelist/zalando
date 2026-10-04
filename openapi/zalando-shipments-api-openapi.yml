@@ -347,116 +347,7 @@ paths:
       operationId: patchMerchantsByMerchantIdOrdersByOrderIdShipmentsByShipmentId
       x-operation-id-source: derived
 components:
-  parameters:
-    x-flow-id:
-      name: X-Flow-Id
-      in: header
-      description: Used for troubleshooting.
-      required: false
-      schema:
-        type: string
-        format: uuid
-      x-doc:
-        excluded: true
-    merchantId:
-      name: merchant-id
-      in: path
-      description: To identify a merchant for which this operation is carried out.
-      required: true
-      schema:
-        type: string
-        format: uuid
-    Authorization:
-      name: Authorization
-      in: header
-      description: Bearer access token.
-      required: true
-      schema:
-        type: string
-        format: JWT token
   schemas:
-    Weight:
-      type: object
-      description: The weight measurement
-      required:
-      - value
-      - unit
-      properties:
-        value:
-          type: integer
-          description: The numerical value of the weight
-          format: int32
-          example: 1250
-        unit:
-          type: string
-          description: The unit of measurement for the weight
-          example: g
-          x-extensible-enum:
-          - g
-    RateLimitError:
-      type: object
-      description: Error object for rate limit.
-      properties:
-        message:
-          description: A string containing the error message for exceeding the rate limit
-          type: string
-    ErrorSource:
-      type: object
-      description: Indicate the source of error.
-      properties:
-        pointer:
-          description: A JSON Pointer [RFC6901] to the associated entity in the request document, for example, '/data' for a primary data object, or '/data/attributes/title' for a specific attribute.
-          type: string
-          example: /data/attributes/order_number
-        parameter:
-          description: A string indicating which URI query parameter caused the error.
-          type: string
-          example: order_number
-    Errors:
-      type: object
-      description: An array of error objects.
-      properties:
-        errors:
-          description: All errors.
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
-    ShipmentOrderLine:
-      type: object
-      description: Shipment related attributes of an order line
-      required:
-      - order_line_id
-      properties:
-        merchant_specified_identifier:
-          description: Optional merchant specific identifier associated with the order line (such as UPOS identifier)
-          type: object
-          required:
-          - type
-          - value
-          properties:
-            type:
-              type: string
-              description: Value indicating the format of the identifier provided
-              example: UPOS-15
-              x-extensible-enum:
-              - UPOS-15
-            value:
-              type: string
-              description: The identifier for the order line in the format as indicated by the `type` field
-              example: ABCDEFGHIJKLMNOPQRSTUVWXYZ
-        order_line_id:
-          description: Identifier of an order line.
-          type: string
-          format: uuid
-          example: 0178b487-262c-4638-b88e-6bb1aa5a166d
-    ShipmentStatus:
-      type: string
-      description: The status of the shipment.
-      x-extensible-enum:
-      - initial
-      - shipped
-      - canceled
-      example: initial
     Error:
       type: object
       description: Error object
@@ -479,6 +370,45 @@ components:
           example: The order 123 does not exist.
         source:
           $ref: '#/components/schemas/ErrorSource'
+    Weight:
+      type: object
+      description: The weight measurement
+      required:
+      - value
+      - unit
+      properties:
+        value:
+          type: integer
+          description: The numerical value of the weight
+          format: int32
+          example: 1250
+        unit:
+          type: string
+          description: The unit of measurement for the weight
+          example: g
+          x-extensible-enum:
+          - g
+    ErrorSource:
+      type: object
+      description: Indicate the source of error.
+      properties:
+        pointer:
+          description: A JSON Pointer [RFC6901] to the associated entity in the request document, for example, '/data' for a primary data object, or '/data/attributes/title' for a specific attribute.
+          type: string
+          example: /data/attributes/order_number
+        parameter:
+          description: A string indicating which URI query parameter caused the error.
+          type: string
+          example: order_number
+    Shipments:
+      type: object
+      description: A collection of shipments for this order.
+      properties:
+        shipments:
+          type: array
+          description: A list of shipments associated with this order.
+          items:
+            $ref: '#/components/schemas/Shipment'
     Shipment:
       type: object
       description: 'A shipment represents the delivery of specific order lines from an order in a single parcel. It includes additional details such as tracking numbers, the stock location ID from which the shipment is sent and the shipment weight (in grams)
@@ -530,15 +460,85 @@ components:
           type: string
           format: date-time
           description: The last modified timestamp.
-    Shipments:
+    ShipmentStatus:
+      type: string
+      description: The status of the shipment.
+      x-extensible-enum:
+      - initial
+      - shipped
+      - canceled
+      example: initial
+    ShipmentOrderLine:
       type: object
-      description: A collection of shipments for this order.
+      description: Shipment related attributes of an order line
+      required:
+      - order_line_id
       properties:
-        shipments:
+        merchant_specified_identifier:
+          description: Optional merchant specific identifier associated with the order line (such as UPOS identifier)
+          type: object
+          required:
+          - type
+          - value
+          properties:
+            type:
+              type: string
+              description: Value indicating the format of the identifier provided
+              example: UPOS-15
+              x-extensible-enum:
+              - UPOS-15
+            value:
+              type: string
+              description: The identifier for the order line in the format as indicated by the `type` field
+              example: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+        order_line_id:
+          description: Identifier of an order line.
+          type: string
+          format: uuid
+          example: 0178b487-262c-4638-b88e-6bb1aa5a166d
+    Errors:
+      type: object
+      description: An array of error objects.
+      properties:
+        errors:
+          description: All errors.
           type: array
-          description: A list of shipments associated with this order.
           items:
-            $ref: '#/components/schemas/Shipment'
+            $ref: '#/components/schemas/Error'
+    RateLimitError:
+      type: object
+      description: Error object for rate limit.
+      properties:
+        message:
+          description: A string containing the error message for exceeding the rate limit
+          type: string
+  parameters:
+    x-flow-id:
+      name: X-Flow-Id
+      in: header
+      description: Used for troubleshooting.
+      required: false
+      schema:
+        type: string
+        format: uuid
+      x-doc:
+        excluded: true
+    Authorization:
+      name: Authorization
+      in: header
+      description: Bearer access token.
+      required: true
+      schema:
+        type: string
+        format: JWT token
+    merchantId:
+      name: merchant-id
+      in: path
+      description: To identify a merchant for which this operation is carried out.
+      required: true
+      schema:
+        type: string
+        format: uuid
   securitySchemes:
     merchant_platform:
       type: oauth2

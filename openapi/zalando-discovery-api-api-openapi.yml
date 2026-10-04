@@ -28,23 +28,36 @@ paths:
       operationId: getProductsIdentifiersByEan
       x-operation-id-source: derived
 components:
-  schemas:
-    LookUp:
-      properties:
-        items:
-          type: array
-          items:
-            properties:
-              ean:
-                $ref: '#/components/schemas/EAN'
-      example:
-        items:
-        - ean: '9780679762881'
-    EAN:
+  parameters:
+    ean:
+      name: ean
+      in: path
       description: The International Article Number or also known as European Article Number.
-      type: string
-      format: gtin13
-      example: '9780679762881'
+      required: true
+      schema:
+        $ref: '#/components/schemas/EAN'
+  responses:
+    LookUpResponse:
+      description: 'Successfully looked up product detail information
+
+        '
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/LookUp'
+    GenericError:
+      description: Error occurred - see status code and problem object for more information.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    ConflictError:
+      description: The request is semantically correct, but it cannot be processed due to business reasons. e.g. A product with same id was already submitted. Please refer to the response.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+  schemas:
     Problem:
       properties:
         type:
@@ -97,35 +110,22 @@ components:
         title: Service Unavailable
         status: 503
         detail: Connection to database timed out
-  parameters:
-    ean:
-      name: ean
-      in: path
+    EAN:
       description: The International Article Number or also known as European Article Number.
-      required: true
-      schema:
-        $ref: '#/components/schemas/EAN'
-  responses:
-    ConflictError:
-      description: The request is semantically correct, but it cannot be processed due to business reasons. e.g. A product with same id was already submitted. Please refer to the response.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    GenericError:
-      description: Error occurred - see status code and problem object for more information.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    LookUpResponse:
-      description: 'Successfully looked up product detail information
-
-        '
-      content:
-        application/json;charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/LookUp'
+      type: string
+      format: gtin13
+      example: '9780679762881'
+    LookUp:
+      properties:
+        items:
+          type: array
+          items:
+            properties:
+              ean:
+                $ref: '#/components/schemas/EAN'
+      example:
+        items:
+        - ean: '9780679762881'
   securitySchemes:
     merchant_platform:
       type: oauth2

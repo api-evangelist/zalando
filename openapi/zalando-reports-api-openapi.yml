@@ -93,17 +93,6 @@ components:
       maxLength: 13
       description: A 13-digit EAN
       example: 0191476239145
-    InboundedItemsResponse:
-      type: object
-      properties:
-        received_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InboundedItem'
-        next:
-          type: string
-          description: Cursor reference. Used to fetch the next page of results.
-          example: MjAxNy0wNy0yMVQxNzozMjoyOFoK
     InboundedItem:
       type: object
       description: Inbounded Item
@@ -143,6 +132,17 @@ components:
       - quality_label
       - location_id
       - received_timestamp
+    InboundedItemsResponse:
+      type: object
+      properties:
+        received_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InboundedItem'
+        next:
+          type: string
+          description: Cursor reference. Used to fetch the next page of results.
+          example: MjAxNy0wNy0yMVQxNzozMjoyOFoK
     DateTime:
       type: string
       format: date-time

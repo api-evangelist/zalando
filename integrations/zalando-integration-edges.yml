@@ -1,5 +1,5 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/zalando/integrations
 - https://n8n.io/integrations/zalando/
@@ -7,10 +7,46 @@ source:
 - https://monid.ai/tools/zalando
 checked:
 - https://composio.dev/toolkits/zalando
+- https://focus.finops.org/data-generators/
+- https://github.com/cncf/k8s-conformance
+- https://github.com/cncf/landscape
 - https://monid.ai/tools/zalando
 - https://n8n.io/integrations/zalando/
 - https://zapier.com/apps/zalando/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: CNCF (Cloud Native Landscape)
+  partner: cncf
+  partner_match: register
+  type: register
+  direction: partner-built
+  category: Cloud native landscape
+  evidence: https://github.com/cncf/landscape/blob/3a7d378b1824b82e729a453bb03fa6f1e37557e1/landscape.yml
+  channel: standard-directory
+  relationship: standard-participant
+  contract_reference:
+    register: CNCF Cloud Native Landscape (github.com/cncf/landscape landscape.yml @3a7d378b18)
+    spec_file: null
+    standard: Cloud Native (CNCF)
+    role: landscape-listed
+    registered_name: Skipper
+    registered_names:
+    - Skipper
+    website: https://opensource.zalando.com/skipper/
+    matched_domain: zalando.com
+    matched_by: domain+name-among-holders
+    member_tier: null
+    joined: null
+    end_user: false
+    cncf_projects: []
+    landscape_categories:
+    - Orchestration & Management / Service Proxy
+    landscape_entries: 1
+    signal_note: 'participation only: a landscape listing is standard-participant evidence, not depth. Entries,
+      categories, tier and projects are CONTEXT, never read (breadth is not credit)'
+    detected_by: sweep-cloud-native.py
+    detected: '2026-10-15'
+  detected_by: sweep-cloud-native.py
+  first_seen: '2026-10-15'
 templates: []

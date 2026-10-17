@@ -113,6 +113,11 @@ components:
         total_price:
           type: number
           format: double
+    Date:
+      type: string
+      format: date
+      description: Date
+      example: '2018-03-17'
     Ean13:
       type: string
       format: ean
@@ -120,11 +125,6 @@ components:
       maxLength: 13
       description: A 13-digit EAN
       example: 0191476239145
-    Date:
-      type: string
-      format: date
-      description: Date
-      example: '2018-03-17'
     LiquidatedItemsQueryResult:
       type: object
       properties:

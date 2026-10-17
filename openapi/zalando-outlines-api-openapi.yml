@@ -50,62 +50,47 @@ paths:
       operationId: getMerchantsByMerchantIdOutlinesByOutlineLabel
       x-operation-id-source: derived
 components:
-  schemas:
-    Outline:
-      description: 'Provides an outline of a product, etc., defining the types of attributes
+  responses:
+    OutlinesPagedResponse:
+      description: list of outlines
+      content:
+        application/json:
+          schema:
+            required:
+            - items
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Outline'
+    GenericError:
+      description: 'error occurred - see status code and problem object for more
 
-        that must be present, and those which may be present, and also some
-
-        optional additional constraints on the attributes of those types.
+        information.
 
         '
-      required:
-      - label
-      - tiers
-      properties:
-        label:
-          type: string
-          example: shoe
-        name:
-          $ref: '#/components/schemas/Name'
-        description:
-          $ref: '#/components/schemas/Description'
-        tiers:
-          $ref: '#/components/schemas/Tiers'
-    Description:
+      content:
+        application/problem+json:
+          schema:
+            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+  schemas:
+    Name:
       description: 'Map of language to text, key must follow (rfc-2616, section
 
         3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
 
 
-        This mapping is only a human readable description of the entity.
+        This mapping is only a human readable name of the entity.
 
-        Building logic dependant on the this field should be avoided.
+        Building logic dependant on this field should be avoided.
 
         '
       additionalProperties:
         type: string
       example:
-        en: Description
-        de: Beschreibung
-        es: Descripción
-    AttributePerType:
-      type: object
-      description: 'Define a relation between an (outline, type) and its allowed values.
-
-        '
-      properties:
-        type:
-          type: object
-          properties:
-            label:
-              type: string
-            version:
-              type: string
-        values:
-          type: array
-          items:
-            type: string
+        en: The name
+        de: Der Name
+        es: El nombre
     OutlineTier:
       description: 'Defines the optional and mandatory attributes and attribute constraints
 
@@ -181,23 +166,6 @@ components:
               description:
                 en: Please specify the material composition if the product has filling.
               hint_type: mandatory_if_applicable
-    Name:
-      description: 'Map of language to text, key must follow (rfc-2616, section
-
-        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
-
-
-        This mapping is only a human readable name of the entity.
-
-        Building logic dependant on this field should be avoided.
-
-        '
-      additionalProperties:
-        type: string
-      example:
-        en: The name
-        de: Der Name
-        es: El nombre
     Tiers:
       properties:
         model:
@@ -206,6 +174,61 @@ components:
           $ref: '#/components/schemas/OutlineTier'
         simple:
           $ref: '#/components/schemas/OutlineTier'
+    Outline:
+      description: 'Provides an outline of a product, etc., defining the types of attributes
+
+        that must be present, and those which may be present, and also some
+
+        optional additional constraints on the attributes of those types.
+
+        '
+      required:
+      - label
+      - tiers
+      properties:
+        label:
+          type: string
+          example: shoe
+        name:
+          $ref: '#/components/schemas/Name'
+        description:
+          $ref: '#/components/schemas/Description'
+        tiers:
+          $ref: '#/components/schemas/Tiers'
+    Description:
+      description: 'Map of language to text, key must follow (rfc-2616, section
+
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+
+
+        This mapping is only a human readable description of the entity.
+
+        Building logic dependant on the this field should be avoided.
+
+        '
+      additionalProperties:
+        type: string
+      example:
+        en: Description
+        de: Beschreibung
+        es: Descripción
+    AttributePerType:
+      type: object
+      description: 'Define a relation between an (outline, type) and its allowed values.
+
+        '
+      properties:
+        type:
+          type: object
+          properties:
+            label:
+              type: string
+            version:
+              type: string
+        values:
+          type: array
+          items:
+            type: string
   parameters:
     merchant_id:
       name: merchant_id
@@ -234,29 +257,6 @@ components:
       required: false
       schema:
         type: string
-  responses:
-    OutlinesPagedResponse:
-      description: list of outlines
-      content:
-        application/json:
-          schema:
-            required:
-            - items
-            properties:
-              items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Outline'
-    GenericError:
-      description: 'error occurred - see status code and problem object for more
-
-        information.
-
-        '
-      content:
-        application/problem+json:
-          schema:
-            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
   securitySchemes:
     merchant_platform:
       type: oauth2

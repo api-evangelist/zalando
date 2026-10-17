@@ -63,9 +63,49 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ResponseDescription:
-      type: string
-      description: Detailed error message regarding the status.
+    StockUpdateResult:
+      type: object
+      description: The result of Stock Update processing.
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        code:
+          $ref: '#/components/schemas/ResponseCode'
+        description:
+          $ref: '#/components/schemas/ResponseDescription'
+      required:
+      - status
+      - code
+    StockUpdatesRequest:
+      type: object
+      description: The request containing a batch of up to 1000 Stock Updates to process.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockUpdatePerSalesChannel'
+          maxItems: 1000
+      required:
+      - items
+    ResponseCode:
+      type: integer
+      format: int32
+      x-extensible-enum:
+      - 0
+      - 101
+      - 102
+      - 104
+      description: 'Machine readable status code.
+
+        -   0: Update Successful
+
+        - 101: Validation failed
+
+        - 102: Submission failed due to internal errors
+
+        - 104: Update pending - waiting for the article to be onboarded
+
+        '
     StockUpdatesResponse:
       type: object
       description: The response containing results of Stock Updates processing.
@@ -100,36 +140,6 @@ components:
 
         '
       example: ACCEPTED
-    ResponseCode:
-      type: integer
-      format: int32
-      x-extensible-enum:
-      - 0
-      - 101
-      - 102
-      - 104
-      description: 'Machine readable status code.
-
-        -   0: Update Successful
-
-        - 101: Validation failed
-
-        - 102: Submission failed due to internal errors
-
-        - 104: Update pending - waiting for the article to be onboarded
-
-        '
-    StockUpdatesRequest:
-      type: object
-      description: The request containing a batch of up to 1000 Stock Updates to process.
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/StockUpdatePerSalesChannel'
-          maxItems: 1000
-      required:
-      - items
     StockUpdatePerSalesChannel:
       type: object
       description: Stock Level for a particular article in a particular Sales Channel.
@@ -153,19 +163,9 @@ components:
       - sales_channel_id
       - ean
       - quantity
-    StockUpdateResult:
-      type: object
-      description: The result of Stock Update processing.
-      properties:
-        status:
-          $ref: '#/components/schemas/ResponseStatus'
-        code:
-          $ref: '#/components/schemas/ResponseCode'
-        description:
-          $ref: '#/components/schemas/ResponseDescription'
-      required:
-      - status
-      - code
+    ResponseDescription:
+      type: string
+      description: Detailed error message regarding the status.
   securitySchemes:
     merchant_platform:
       type: oauth2

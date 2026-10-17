@@ -48,71 +48,6 @@ paths:
       operationId: getMerchantsByMerchantIdAttributeTypesByTypeLabelAttributesByAttributeLabel
       x-operation-id-source: derived
 components:
-  responses:
-    AttributesPagedResponse:
-      description: list of attributes
-      content:
-        application/json:
-          schema:
-            required:
-            - items
-            properties:
-              items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Attribute'
-    GenericError:
-      description: 'error occurred - see status code and problem object for more
-
-        information.
-
-        '
-      content:
-        application/problem+json:
-          schema:
-            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
-    AttributeResponse:
-      description: a single attribute
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Attribute'
-  parameters:
-    merchant_id:
-      name: merchant_id
-      in: path
-      description: Id of the merchant
-      required: true
-      schema:
-        type: string
-        format: string
-    type_label:
-      name: type_label
-      in: path
-      description: Label of the attribute type
-      required: true
-      schema:
-        type: string
-        format: string
-    flow_id:
-      name: X-Flow-Id
-      description: 'A custom header that will be passed onto any further requests and can be
-
-        used for diagnosing.
-
-        '
-      in: header
-      required: false
-      schema:
-        type: string
-    attribute_label:
-      name: attribute_label
-      in: path
-      description: Label of the attribute
-      required: true
-      schema:
-        type: string
-        format: string
   schemas:
     AttributeMeta:
       type: object
@@ -197,6 +132,71 @@ components:
           $ref: '#/components/schemas/AttributeValue'
         _meta:
           $ref: '#/components/schemas/AttributeMeta'
+  responses:
+    GenericError:
+      description: 'error occurred - see status code and problem object for more
+
+        information.
+
+        '
+      content:
+        application/problem+json:
+          schema:
+            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+    AttributesPagedResponse:
+      description: list of attributes
+      content:
+        application/json:
+          schema:
+            required:
+            - items
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attribute'
+    AttributeResponse:
+      description: a single attribute
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Attribute'
+  parameters:
+    merchant_id:
+      name: merchant_id
+      in: path
+      description: Id of the merchant
+      required: true
+      schema:
+        type: string
+        format: string
+    type_label:
+      name: type_label
+      in: path
+      description: Label of the attribute type
+      required: true
+      schema:
+        type: string
+        format: string
+    attribute_label:
+      name: attribute_label
+      in: path
+      description: Label of the attribute
+      required: true
+      schema:
+        type: string
+        format: string
+    flow_id:
+      name: X-Flow-Id
+      description: 'A custom header that will be passed onto any further requests and can be
+
+        used for diagnosing.
+
+        '
+      in: header
+      required: false
+      schema:
+        type: string
   securitySchemes:
     merchant_platform:
       type: oauth2

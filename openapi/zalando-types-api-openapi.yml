@@ -29,6 +29,95 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    TypeUsage:
+      description: 'How this type is to be used. Reference attributes established within
+
+        this service, or Literal values provided.
+
+        '
+      type: string
+      x-extensible-enum:
+      - literal
+      - reference_by_label
+      - reference_by_value
+      example: reference_by_label
+    Type:
+      required:
+      - label
+      - name
+      - definition
+      - type_variants
+      - cardinality
+      - usage
+      properties:
+        label:
+          type: string
+          example: color_code
+        name:
+          $ref: '#/components/schemas/Name'
+        description:
+          $ref: '#/components/schemas/Description'
+        cardinality:
+          $ref: '#/components/schemas/TypeCardinality'
+        usage:
+          $ref: '#/components/schemas/TypeUsage'
+        definition:
+          $ref: '#/components/schemas/TypeDefinition'
+        type_variants:
+          $ref: '#/components/schemas/TypeVariants'
+    Name:
+      description: 'Map of language to text, key must follow (rfc-2616, section
+
+        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
+
+
+        This mapping is only a human readable name of the entity.
+
+        Building logic dependant on this field should be avoided.
+
+        '
+      additionalProperties:
+        type: string
+      example:
+        en: The name
+        de: Der Name
+        es: El nombre
+    TypeCardinality:
+      description: 'The allowed cardinality of this type when used - i.e. how many
+
+        attributes of this type can be used.
+
+        '
+      type: string
+      x-extensible-enum:
+      - one
+      - many
+      example: one
+    TypeVariants:
+      description: 'Allow aliases for types, when used it would be:
+
+        "{type_label}.{type_variant}", this way it would be allowed to have the
+
+        same type used multiple times in the same outline/attributes
+
+        E.g: color.primary being color the type and primary the variant
+
+        '
+      type: array
+      items:
+        required:
+        - label
+        - name
+        properties:
+          label:
+            type: string
+          name:
+            $ref: '#/components/schemas/Name'
+      example:
+      - label: primary
+        name: Primary Type
+      - label: secondary
+        name: Secondary Type
     Description:
       description: 'Map of language to text, key must follow (rfc-2616, section
 
@@ -76,95 +165,23 @@ components:
                 type: boolean
       example:
         type: LocalizedStringDefinition
-    Type:
-      required:
-      - label
-      - name
-      - definition
-      - type_variants
-      - cardinality
-      - usage
-      properties:
-        label:
-          type: string
-          example: color_code
-        name:
-          $ref: '#/components/schemas/Name'
-        description:
-          $ref: '#/components/schemas/Description'
-        cardinality:
-          $ref: '#/components/schemas/TypeCardinality'
-        usage:
-          $ref: '#/components/schemas/TypeUsage'
-        definition:
-          $ref: '#/components/schemas/TypeDefinition'
-        type_variants:
-          $ref: '#/components/schemas/TypeVariants'
-    TypeCardinality:
-      description: 'The allowed cardinality of this type when used - i.e. how many
+  responses:
+    GenericError:
+      description: 'error occurred - see status code and problem object for more
 
-        attributes of this type can be used.
+        information.
 
         '
-      type: string
-      x-extensible-enum:
-      - one
-      - many
-      example: one
-    TypeUsage:
-      description: 'How this type is to be used. Reference attributes established within
-
-        this service, or Literal values provided.
-
-        '
-      type: string
-      x-extensible-enum:
-      - literal
-      - reference_by_label
-      - reference_by_value
-      example: reference_by_label
-    Name:
-      description: 'Map of language to text, key must follow (rfc-2616, section
-
-        3.10)[https://tools.ietf.org/html/rfc2616#section-3.10]
-
-
-        This mapping is only a human readable name of the entity.
-
-        Building logic dependant on this field should be avoided.
-
-        '
-      additionalProperties:
-        type: string
-      example:
-        en: The name
-        de: Der Name
-        es: El nombre
-    TypeVariants:
-      description: 'Allow aliases for types, when used it would be:
-
-        "{type_label}.{type_variant}", this way it would be allowed to have the
-
-        same type used multiple times in the same outline/attributes
-
-        E.g: color.primary being color the type and primary the variant
-
-        '
-      type: array
-      items:
-        required:
-        - label
-        - name
-        properties:
-          label:
-            type: string
-          name:
-            $ref: '#/components/schemas/Name'
-      example:
-      - label: primary
-        name: Primary Type
-      - label: secondary
-        name: Secondary Type
+      content:
+        application/problem+json:
+          schema:
+            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
+    TypeResponse:
+      description: a single attribute type
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Type'
   parameters:
     merchant_id:
       name: merchant_id
@@ -193,23 +210,6 @@ components:
       required: false
       schema:
         type: string
-  responses:
-    GenericError:
-      description: 'error occurred - see status code and problem object for more
-
-        information.
-
-        '
-      content:
-        application/problem+json:
-          schema:
-            $ref: https://opensource.zalando.com/problem/schema.yaml#/Problem
-    TypeResponse:
-      description: a single attribute type
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Type'
   securitySchemes:
     merchant_platform:
       type: oauth2

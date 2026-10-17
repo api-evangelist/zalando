@@ -139,6 +139,41 @@ components:
       - destination_stock_location
       - source_stock_location
       - movement_type
+    CrossBorderReportResponse:
+      type: object
+      properties:
+        merchant_id:
+          type: string
+          format: uuid
+          description: Merchant ID
+        items:
+          type: array
+          description: A set of items for each movement if the specified report_date range
+          items:
+            $ref: '#/components/schemas/CrossBorderMovement'
+        next:
+          description: Pagination cursor pointing to the next page.
+          type: string
+        query:
+          description: 'Object containing the current query filters applied to the collection resource. The cursor here is a copy of the current request -- it should not be used for the next request.\n
+
+            '
+          type: object
+          properties:
+            from:
+              type: string
+              format: date
+            to:
+              type: string
+              format: date
+            cursor:
+              type: string
+            limit:
+              type: integer
+              format: int32
+              default: 1000
+      required:
+      - merchant_id
     Ean13:
       type: string
       format: ean
@@ -176,41 +211,6 @@ components:
       - country_code
       - inbound_active
       - outbound_active
-    CrossBorderReportResponse:
-      type: object
-      properties:
-        merchant_id:
-          type: string
-          format: uuid
-          description: Merchant ID
-        items:
-          type: array
-          description: A set of items for each movement if the specified report_date range
-          items:
-            $ref: '#/components/schemas/CrossBorderMovement'
-        next:
-          description: Pagination cursor pointing to the next page.
-          type: string
-        query:
-          description: 'Object containing the current query filters applied to the collection resource. The cursor here is a copy of the current request -- it should not be used for the next request.\n
-
-            '
-          type: object
-          properties:
-            from:
-              type: string
-              format: date
-            to:
-              type: string
-              format: date
-            cursor:
-              type: string
-            limit:
-              type: integer
-              format: int32
-              default: 1000
-      required:
-      - merchant_id
   securitySchemes:
     OAuth2:
       type: oauth2

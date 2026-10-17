@@ -82,17 +82,17 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AdviceId:
-      type: string
-      pattern: ^[0-9]{8}$
-      example: 99200001
-    Ean13:
-      type: string
-      format: ean
-      pattern: ^[0-9]{13}$
-      maxLength: 13
-      description: A 13-digit EAN
-      example: 0191476239145
+    InboundedItemsResponse:
+      type: object
+      properties:
+        received_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InboundedItem'
+        next:
+          type: string
+          description: Cursor reference. Used to fetch the next page of results.
+          example: MjAxNy0wNy0yMVQxNzozMjoyOFoK
     InboundedItem:
       type: object
       description: Inbounded Item
@@ -132,17 +132,17 @@ components:
       - quality_label
       - location_id
       - received_timestamp
-    InboundedItemsResponse:
-      type: object
-      properties:
-        received_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InboundedItem'
-        next:
-          type: string
-          description: Cursor reference. Used to fetch the next page of results.
-          example: MjAxNy0wNy0yMVQxNzozMjoyOFoK
+    Ean13:
+      type: string
+      format: ean
+      pattern: ^[0-9]{13}$
+      maxLength: 13
+      description: A 13-digit EAN
+      example: 0191476239145
+    AdviceId:
+      type: string
+      pattern: ^[0-9]{8}$
+      example: 99200001
     DateTime:
       type: string
       format: date-time

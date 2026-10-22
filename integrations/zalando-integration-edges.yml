@@ -13,6 +13,9 @@ checked:
 - https://monid.ai/tools/zalando
 - https://n8n.io/integrations/zalando/
 - https://zapier.com/apps/zalando/integrations
+- https://api.apis.guru/v2/list.json
+- https://api.apis.guru/v2/providers.json
+- https://www.bestpractices.dev/en/projects.json
 summary: null
 marketplace_apps: []
 edges:
@@ -49,4 +52,80 @@ edges:
     detected: '2026-10-19'
   detected_by: sweep-cloud-native.py
   first_seen: '2026-10-15'
+- partner_name: APIs.guru OpenAPI Directory
+  partner: apis-guru
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: third-party
+  evidence: https://apis.guru/
+  category: API definition directory listing (OpenAPI)
+  contract_reference:
+    register: APIs.guru OpenAPI Directory
+    spec_file: null
+    standard: APIs.guru OpenAPI Directory
+    role: listed-in-directory
+    directory_provider: zalando.com
+    matched_domain: zalando.com
+    matched_by: domain+name-among-holders
+    apis_listed: 1
+    version_count: 1
+    first_added: '2017-09-04'
+    last_updated: '2018-09-27'
+    origin_publisher_hosted: true
+    origin_hosts:
+    - api.zalando.com
+    categories:
+    - ecommerce
+    own_openapi_files: 20
+    listings:
+    - key: zalando.com
+      title: Zalando Shop
+      preferred: v1.0
+      versions: 1
+      swagger_url: https://api.apis.guru/v2/specs/zalando.com/v1.0/swagger.json
+      origin_url: https://api.zalando.com/schema/swagger.json
+      openapi_version: '2.0'
+    signal_note: 'participation only: a community directory listing (APIs.guru collects definitions; the provider
+      did not file them). Signals: version_count, apis_listed, origin_publisher_hosted.'
+    detected_by: sweep-openapi-directory-apis-guru.py
+    detected: '2026-10-22'
+  detected_by: sweep-openapi-directory-apis-guru.py
+  first_seen: '2026-10-22'
+- partner_name: OpenSSF Best Practices Badge
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.bestpractices.dev/en/projects/2461
+  category: OpenSSF Best Practices badge (open-source project security conformance)
+  contract_reference:
+    register: OpenSSF Best Practices badge projects (bestpractices.dev/en/projects.json, paged)
+    standard: OpenSSF Best Practices Badge criteria (formerly CII Best Practices; bestpractices.dev)
+    spec_file: null
+    role: badge-holder
+    registered_name: skipper
+    matched_by: github-org+name-among-claimants
+    matched_on: zalando
+    certified_products:
+    - product: open-source project
+      product_type: open-source project
+      standard: OpenSSF Best Practices Badge criteria (formerly CII Best Practices; bestpractices.dev)
+      lapsed: false
+      partner_tier: passing
+      projects:
+      - name: skipper
+        id: 2461
+        url: https://www.bestpractices.dev/en/projects/2461
+        badge_level: passing
+    signal_note: 'certified_products = ONE entry (product type: open-source project) with the highest CURRENT badge
+      level in partner_tier; a provider whose projects only lost the badge is lapsed: true; project names are context,
+      never counted; in_progress entries are not conformance'
+    detected_by: sweep-openssf-best-practices-badges.py
+    detected: '2026-10-22'
+  detected_by: sweep-openssf-best-practices-badges.py
+  first_seen: '2026-10-22'
 templates: []
